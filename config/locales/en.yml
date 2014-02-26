@@ -1,0 +1,102 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  date:
+    formats:
+      default: "%d/%m/%Y"
+  hello: "Hello world"
+  registration:
+    create:
+      machine: "Slot Cannot be allotted this time.."
+      success: "Registration has been successfulyy completed"
+      fail: "Registration has not been completed"
+    exam:
+      fail: "Cannot submit. Session Invalidated.."
+  exam:
+    create:
+      success: "Exam has been created"
+      fail: "Exam has not been created"
+    destroy:
+      success: "Exam has been deleted"
+      fail: "Exam has not been deleted"
+    update:
+      success: "Exam has been updated"
+      fail: "Exam has not been updated"
+    criteria:
+      invalid: "Pass Creteria%{criteria} should be Numeric"
+  question:
+    create:
+      success: "Question has been added"
+      fail: "Question not been added"
+    destroy:
+      success: "Question has been removed"
+      fail: "Question has not been removed"
+    update:
+      success: "Question has been updated"
+      fail: "Question not been updated"
+    upload:
+      success: "Question has been uploaded"
+  registration:
+    create:
+      success: "Registration has been registered"
+      fail: "Registration has not been registered"
+      exam_date: "Invalid Exam Date"
+  user:
+    create:
+      success: "User has been created"
+      fail: "User has not been created"
+    update:
+      success: "User has been updated"
+      fail: "User not been updated"
+  student:
+    create:
+      success: "Student has been created"
+      fail: "Student not been created"
+    destroy:
+      success: "Student has been removed"
+      fail: "Student has not been removed"
+    update:
+      success: "Student has been updated"
+      fail: "Student not been updated"
+    upload:
+      success: "Students has been uploaded"
+      fail: "Students has not been uploaded"
+  faculty:
+    create:
+      success: "Faculty has been created"
+      fail: "Faculty not been created"
+    destroy:
+      success: "Faculty has been removed"
+      fail: "Faculty has not been removed"
+    update:
+      success: "Faculty has been updated"
+      fail: "Faculty not been updated"
+  course:
+    create:
+      success: "Course has been created"
+      fail: "Course not been created"
+    destroy:
+      success: "Course has been removed"
+      fail: "Course has not been removed"
+    update:
+      success: "Course has been updated"
+      fail: "Course not been updated"

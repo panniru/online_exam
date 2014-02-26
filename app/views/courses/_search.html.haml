@@ -1,0 +1,10 @@
+= form_tag courses_path, :method => 'get' , :class => "form-inline" do
+  .form-group.col-md-6
+    = autocomplete_field_tag :search_term,
+    '',
+    auto_search_autocomplete_course_name_path,
+    :placeholder => "Course Name", :class => 'form-control',
+    :id_element => "#search"
+    = hidden_field_tag :search, :id => "search"
+  = submit_tag "Search", :name => nil, :class => "btn-primary btn"
+  = link_to "Add Course", new_course_path, :class => "btn-primary btn"

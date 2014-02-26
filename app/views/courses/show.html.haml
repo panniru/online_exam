@@ -1,0 +1,6 @@
+.page-header
+  %h3
+    = @course.name
+    .pull-right
+      = link_to "Edit", edit_course_path(@course), :class => "btn btn-success"
+      = link_to "Delete", course_path(@course), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}

@@ -1,0 +1,8 @@
+- unless bread_crumbs.empty?
+  %ul.breadcrumb
+    - bread_crumbs.each do |item|
+      %li{:class => item.klass }
+        - if item.klass == 'active'
+          = item.item
+        - else
+          = link_to item.item, item.link

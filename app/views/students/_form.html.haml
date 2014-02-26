@@ -1,0 +1,34 @@
+= form_for @student, :html => { :class => "form-horizontal", :role => "form" } do |f|
+  = render "shared/error_messages", :object => f.object
+  .col-sm-8
+    .form-group
+      = f.label "Roll No", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :roll_number, :class => 'form-control'
+    .form-group
+      = f.label "Name", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :name, :class => 'form-control'
+    .form-group
+      = f.label "Date Of Birth", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :dob, :class => 'datepicker form-control'
+    .form-group
+      = f.label "Joining Date", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :joining_date, :class => 'datepicker form-control'
+    .form-group
+      = f.label :email, :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :email, :class => 'form-control'
+    .form-group
+      = f.label :course, :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.select :course_id, courses,{}, :class => 'form-control'
+    .form-group
+      = f.label :semister, :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :semister, :class => 'form-control'
+
+  .col-sm-8.pull-right
+    = f.submit "Create", :class => 'btn btn-primary'

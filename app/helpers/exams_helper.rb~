@@ -1,0 +1,37 @@
+module ExamsHelper
+
+  def course_action_bar(course)
+    buttons = []
+    buttons << edit_course(course)
+    buttons << delete_course(course)
+    buttons << question_btn_group(course)
+    content_tag(:div,raw(buttons.join(" ")))
+  end
+
+  def new_course
+    link_to "New Course", new_course_path, :class => "btn btn-primary"
+  end
+
+  def question_btn_group(course)
+    links = []
+    links << link_to "Add Question", new_course_question_path(course)
+    links << link_to "Upload Questions", upload_new_course_questions_path(course)
+    links << link_to "Show Question", course_questions_path(course), :class => "btn btn-primary"
+    links << descriptive_questions(course)
+    ApplicationHeper.btn_goups(links)
+  end
+
+  private
+  def edit_course(course)
+    link_to "Edit", edit_course_path(course), :class => "btn btn-success"
+  end
+
+  def delete_course(course)
+    link_to "Delete", course, :class => "btn btn-danger", :data => { :confirm => 'Are You Sure ?', :method => :delete }
+  end
+
+  def descriptive_questions(course)
+    link_to "Descriptive Questions", course_descriptive_questions_path(course)
+  end
+
+end

@@ -1,0 +1,45 @@
+%table.table.table-striped
+  %thead
+    %th Course
+    %th Subject
+    %th Semister
+    %th Exam
+    %th Total Questions
+  %tbody
+    %tr
+      %td= data.course.name
+      %td= data.subject
+      %td= data.semister
+      %td= data.duration
+      %td= data.no_of_questions
+
+.col-md-5
+  %table.table.table-bordered
+    %thead
+      %th Criteria
+      %th Description
+    %tbody
+      %tr.success
+        %td= data.pass_criteria_1
+        %td= data.pass_text_1
+      %tr.info
+        %td= data.pass_criteria_2
+        %td= data.pass_text_2
+      %tr.warning
+        %td= data.pass_criteria_3
+        %td= data.pass_text_3
+      %tr.danger
+        %td= data.pass_criteria_4
+        %td= data.pass_text_4
+.col-md-5
+  %table.table.table-bordered
+    %tbody
+      %tr.info
+        %td= "Negative Mark"
+        %td= data.negative_mark
+      %tr.info
+        %td= "Multiple Question"
+        %td= data.multiple_choice
+      %tr.warning
+        %td= "Fill in the blanks"
+        %td= data.fill_in_blanks

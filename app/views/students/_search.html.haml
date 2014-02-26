@@ -1,0 +1,10 @@
+= form_tag students_path, :method => 'get' , :class => "form-inline" do
+  .form-group.col-md-6
+    = autocomplete_field_tag :search_term,
+    '',
+    auto_search_autocomplete_student_roll_number_path,
+    :placeholder => "Student Roll No", :class => 'form-control',
+    :id_element => "#search"
+    = hidden_field_tag :search, :id => "search"
+  = submit_tag "Search", :name => nil, :class => "btn-primary btn"
+  = raw student_btn_group

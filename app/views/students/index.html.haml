@@ -1,0 +1,19 @@
+= render "search"
+
+%table.table.table-condensed
+  %thead
+    %th Roll No
+    %th Name
+    %th Course
+    %th Semister
+    %th email
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= link_to student.roll_number, student
+        %td= student.name
+        %td= student.course_name
+        %td= student.semister
+        %td= student.email
+
+= will_paginate @students, param_name: "page", previous_label: h("<"), next_label: h(">")

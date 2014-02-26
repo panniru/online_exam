@@ -1,0 +1,8 @@
+%ul.nav.nav-pills.nav-stacked
+  - navigation_list.each do |item|
+    - active_class = ''
+    - active_class = 'active' if item.is_active
+    %li{:class => active_class }
+      %a{ :href =>  item.link}
+        %i{ :class => item.icon }
+        = item.item

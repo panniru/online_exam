@@ -1,0 +1,6 @@
+.page-header
+  %h3
+    = link_to @exam.exam_name, @exam
+    .pull-right
+      = exam_action_bar(@exam)
+= render :partial => "exam", :locals => { :data => @exam }

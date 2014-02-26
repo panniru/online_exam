@@ -1,0 +1,71 @@
+= form_for @exam, :html => { :multipart => true, :class => "form-horizontal", :role => "form" } do |f|
+  = render "shared/error_messages", :object => f.object
+  .row
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label "Course", :class => 'col-sm-3 control-label'
+        .col-xs-8
+          = f.autocomplete_field :course,
+          auto_search_autocomplete_course_name_path,
+          :placeholder => "Course", :class => 'form-control',
+          :autofocus => true, :id_element => "#course_id"
+          = f.hidden_field :course_id, :id => "course_id"
+
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label "Subject", :class => 'col-sm-3 control-label'
+        .col-xs-8
+          = f.autocomplete_field :subject,
+          auto_search_autocomplete_exam_subject_path,
+          :placeholder => "Subject", :class => 'form-control'
+  .row
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label "Semister", :class => 'col-sm-3 control-label'
+        .col-sm-8
+          = f.select :semister, (1..6).map{|i| [i,i]}, {}, :class => 'form-control'
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label :exam_name, :class => 'col-sm-3 control-label'
+        .col-sm-8
+          = f.autocomplete_field :exam_name,
+          auto_search_autocomplete_exam_exam_name_path,
+          :placeholder => "Exam Name", :class => 'form-control'
+  .row
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label :duration, :class => 'col-sm-3 control-label'
+        .col-sm-8
+          .input-group
+            = f.text_field :duration, :class => 'form-control'
+            %span.input-group-addon Hrs
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label :no_of_questions, :class => 'col-sm-3 control-label'
+        .col-sm-8
+          = f.text_field :no_of_questions, :class => 'form-control'
+  .row
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label :fill_in_blanks, :class => 'col-sm-3 control-label'
+        .col-sm-8
+          = f.text_field :fill_in_blanks, :class => 'form-control'
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label :multiple_choice, :class => 'col-sm-3 control-label'
+        .col-sm-8
+          = f.text_field :multiple_choice, :class => 'form-control'
+
+  .row
+    .col-md-6.col-xs-6
+      .form-group
+        = f.label :negative_mark, :class => 'col-sm-3 control-label'
+        .col-sm-8
+          .input-group
+            = f.text_field :negative_mark, :class => 'form-control'
+            %span.input-group-addon %
+  .row
+    = render "criteria", :f => f
+  .row
+    .col-md-6.col-xs-6.pull-right
+      = f.submit "Create Course", :class => 'btn btn-primary'

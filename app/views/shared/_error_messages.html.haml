@@ -1,0 +1,4 @@
+%ul.nav
+  - object.errors.full_messages.each do |message|
+    %li.alert.alert-danger
+      = message

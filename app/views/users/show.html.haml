@@ -1,0 +1,10 @@
+.page-header
+  %h3
+    = @user.user_id
+    .pull-right
+      = link_to "Edit", edit_user_path(@user), :class => "btn btn-danger"
+
+%h2
+  %small= @user.email
+  %br
+  %small= @user.role.role

@@ -1,0 +1,21 @@
+.page-header
+  %h3
+    = @faculty.name
+    .pull-right
+      = link_to "Edit", edit_faculty_path(@faculty), :class => "btn btn-success"
+      = link_to "Delete", faculty_path(@faculty), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
+.col-md-5
+  %table.table.table-bordered.table-reponsive
+    %tbody
+      %tr
+        %td.active Name
+        %td= @faculty.name
+      %tr
+        %td.active Department
+        %td= @faculty.course_names
+      %tr
+        %td.active Semister
+        %td= @faculty.designation
+      %tr
+        %td.active Email
+        %td= @faculty.email

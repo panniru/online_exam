@@ -1,0 +1,24 @@
+.page-header
+  %h2
+    = link_to "Upload Students", "#"
+%p
+  A Csv or Exel can be uploaded. First row should have the column names
+= form_for @student_uploader, :url => upload_students_path, :multipart => true, :html => { :class => "form"} do |f|
+  = render "shared/error_messages", :object => f.object
+  .panel.panel-info
+    .panel-heading
+      %h5 Students
+    .panel-body
+      %strong Columns: &nbsp;
+      name, dob, joining_date, semister, email
+      %strong.pull-right
+        = link_to "Download Template", new_upload_students_path(:format => :xls)
+      .form-group
+        .col-sm-3
+          = f.label "Course", :class => 'control-label'
+        .col-sm-3
+          = f.select :course_id, courses,{}, :class => 'form-control'
+        .col-sm-3.col-sm-offset-3
+          = f.file_field :file
+    .col-sm-6
+      = f.submit "Upload", :class => "btn btn-primary pull-right"

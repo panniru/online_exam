@@ -1,0 +1,22 @@
+= render "search"
+-# .page-header
+-#   %h2
+-#     = link_to "Users", users_path
+-#     .pull-right
+-#       = link_to "Add User", new_user_path(@exam_center), :class => "btn btn-primary"
+
+%table.table.table-hover
+  %thead
+    %th User Id
+    %th Role
+    %th Email
+    - if can? [:update], User
+      %th Action
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= link_to user.user_id, user_path(user)
+        %td= user.role.role
+        %td= user.email
+        - if can? [:update], User
+          %td= link_to "Edit", edit_user_path(user), :class => "btn btn-danger"

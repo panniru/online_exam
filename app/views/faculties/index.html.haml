@@ -1,0 +1,17 @@
+= render "search"
+
+%table.table.table-condensed
+  %thead
+    %th Name
+    %th Department
+    %th Designation
+    %th email
+  %tbody
+    - @faculties.each do |faculty|
+      %tr
+        %td= link_to faculty.name, faculty
+        %td= faculty.course_names
+        %td= faculty.designation
+        %td= faculty.email
+
+= will_paginate @faculties, param_name: "page", previous_label: h("<"), next_label: h(">")
