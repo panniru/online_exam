@@ -66,6 +66,7 @@
             %span.input-group-addon %
   .row
     = render "criteria", :f => f
+    = f.hidden_field :faculty_id
   .row
     .col-md-6.col-xs-6.pull-right
       = f.submit "Create Course", :class => 'btn btn-primary'

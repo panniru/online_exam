@@ -3,6 +3,14 @@ class Role < ActiveRecord::Base
   has_many :users
   before_save :generate_role_code, :generate_description
 
+  def self.faculty_role
+    Role.find_by_role("faculty")
+  end
+
+  def self.student_role
+    Role.find_by_role("student")
+  end
+
   private
   def generate_role_code
     self.code = self.role.downcase.parameterize("_")

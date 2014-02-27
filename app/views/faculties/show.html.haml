@@ -18,4 +18,4 @@
         %td= @faculty.designation
       %tr
         %td.active Email
-        %td= @faculty.email
+        %td= @faculty.user.try(:email)

@@ -12,6 +12,6 @@
         %td= link_to faculty.name, faculty
         %td= faculty.course_names
         %td= faculty.designation
-        %td= faculty.email
+        %td= faculty.user.try(:email)
 
 = will_paginate @faculties, param_name: "page", previous_label: h("<"), next_label: h(">")

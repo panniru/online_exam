@@ -9,6 +9,9 @@
       = f.label "Name", :class => 'col-sm-2 control-label'
       .col-sm-8
         = f.text_field :name, :class => 'form-control'
+    = f.fields_for :user do |f|
+      = render "shared/sign_up", :f => f
+
     .form-group
       = f.label "Date Of Birth", :class => 'col-sm-2 control-label'
       .col-sm-8
@@ -17,10 +20,6 @@
       = f.label "Joining Date", :class => 'col-sm-2 control-label'
       .col-sm-8
         = f.text_field :joining_date, :class => 'datepicker form-control'
-    .form-group
-      = f.label :email, :class => 'col-sm-2 control-label'
-      .col-sm-8
-        = f.text_field :email, :class => 'form-control'
     .form-group
       = f.label :course, :class => 'col-sm-2 control-label'
       .col-sm-8

@@ -3,6 +3,9 @@ class Faculty < ActiveRecord::Base
   validates :name, :presence => true
   after_save :insert_faculty_course
 
+  has_one :user, :dependent => :destroy, :foreign_key => "resource_id"
+  accepts_nested_attributes_for :user
+
   attr_accessor :department_ids
   has_many :courses, :through => :faculty_courses
   has_many :faculty_courses

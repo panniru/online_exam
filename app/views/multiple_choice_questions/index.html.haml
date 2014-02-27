@@ -1,0 +1,5 @@
+= render "questions_header"
+
+= render "results"
+
+= will_paginate @questions, param_name: "page", previous_label: h("<"), next_label: h(">")

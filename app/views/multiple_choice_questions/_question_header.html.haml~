@@ -1,0 +1,8 @@
+.page-header
+  %h2
+    %small
+      = @question.description
+      .pull-right
+        = link_to "Edit", send("edit_course_#{@question.class.name.tableize.singularize}_path".to_sym, @exam, @question), :class => "btn btn-primary"
+        = link_to "Delete", send("course_#{@question.class.name.tableize.singularize}_path".to_sym, @exam, @question), :class => "btn btn-danger", :data => { :confirm => 'Are you sure?', :method => :delete }
+        = link_to "Add Question", send("new_course_#{@question.class.name.tableize.singularize}_path".to_sym, @exam), :class => "btn btn-success"

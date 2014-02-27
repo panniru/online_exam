@@ -8,7 +8,7 @@ class Ability
     if user.admin?
       can :manage, [User, Student, Faculty, Course]
     elsif user.faculty?
-      can :manage, [Exam, MultipleChoiceQuestion]
+      can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule]
     elsif user.student?
 
     end

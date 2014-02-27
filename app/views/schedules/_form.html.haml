@@ -1,0 +1,23 @@
+= form_for @schedule, :html => { :class => "form-horizontal", :role => "form" } do |f|
+  = render "shared/error_messages", :object => f.object
+  .col-sm-8
+    .form-group
+      = f.label :course, :class => 'col-sm-3 control-label'
+      .col-sm-6
+        = f.select :course_id, faculty_courses(current_user.resource_id),{}, :class => 'form-control', :rel => "course_change"
+    .form-group
+      = f.label :Exam, :class => 'col-sm-3 control-label'
+      .col-sm-6
+        = f.select :exam_id,[""],{}, :class => 'form-control', :id => "schedule-exam-list"
+    .form-group
+      = f.label :exam_date, :class => 'col-sm-3 control-label'
+      .col-sm-6
+        = f.text_field :exam_date, :class => 'datepicker form-control'
+    .form-group
+      = f.label :start_time, :class => 'col-sm-3 control-label'
+      .col-sm-6
+        .input-group
+          = f.text_field :start_time, :class => 'form-control'
+          %span.input-group-addon HH:MM(24Hrs)
+    .col-sm-3.col-sm-offset-3
+      = f.submit "Schedule", :class => 'btn btn-primary'

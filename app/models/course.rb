@@ -4,4 +4,6 @@ class Course < ActiveRecord::Base
   has_many :faculties, :through => :facultycourse
 
   scope :search, lambda { |id| where(:id => id)}
+
+
 end

@@ -1,0 +1,20 @@
+= form_for [@course, @question], :html => { :class => "form-horizontal", :role => "form" } do |f|
+  = render_errors(f.object)
+  .col-sm-8
+    .form-group
+      = f.label "Question", :class => 'col-sm-4 control-label'
+      .col-sm-8
+        = f.text_area :description, :class => 'form-control', :autofocus => true
+    .form-group
+      = f.label "Descriptive", :class => 'col-sm-4 control-label'
+      .col-sm-3
+        = f.check_box :is_descriptive, :class => 'form-control', :rel => "is-descriptive"
+    #question-options{:style => 'display:none'}
+      = render "question_options", :form => f
+    .form-group
+      = f.label "Answer", :class => 'col-sm-4 control-label'
+      .col-sm-8
+        = f.text_field :answer, :class => 'form-control'
+      .form-group
+    .col-sm-offset-6
+      = f.submit "Create", :class => 'btn btn-primary'

@@ -1,0 +1,16 @@
+.form-group
+  = f.label "User Id", :class => 'col-sm-2 control-label'
+  .col-sm-8
+    = f.text_field :user_id, :class => 'form-control'
+.form-group
+  = f.label :email, :class => 'col-sm-2 control-label'
+  .col-sm-8
+    = f.email_field :email, :class => 'form-control'
+.form-group
+  = f.label :password, :class => 'col-sm-2 control-label'
+  .col-sm-8
+    = f.password_field :password, :class => 'form-control'
+.form-group
+  = f.label :password_confirmation, :class => 'col-sm-2 control-label'
+  .col-sm-8
+    = f.password_field :password_confirmation, :class => 'form-control'

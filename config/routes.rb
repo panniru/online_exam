@@ -15,10 +15,13 @@ OnlineExam::Application.routes.draw do
 
   resources :exams do
     collection do
+      get "course_exams_json"
     end
     resources :descriptive_questions do
       collection do
         get 'xls_template_descriptive'
+        get 'upload_new'
+        post 'upload'
       end
     end
     resources :multiple_choice_questions do
@@ -29,6 +32,8 @@ OnlineExam::Application.routes.draw do
       end
     end
   end
+
+  resources :schedules
 
 
   get 'auto_search/autocomplete_user_user_id'

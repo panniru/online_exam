@@ -1,0 +1,22 @@
+= render "question_header"
+.col-md-5
+  %table.table.table-bordered.table-reponsive
+    %tbody
+      %tr
+        %td.active Option 1
+        %td= @question.option_1
+      %tr
+        %td.active Option 2
+        %td= @question.option_2
+      %tr
+        %td.active Option 3
+        %td= @question.option_3
+      %tr
+        %td.active Option 4
+        %td= @question.option_4
+.col-md-5
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %td.success Answer
+        %td= @question.answer

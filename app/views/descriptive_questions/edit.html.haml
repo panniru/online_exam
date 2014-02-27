@@ -1,0 +1,17 @@
+.page-header
+  %h2 Edit Question
+
+= form_for [@exam, @question], :html => { :class => "form-horizontal", :role => "form", :method => "put" } do |f|
+  = render "shared/error_messages", :object => f.object
+  .col-sm-8
+    .form-group
+      = f.label "Question", :class => 'col-sm-4 control-label'
+      .col-sm-8
+        = f.text_area :description, :class => 'form-control', :autofocus => true
+    .form-group
+      = f.label "Answer", :class => 'col-sm-4 control-label'
+      .col-sm-8
+        = f.text_field :answer, :class => 'form-control'
+    .form-group
+      .col-sm-offset-6
+        = f.submit "Update", :class => 'btn btn-primary'

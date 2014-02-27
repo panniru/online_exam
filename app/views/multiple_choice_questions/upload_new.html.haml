@@ -1,0 +1,22 @@
+.page-header
+  %h2
+    = link_to "Upload Multiple Choice: Questions", "#"
+%p
+  A Csv or Exel can be uploaded. First row should have the column names
+= form_for @upload_question, :url => upload_exam_multiple_choice_questions_path, :multipart => true, :html => { :class => "form"} do |f|
+  = render "shared/error_messages", :object => f.object
+  .panel.panel-info
+    .panel-heading
+      %h5 Multiple Choice Questions
+    .panel-body
+      %strong Columns: &nbsp;
+      description, option_1, option_2, option_3, option_4, answer
+      %strong.pull-right
+        = link_to "Download Template", xls_template_exam_multiple_choice_questions_path(@exam, :format => :xls)
+      .form-group
+        .col-sm-3.col-sm-offset-3
+          = f.file_field :file
+  .col-sm-8.offset-4
+    = f.hidden_field :exam_id
+    .col-sm-6
+      = f.submit "Upload", :class => "btn btn-primary pull-right"

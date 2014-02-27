@@ -2,6 +2,10 @@ class StudentsController < ApplicationController
   load_resource :only => [:show, :update, :edit, :destroy, :new, :new_upload]
   authorize_resource
 
+
+  def new
+    @student.build_user
+  end
   def index
     page = params[:page].present? ? params[:page] : 1
     if params[:search].present?
@@ -13,6 +17,7 @@ class StudentsController < ApplicationController
 
   def create
     @student = Student.new(student_params)
+    @student.user.role = Role.student_role
     if @student.save
       flash.now[:success] = I18n.t :success, :scope => [:student, :create]
       render "show"
@@ -63,7 +68,7 @@ class StudentsController < ApplicationController
   private
 
   def student_params
-    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semister, :roll_number)
+    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semister, :roll_number, :user_attributes => [:user_id, :email, :password, :password_confirmation])
   end
 
 end

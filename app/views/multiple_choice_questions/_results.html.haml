@@ -1,0 +1,11 @@
+%table.table.table-striped
+  %thead
+    %th Id
+    %th Description
+    %th Option 1
+    %th Option 2
+    %th Option 3
+    %th Option 4
+    %th Answer
+  %tbody
+    = render :partial => "question", :collection => @questions, :as => :data

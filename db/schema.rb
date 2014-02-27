@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140226131135) do
+ActiveRecord::Schema.define(version: 20140227091040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "courses", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "descriptive_questions", force: true do |t|
+    t.integer  "exam_id"
+    t.string   "description"
+    t.string   "answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -42,12 +50,12 @@ ActiveRecord::Schema.define(version: 20140226131135) do
     t.integer  "fill_in_blanks"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "faculty_id"
   end
 
   create_table "faculties", force: true do |t|
     t.string   "name"
     t.string   "designation"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,7 +68,7 @@ ActiveRecord::Schema.define(version: 20140226131135) do
   end
 
   create_table "multiple_choice_questions", force: true do |t|
-    t.integer  "course_id"
+    t.integer  "exam_id"
     t.string   "description"
     t.string   "option_1"
     t.string   "option_2"
@@ -79,13 +87,23 @@ ActiveRecord::Schema.define(version: 20140226131135) do
     t.datetime "updated_at"
   end
 
+  create_table "schedules", force: true do |t|
+    t.integer  "exam_id"
+    t.datetime "exam_date_time"
+    t.datetime "exam_end_date_time"
+    t.date     "schedule_date"
+    t.string   "access_password"
+    t.string   "schedule_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", force: true do |t|
     t.string   "name"
     t.date     "dob"
     t.date     "joining_date"
     t.integer  "course_id"
     t.integer  "semister"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "roll_number"
@@ -106,6 +124,7 @@ ActiveRecord::Schema.define(version: 20140226131135) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
+    t.integer  "resource_id"
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

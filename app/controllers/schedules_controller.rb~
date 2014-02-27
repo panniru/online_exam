@@ -1,0 +1,61 @@
+class SchedulesController < ApplicationController
+  load_resource :only => [:new, :edit, :show, :update]
+  authorize_resource
+  def index
+    page = params[:page].present? ? params[:page] : 1
+    @schedules = @schedule.descriptive_schedules.order("id DESC").paginate(:page => page)
+  end
+
+  def new
+    @schedule = @schedule.new_descriptive_schedule
+  end
+
+  def create
+    @schedule = @schedule.new(schedule_params)
+    if @schedule.save
+      flash.now[:success] = I18n.t :success, :scope => [:schedule, :create]
+      render "show"
+    else
+      flash.now[:fail] = I18n.t :fail, :scope => [:schedule, :create]
+      render "multiple_choice_schedules/new"
+    end
+  end
+
+  def update
+    if @schedule.update(update_params)
+      flash.now[:success] = I18n.t :success, :scope => [:schedule, :update]
+      render "show"
+    else
+      flash.now[:fail] = I18n.t :fail, :scope => [:schedule, :update]
+      render "multiple_choice_schedules/edit"
+    end
+  end
+
+  def xls_template_descriptive
+    respond_to do |format|
+      @schedule = DescriptiveQuestion.new
+      format.xls { send_data @schedule.xls_template(col_sep: "\t")}
+    end
+  end
+
+  def edit
+    render "edit"
+  end
+
+  def destroy
+    if @schedule.destroy
+      flash[:success] = I18n.t :success, :scope => [:schedule, :destroy]
+      redirect_to schedule_descriptive_schedules_path
+    else
+      flash.now[:fail] = I18n.t :fail, :scope => [:schedule, :destroy]
+      render "show"
+    end
+  end
+
+  private
+
+  def schedule_params
+    params.require(:schedule).permit(:course_id, :schedule_id, :schedule_date, :start_time)
+  end
+
+end

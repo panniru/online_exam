@@ -1,0 +1,16 @@
+= render "questions/questions_header"
+
+
+%table.table.table-striped
+  %thead
+    %th Id
+    %th Description
+    %th Answer
+  %tbody
+    - @descriptive_questions.each do |question|
+      %tr
+        %td= question.id
+        %td= link_to question.description, course_descriptive_question_path(question.course, question)
+        %td= question.answer
+
+= will_paginate @questions, param_name: "page", previous_label: h("<"), next_label: h(">")

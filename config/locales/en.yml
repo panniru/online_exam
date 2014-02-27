@@ -100,3 +100,13 @@ en:
     update:
       success: "Course has been updated"
       fail: "Course not been updated"
+  schedule:
+    create:
+      success: "Exam has been scheduled"
+      fail: "Exam has not been scheduled"
+    destroy:
+      success: "Exam Schedule has been removed"
+      fail: "Exam Schedule has not been removed"
+    update:
+      success: "Exam Schedule has been updated"
+      fail: "Exam Schedule has been updated"

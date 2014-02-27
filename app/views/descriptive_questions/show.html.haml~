@@ -1,0 +1,7 @@
+= render "questions/question_header.html.haml"
+.col-md-5
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %td.success Answer
+        %td= @descriptive_question.answer
