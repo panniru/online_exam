@@ -1,0 +1,16 @@
+.page-header
+  %h4 Instructions
+%ul.list-group
+  %li Instrunction1
+  %li Instrunction2
+  %li Instrunction3
+  %li Instrunction4
+  %li Instrunction5
+.row
+  .col-sm-6.col-sm-offset-4
+    %h3
+      %span.label.label-primary{"data-countdown".to_sym => "#{@schedule.count_exam_date}"}
+.row
+  .pull-right
+    = link_to "Take Exam", exam_schedule_path(@schedule), :class => "btn btn-danger", :id => "take_exam", :style => "display:none"
+= render "entry_validation"

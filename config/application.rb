@@ -25,8 +25,8 @@ module OnlineExam
     config.assets.version = '1.0'
 
     config.sass.preferred_syntax = :sass
-    config.time_zone = 'Central Time (US & Canada)'
-    config.active_record.default_timezone = 'Central Time (US & Canada)'
+    # config.time_zone = 'Central Time (US & Canada)'
+    # config.active_record.default_timezone = 'Central Time (US & Canada)'
 
     config.autoload_paths += %W(#{Rails.root}/lib/)
     config.autoload_paths += %W(#{Rails.root}/app/presenters)

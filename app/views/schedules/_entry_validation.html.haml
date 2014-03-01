@@ -1,0 +1,15 @@
+%div.modal.fade{ :id => "validationModel", :tabindex => "-1", :role => "dialog", "aria-labelledby".to_sym => "myModalLabel", "aria-hidden".to_sym => true, "data-backdrop" => 'static'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.modal-title Entry Validation
+      .modal-body
+        .form-group
+          = password_field_tag :password,"",:class => "col-sm-6 form-control", :placeholder => "Enter Password", :id => "entry-password"
+          = hidden_field_tag :registration_id, @schedule.id
+          #status
+      .modal-footer
+        = link_to "Enter", "#", :rel => "validation-submit", :class => "btn btn-primary"
+
+%script{ :type => "text/javascript"}
+  $('#validationModel').modal('show')

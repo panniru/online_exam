@@ -26,4 +26,13 @@ class User < ActiveRecord::Base
     self.role.role == 'student'
   end
 
+  def resource
+    if student?
+      Student.where(:id => resource_id).first
+    elsif faculty?
+      Faculty.where(:id => resource_id).first
+    else
+    end
+  end
+
 end

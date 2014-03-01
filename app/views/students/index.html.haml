@@ -14,6 +14,6 @@
         %td= student.name
         %td= student.course_name
         %td= student.semister
-        %td= student.user.email
+        %td= student.user.try(:email)
 
 = will_paginate @students, param_name: "page", previous_label: h("<"), next_label: h(">")

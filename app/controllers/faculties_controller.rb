@@ -13,6 +13,7 @@ class FacultiesController < ApplicationController
 
   def new
     @faculty.build_user
+    @faculty.user.role = Role.faculty_role
   end
 
   def show
@@ -21,7 +22,6 @@ class FacultiesController < ApplicationController
 
   def create
     @faculty = Faculty.new(faculty_params)
-    @faculty.user.role = Role.faculty_role
     if @faculty.save
       flash.now[:success] = I18n.t :success, :scope => [:faculty, :create]
       render "show"
@@ -54,7 +54,7 @@ class FacultiesController < ApplicationController
   private
 
   def faculty_params
-    fac_params = params.require(:faculty).permit(:name , :designation, :user_attributes => [:user_id, :email, :password, :password_confirmation], :department_ids => [])
+    fac_params = params.require(:faculty).permit(:name , :designation, :user_attributes => [:user_id, :email, :password, :password_confirmation, :role_id], :department_ids => [])
   end
 
 end

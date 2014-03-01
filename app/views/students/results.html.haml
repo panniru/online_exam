@@ -1,0 +1,20 @@
+.page-header
+  %h3
+    = "Result #{@student.name}"
+%table.table.table-hover
+  %thead
+    %th Exam
+    %th Semister
+    %th Total Marks
+    %th Secured Marks
+    %th Exam Date
+    %th Result
+  %tbody
+    - @results.each do |result|
+      %tr
+        %td= result.exam_name
+        %td= result.semister
+        %td= result.total_marks
+        %td= result.marks_secured
+        %td= result.exam_date
+        %td= result.exam_result

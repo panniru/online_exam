@@ -8,12 +8,12 @@
 
   %body
     = render "shared/header"
-    .container.panel.panel-default
-      #body
+    .container
+      .row.row-offcanvas
         - if user_signed_in?
           .col-md-2.sidebar-offcanvas
             = render "shared/navigation_list"
-          .col-md-10
+          .col-xs-12.col-sm-9
             %div
               %section
                 - flash.each do |key, value|
@@ -21,5 +21,8 @@
               = render "shared/bread_crumb"
             = yield
         - else
-          .col-md-12
+          .col-xs-12.col-sm-8
+            = render "shared/index_content"
+          .col-xs-6.col-sm-4.sidebar-offcanvas
+
             = yield

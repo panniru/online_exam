@@ -15,6 +15,7 @@ class Exam < ActiveRecord::Base
   has_many :descriptive_questions, :class_name => "DescriptiveQuestion", :dependent => :destroy
   has_many :registraions
   belongs_to :course
+  has_many :schedules
 
   scope :search_by_name, lambda{|name| where(:exam_name => name)}
   scope :belongs_to_faculty, lambda{|faculty| where(:faculty_id => faculty)}

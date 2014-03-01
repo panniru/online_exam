@@ -1,11 +1,12 @@
 class StudentsController < ApplicationController
-  load_resource :only => [:show, :update, :edit, :destroy, :new, :new_upload]
+  load_resource :only => [:show, :update, :edit, :destroy, :new, :new_upload, :results]
   authorize_resource
-
 
   def new
     @student.build_user
+    @student.user.role_id = Role.student_role.id
   end
+
   def index
     page = params[:page].present? ? params[:page] : 1
     if params[:search].present?
@@ -17,7 +18,6 @@ class StudentsController < ApplicationController
 
   def create
     @student = Student.new(student_params)
-    @student.user.role = Role.student_role
     if @student.save
       flash.now[:success] = I18n.t :success, :scope => [:student, :create]
       render "show"
@@ -58,17 +58,21 @@ class StudentsController < ApplicationController
   def upload
     @student_uploader = StudentUploader.new(params[:student_uploader])
     if @student_uploader.save
-      flash[:success] = I18n.t :success, :scope => [:studets, :upload]
+      flash[:success] = I18n.t :success, :scope => [:student, :upload]
       redirect_to students_path
     else
       render "new_upload"
     end
   end
 
+  def results
+    @results = ResultsDecorator.decorate_collection(@student.results)
+  end
+
   private
 
   def student_params
-    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semister, :roll_number, :user_attributes => [:user_id, :email, :password, :password_confirmation])
+    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semister, :roll_number, :user_attributes => [:user_id, :email, :password, :password_confirmation, :role_id])
   end
 
 end

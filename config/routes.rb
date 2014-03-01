@@ -8,6 +8,10 @@ OnlineExam::Application.routes.draw do
       get "new_upload"
       post "upload"
     end
+
+    member do
+      get "results"
+    end
   end
 
   resources :faculties
@@ -17,6 +21,7 @@ OnlineExam::Application.routes.draw do
     collection do
       get "course_exams_json"
     end
+
     resources :descriptive_questions do
       collection do
         get 'xls_template_descriptive'
@@ -33,7 +38,16 @@ OnlineExam::Application.routes.draw do
     end
   end
 
-  resources :schedules
+  resources :schedules do
+    member do
+      get "exam"
+      post "exam"
+      get "review_exam"
+      get "submit_exam"
+      get "exam_entrance"
+      post "validate_exam_entrance"
+    end
+  end
 
 
   get 'auto_search/autocomplete_user_user_id'

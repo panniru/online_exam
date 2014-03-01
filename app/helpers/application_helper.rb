@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def flash_alert_class(key)
-    key = 'danger' if key == :error
+    key = 'danger' if key == :error or key == :alert
     alert_class = ["alert"]
     if key.to_s == "fail"
       alert_class << "alert-danger"
@@ -53,10 +53,17 @@ module ApplicationHelper
     elsif current_user.faculty?
       list << home
       list << exams
+      list << schedules
       #list << survey
     elsif current_user.student?
+      list << schedules
+      list << results
     end
     list
+  end
+
+  def results
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-th-list', 'Results', results_student_path(current_user.try(:resource_id)), controller.action_name == "results")
   end
 
   def roles
@@ -90,6 +97,10 @@ module ApplicationHelper
 
   def user_management
     Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-user', 'Users', users_path, controller.controller_name == "users")
+  end
+
+  def schedules
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Schedule', schedules_path, controller.controller_name == "schedules")
   end
 
 end

@@ -1,0 +1,26 @@
+.page-header
+  %h4
+    = "#{@question.active_question_no}. #{@question.description}"
+    .pull-right
+      = link_to "Submit", "#", :class => "btn btn-primary", :rel => "question-nav-submit"
+= form_tag(exam_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
+  - if @question.descriptive?
+    = render "descriptive_answer"
+  - else
+    = render "mc_answer"
+  = hidden_field_tag :active_question_no, @question.active_question_no
+  = hidden_field_tag :action_for
+
+%ul.pager
+  %li.previous
+    %a{:rel => "question-nav-prev"}
+      %i.glyphicon.glyphicon-chevron-left
+      = "Prev"
+  %li.next
+    %a{:rel => "question-nav-next"}
+      = "Next"
+      %i.glyphicon.glyphicon-chevron-right
+
+.col-sm-2.pull-right
+  %h4
+    %span.label.label-danger{"data-end-countdown".to_sym => "#{@schedule.count_down_exam_end_time}", :id => "time-out-timer"}
