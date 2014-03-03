@@ -21,9 +21,9 @@
   .row
     .col-md-6.col-xs-6
       .form-group
-        = f.label "Semister", :class => 'col-sm-3 control-label'
+        = f.label "Semester", :class => 'col-sm-3 control-label'
         .col-sm-8
-          = f.select :semister, (1..6).map{|i| [i,i]}, {}, :class => 'form-control'
+          = f.select :semester, (1..6).map{|i| [i,i]}, {}, :class => 'form-control'
     .col-md-6.col-xs-6
       .form-group
         = f.label :exam_name, :class => 'col-sm-3 control-label'

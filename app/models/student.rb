@@ -2,7 +2,7 @@ class Student < ActiveRecord::Base
   validates :roll_number, :presence => true, :uniqueness => true
   validates :name, :presence => true
   validates :course_id, :presence => true
-  validates :semister, :presence => true
+  validates :semester, :presence => true
 
   belongs_to :course
   has_many :results

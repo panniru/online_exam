@@ -63,7 +63,7 @@ def seed_questions
 end
 
 def seed_user_details
-  Student.first_or_create!(name: "student", dob: "17/06/1989", joining_date: "06/06/2009", course_id: Course.first.id, semister: 1, roll_number: "088072010")
+  Student.first_or_create!(name: "student", dob: "17/06/1989", joining_date: "06/06/2009", course_id: Course.first.id, semester: 1, roll_number: "088072010")
 end
 
 def seed_user

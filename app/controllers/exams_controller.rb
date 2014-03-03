@@ -50,7 +50,7 @@ class ExamsController < ApplicationController
       format.json do
         data = [""]
         data = Exam.belongs_to_course(params[:course_id]).belongs_to_faculty(current_user.resource_id).map do |exam|
-          ["#{exam.exam_name}, #{exam.semister}, #{exam.subject}", exam.id]
+          ["#{exam.exam_name}, #{exam.semester}, #{exam.subject}", exam.id]
         end
         render :json => data
       end
@@ -60,7 +60,7 @@ class ExamsController < ApplicationController
   private
 
   def exam_params
-    params.require(:exam).permit(:subject, :semister, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id)
+    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id)
   end
 
 end

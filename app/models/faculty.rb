@@ -32,7 +32,7 @@ class Faculty < ActiveRecord::Base
       courses = self.courses.map{ |course| course.id}
     end
     courses.each do |id|
-      department_ids.delete(id)
+      department_ids.delete(id.to_s)
     end
     department_ids.delete("")
     department_ids.each do |dept|

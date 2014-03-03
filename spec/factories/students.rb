@@ -6,7 +6,7 @@ FactoryGirl.define do
     dob "2014-02-25"
     joining_date "2014-02-25"
     course_id 1
-    semister 1
+    semester 1
     email "MyString"
   end
 end

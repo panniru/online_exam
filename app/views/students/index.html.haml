@@ -5,7 +5,7 @@
     %th Roll No
     %th Name
     %th Course
-    %th Semister
+    %th Semester
     %th email
   %tbody
     - @students.each do |student|
@@ -13,7 +13,7 @@
         %td= link_to student.roll_number, student
         %td= student.name
         %td= student.course_name
-        %td= student.semister
+        %td= student.semester
         %td= student.user.try(:email)
 
 = will_paginate @students, param_name: "page", previous_label: h("<"), next_label: h(">")

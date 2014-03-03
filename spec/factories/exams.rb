@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :exam do
     subject "Chemistry"
-    semister 1
+    semester 1
     exam_name "MID TERM1"
     course_id 1
     duration 0.30

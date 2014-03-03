@@ -4,12 +4,12 @@
   %thead
     %th Exam Name
     %th Subject
-    %th semister
+    %th Semester
     %th course
   %tbody
     - @exams.each do |exam|
       %tr
         %td= link_to exam.exam_name, exam
         %td= exam.subject
-        %td= exam.semister
+        %td= exam.semester
         %td= exam.course.name

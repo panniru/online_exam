@@ -13,8 +13,8 @@ class SchedulesDecorator < Draper::Decorator
     exam.exam_name
   end
 
-  def semister
-    exam.semister
+  def semester
+    exam.semester
   end
 
   def duration

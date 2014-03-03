@@ -12,14 +12,14 @@ class Schedule < ActiveRecord::Base
 
   scope :belongs_to_faculty, lambda { |id| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.faculty_id = ?)', id )}
 
-  scope :belongs_to_student, lambda{|course_id, semister| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.course_id = ? and semister = ? )', course_id, semister)}
+  scope :belongs_to_student, lambda{|course_id, semester| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.course_id = ? and semester = ? )', course_id, semester)}
 
   def self.role_based_schedules(user)
     if user.faculty?
       Schedule.belongs_to_faculty(user.resource_id)
     elsif user.student?
       resource = user.resource
-      Schedule.belongs_to_student(resource.course_id, resource.semister)
+      Schedule.belongs_to_student(resource.course_id, resource.semester)
     end
   end
 

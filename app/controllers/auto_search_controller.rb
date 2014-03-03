@@ -5,7 +5,7 @@ class AutoSearchController < ApplicationController
 
   autocomplete :user, :user_info, :column_name => :user_id, :full => true
 
-  autocomplete :student, :roll_number, :full => true, :extra_data => [:name, :semister]
+  autocomplete :student, :roll_number, :full => true, :extra_data => [:name, :semester]
 
   autocomplete :faculty, :name, :full => true, :extra_data => [:designation]
 

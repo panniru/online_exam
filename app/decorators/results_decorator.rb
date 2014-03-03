@@ -9,8 +9,8 @@ class ResultsDecorator < Draper::Decorator
     schedule.exam_date_time.strftime("%d/%m/%Y")
   end
 
-  def semister
-    schedule.exam.semister
+  def semester
+    schedule.exam.semester
   end
 
 
