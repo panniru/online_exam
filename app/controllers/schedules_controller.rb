@@ -26,6 +26,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new(schedule_params)
     if @schedule.save
       flash.now[:success] = I18n.t :success, :scope => [:schedule, :create]
+      @schedule = SchedulesDecorator.decorate(@schedule)
       render "show"
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:schedule, :create]
@@ -36,6 +37,7 @@ class SchedulesController < ApplicationController
   def update
     if @schedule.update(schedule_params)
       flash.now[:success] = I18n.t :success, :scope => [:schedule, :update]
+      @schedule = SchedulesDecorator.decorate(@schedule)
       render "show"
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:schedule, :update]
@@ -49,6 +51,7 @@ class SchedulesController < ApplicationController
       redirect_to schedules_path
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:schedule, :destroy]
+      @schedule = SchedulesDecorator.decorate(@schedule)
       render "show"
     end
   end
@@ -101,7 +104,6 @@ class SchedulesController < ApplicationController
   def submit_exam
     active_questions = session[:current_user_exam_questions]
     if active_questions.present?
-      puts "==============>#{current_user}"
       validator = ExamValidator.new(active_questions, @schedule, current_user)
       result = validator.validate
       redirect_to @schedule
@@ -129,7 +131,7 @@ class SchedulesController < ApplicationController
   end
 
   def validate_exam_status
-    @status = true #false
+    @status = false
     system_time = session[:current_time]
     start_time = ActiveSupport::TimeZone[current_user.time_zone.name].parse(@schedule.exam_date_time.to_s)
     end_time = ActiveSupport::TimeZone[current_user.time_zone.name].parse(@schedule.exam_end_date_time.to_s)
