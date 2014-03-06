@@ -8,7 +8,8 @@
   %td= schedule.formatted_exam_date_time
   %td= schedule.end_time
   %td= schedule.schedule_date
-  %td= schedule.access_password
+  - if current_user.faculty?
+    %td= schedule.access_password
   - if pending
     %td
       %span.label.label-success{ "data-countdown".to_sym => "#{schedule.count_exam_date}"}

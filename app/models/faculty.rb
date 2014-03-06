@@ -3,7 +3,7 @@ class Faculty < ActiveRecord::Base
   validates :name, :presence => true
   after_save :insert_faculty_course
 
-  has_one :user, :dependent => :destroy, :foreign_key => "resource_id"
+  belongs_to :user
   accepts_nested_attributes_for :user
 
   attr_accessor :department_ids
@@ -22,7 +22,6 @@ class Faculty < ActiveRecord::Base
   def course_names
     courses.map{|c| c.name}.join(", ")
   end
-
 
   private
 

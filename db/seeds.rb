@@ -19,7 +19,8 @@ end
 
 def seed_faculty_details
   course = Course.first
-  Faculty.first_or_create!(name: "faculty", designation: "proffessor", department_ids: [course.id])
+  faculty = User.where(user_id: "faculty").first
+  Faculty.first_or_create!(name: "faculty", designation: "proffessor", department_ids: [course.id], user_id: faculty.id)
 end
 
 def seed_exam
@@ -63,7 +64,9 @@ def seed_questions
 end
 
 def seed_user_details
-  Student.first_or_create!(name: "student", dob: "17/06/1989", joining_date: "06/06/2009", course_id: Course.first.id, semester: 1, roll_number: "088072010")
+  student = User.where(user_id: "student").first
+
+  Student.first_or_create!(name: "student", dob: "17/06/1989", joining_date: "06/06/2009", course_id: Course.first.id, semester: 1, roll_number: "088072010", user_id: student.id )
 end
 
 def seed_user
@@ -82,13 +85,13 @@ def seed_user
   end
 
   unless student.present?
-    student =  User.new({:email => 'student@ostryalabs.com', :password => 'welcome', :user_id => 'student', :resource_id => Student.first.id})
+    student =  User.new({:email => 'student@ostryalabs.com', :password => 'welcome', :user_id => 'student'})
     student.role = stu_role
     student.save!
   end
 
   unless faculty.present?
-    faculty =  User.new({:email => 'faculty@ostryalabs.com', :password => 'welcome', :user_id => 'faculty', :resource_id => Faculty.first.id})
+    faculty =  User.new({:email => 'faculty@ostryalabs.com', :password => 'welcome', :user_id => 'faculty'})
     faculty.role = faculty_role
     faculty.save!
   end
@@ -96,12 +99,13 @@ end
 
 def seed_all
   seed_course
+  seed_user
   seed_faculty_details
   seed_exam
   seed_questions
   seed_user_details
   seed_role
-  seed_user
+
 end
 
 seed_all

@@ -4,7 +4,7 @@
     .form-group
       = f.label :course, :class => 'col-sm-3 control-label'
       .col-sm-6
-        = f.select :course_id, faculty_courses(current_user.resource_id),{}, :class => 'form-control', :rel => "course_change"
+        = f.select :course_id, faculty_courses(current_user.resource.id),{}, :class => 'form-control', :rel => "course_change"
     .form-group
       = f.label :Exam, :class => 'col-sm-3 control-label'
       .col-sm-6

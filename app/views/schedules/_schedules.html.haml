@@ -6,7 +6,8 @@
     %th Exam Date and Time
     %th Exam End Time
     %th Registration Date
-    %th access_password
+    - if current_user.faculty?
+      %th access_password
     - if pending
       %th Countdown
   %tbody

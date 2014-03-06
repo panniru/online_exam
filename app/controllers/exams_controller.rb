@@ -4,14 +4,14 @@ class ExamsController < ApplicationController
 
 
   def new
-    @exam.faculty_id = current_user.resource_id
+    @exam.faculty_id = current_user.resource.id
   end
   def index
     page = params[:page].present? ? params[:page] : 1
     if params[:search].present?
       @exams = Exam.search_by_name(params[:search]).paginate(:page => 1)
     else
-      @exams = Exam.belongs_to_faculty(current_user.resource_id).order("exam_name").paginate(:page => page)
+      @exams = Exam.belongs_to_faculty(current_user.resource.id).order("exam_name").paginate(:page => page)
     end
   end
 
@@ -49,7 +49,7 @@ class ExamsController < ApplicationController
     respond_to do |format|
       format.json do
         data = [""]
-        data = Exam.belongs_to_course(params[:course_id]).belongs_to_faculty(current_user.resource_id).map do |exam|
+        data = Exam.belongs_to_course(params[:course_id]).belongs_to_faculty(current_user.resource.id).map do |exam|
           ["#{exam.exam_name}, #{exam.semester}, #{exam.subject}", exam.id]
         end
         render :json => data

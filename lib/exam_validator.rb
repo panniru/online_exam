@@ -27,7 +27,7 @@ class ExamValidator
 
     result = analyse_result(marks_secured)
 
-    result = Result.new(:schedule_id => schedule.id, :total_marks => exam.no_of_questions, :marks_secured => marks_secured, :exam_result => result, :student_id => user.resource_id)
+    result = Result.new(:schedule_id => schedule.id, :total_marks => exam.no_of_questions, :marks_secured => marks_secured, :exam_result => result, :student_id => user.resource.id)
     result.save
     result
   end

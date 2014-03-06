@@ -23,6 +23,9 @@ gem 'draper'
 gem 'haml-rails'
 gem 'rails3-jquery-autocomplete'
 
+gem 'chartkick'
+gem 'groupdate'
+
 gem 'will_paginate', '~> 3.0'
 gem 'bootstrap-will_paginate'
 

@@ -6,6 +6,9 @@
 //= require jquery.countdown
 //= require jquery.cookie
 
+//= require jsapi
+//= require chartkick
+
 //= require bootstrap/tooltip
 //= require bootstrap/scrollspy
 //= require bootstrap/modal

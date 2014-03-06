@@ -7,10 +7,9 @@ class Student < ActiveRecord::Base
   belongs_to :course
   has_many :results
 
-  has_one :user, :dependent => :destroy, :foreign_key => "resource_id"
+  belongs_to :user
+
   accepts_nested_attributes_for :user
-
-
 
   scope :search, lambda { |id| where(:id => id)}
 

@@ -16,7 +16,7 @@ class Schedule < ActiveRecord::Base
 
   def self.role_based_schedules(user)
     if user.faculty?
-      Schedule.belongs_to_faculty(user.resource_id)
+      Schedule.belongs_to_faculty(user.resource.id)
     elsif user.student?
       resource = user.resource
       Schedule.belongs_to_student(resource.course_id, resource.semester)

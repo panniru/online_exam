@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
 
   belongs_to :role
 
+  has_one :student
+  has_one :faculty
+
   def self.search(id)
     self.where(:id => id)
   end
@@ -28,9 +31,9 @@ class User < ActiveRecord::Base
 
   def resource
     if student?
-      Student.where(:id => resource_id).first
+      student
     elsif faculty?
-      Faculty.where(:id => resource_id).first
+      faculty
     else
     end
   end

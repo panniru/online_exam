@@ -5,8 +5,9 @@
       = f.label "Name", :class => 'col-sm-2 control-label'
       .col-sm-8
         = f.text_field :name, :class => 'form-control'
-    = f.fields_for :user do |f|
-      = render "shared/sign_up", :f => f
+    - unless @faculty.id.present?
+      = f.fields_for :user do |f|
+        = render "shared/sign_up", :f => f
     .form-group
       = f.label "Department", :class => 'col-sm-2 control-label'
       .col-sm-8
@@ -18,4 +19,7 @@
 
 
   .col-sm-8.pull-right
-    = f.submit "Create", :class => 'btn btn-primary'
+    - unless @faculty.id.present?
+      = f.submit "Create", :class => 'btn btn-primary'
+    - else
+      = f.submit "Update", :class => 'btn btn-primary'

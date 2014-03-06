@@ -19,7 +19,10 @@ class StudentUploader
       student = Student.find_by_id(row["id"]) || Student.new
       student.attributes = row.to_hash.slice("name", "dob", "joining_date", "semester", "roll_number")
       student.course_id = course_id
+      user = student.build_user
+      user.attributes = {:email => row["email"], :user_id => student.roll_number.to_s, :password => "welcome", :password_confirmation => "welcome", :role_id => Role.student_role.id }
       student
+
     end
   end
 

@@ -32,7 +32,7 @@ class FacultiesController < ApplicationController
   end
 
   def update
-    if @faculty.update(faculty_params)
+    if @faculty.update(faculty_update_params)
       flash.now[:success] = I18n.t :success, :scope => [:faculty, :update]
       render "show"
     else
@@ -55,6 +55,10 @@ class FacultiesController < ApplicationController
 
   def faculty_params
     fac_params = params.require(:faculty).permit(:name , :designation, :user_attributes => [:user_id, :email, :password, :password_confirmation, :role_id], :department_ids => [])
+  end
+
+  def faculty_update_params
+    fac_params = params.require(:faculty).permit(:name , :designation, :department_ids => [])
   end
 
 end

@@ -48,8 +48,8 @@ module ApplicationHelper
       list << home
       list << course_details
       list << user_management
-      list << students
       list << faculty
+      list << students
     elsif current_user.faculty?
       list << home
       list << exams
@@ -63,7 +63,7 @@ module ApplicationHelper
   end
 
   def results
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-th-list', 'Results', results_student_path(current_user.try(:resource_id)), controller.action_name == "results")
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-th-list', 'Results', results_student_path(current_user.resource), controller.action_name == "results")
   end
 
   def roles

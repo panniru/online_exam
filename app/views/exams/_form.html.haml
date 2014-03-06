@@ -3,14 +3,9 @@
   .row
     .col-md-6.col-xs-6
       .form-group
-        = f.label "Course", :class => 'col-sm-3 control-label'
+        = f.label :course, :class => 'col-sm-3 control-label'
         .col-xs-8
-          = f.autocomplete_field :course,
-          auto_search_autocomplete_course_name_path,
-          :placeholder => "Course", :class => 'form-control',
-          :autofocus => true, :id_element => "#course_id"
-          = f.hidden_field :course_id, :id => "course_id"
-
+          = f.select :course_id, faculty_courses(current_user.resource.id),{}, :class => 'form-control'
     .col-md-6.col-xs-6
       .form-group
         = f.label "Subject", :class => 'col-sm-3 control-label'
@@ -69,4 +64,4 @@
     = f.hidden_field :faculty_id
   .row
     .col-md-6.col-xs-6.pull-right
-      = f.submit "Create Course", :class => 'btn btn-primary'
+      = f.submit "Create Exam", :class => 'btn btn-primary'

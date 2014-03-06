@@ -28,7 +28,7 @@ class StudentsController < ApplicationController
   end
 
   def update
-    if @student.update(student_params)
+    if @student.update(student_update_params)
       flash.now[:success] = I18n.t :success, :scope => [:student, :update]
       render "show"
     else
@@ -55,6 +55,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  def edit
+    unless @student.user.present?
+      @student.build_user
+      @student.user.role_id = Role.student_role.id
+    end
+  end
+
   def upload
     @student_uploader = StudentUploader.new(params[:student_uploader])
     if @student_uploader.save
@@ -73,6 +80,10 @@ class StudentsController < ApplicationController
 
   def student_params
     params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semester, :roll_number, :user_attributes => [:user_id, :email, :password, :password_confirmation, :role_id])
+  end
+
+  def student_update_params
+    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semester, :roll_number)
   end
 
 end
