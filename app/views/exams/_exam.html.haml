@@ -1,9 +1,9 @@
-%table.table.table-striped
+%table.table.table-condensed
   %thead
     %th Course
     %th Subject
     %th Semester
-    %th Exam
+    %th Exam Duration(Hrs)
     %th Total Questions
   %tbody
     %tr
@@ -35,11 +35,11 @@
   %table.table.table-bordered
     %tbody
       %tr.info
-        %td= "Negative Mark"
+        %th= "Negative Mark"
         %td= data.negative_mark
       %tr.info
-        %td= "Multiple Question"
+        %th= "Multiple Question"
         %td= data.multiple_choice
       %tr.warning
-        %td= "Fill in the blanks"
+        %th= "Fill in the blanks"
         %td= data.fill_in_blanks
