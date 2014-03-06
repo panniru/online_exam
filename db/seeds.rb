@@ -98,14 +98,13 @@ def seed_user
 end
 
 def seed_all
+  seed_role
   seed_course
   seed_user
   seed_faculty_details
   seed_exam
   seed_questions
   seed_user_details
-  seed_role
-
 end
 
 seed_all
