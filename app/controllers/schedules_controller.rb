@@ -11,7 +11,7 @@ class SchedulesController < ApplicationController
     @schedules.each do |schedule|
       @schedule = schedule
       validate_exam_status
-      if @status
+      if @status or session[:current_time] < formatted_start_time
         @active_schedules << schedule
       else
         @closed_schedules << schedule
@@ -133,11 +133,19 @@ class SchedulesController < ApplicationController
   def validate_exam_status
     @status = false
     system_time = session[:current_time]
-    start_time = ActiveSupport::TimeZone[current_user.time_zone.name].parse(@schedule.exam_date_time.to_s)
-    end_time = ActiveSupport::TimeZone[current_user.time_zone.name].parse(@schedule.exam_end_date_time.to_s)
+    start_time = formatted_start_time
+    end_time = formatted_end_time
     if ((start_time -  system_time)/60) <= 10.00 and system_time <= end_time
       @status = true
     end
+  end
+
+  def formatted_start_time
+    ActiveSupport::TimeZone[current_user.time_zone.name].parse(@schedule.exam_date_time.to_s)
+  end
+
+  def formatted_end_time
+    ActiveSupport::TimeZone[current_user.time_zone.name].parse(@schedule.exam_end_date_time.to_s)
   end
 
 end
