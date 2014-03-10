@@ -13,5 +13,13 @@ class ResultsDecorator < Draper::Decorator
     schedule.exam.semester
   end
 
+  def student_name
+    student.name
+  end
+
+  def student_roll_number
+    student.roll_number
+  end
+
 
 end

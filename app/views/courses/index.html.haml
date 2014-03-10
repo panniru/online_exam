@@ -1,11 +1,9 @@
 = render "search"
 
-%table.table.table-condensed
-  %thead
-    %th Name
-  %tbody
-    - @courses.each do |course|
-      %tr
-        %td= link_to course.name, course
+%table.table.table-stripped
+  - @courses.each do |course|
+    %tr{:id => "content-course-#{course.id}"}
+      %td.well1.panel-title
+        = link_to course.name, "#", :data => {:id => course.id}, :rel => "course-drill", :id => "course-#{course.id}"
 
-= will_paginate @students, param_name: "page", previous_label: h("<"), next_label: h(">")
+= will_paginate @courses, param_name: "page", previous_label: h("<"), next_label: h(">")

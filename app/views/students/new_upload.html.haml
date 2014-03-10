@@ -6,19 +6,19 @@
 = form_for @student_uploader, :url => upload_students_path, :multipart => true, :html => { :class => "form"} do |f|
   = render "shared/error_messages", :object => f.object
   .panel.panel-info
-    .panel-heading
-      %h5 Students
     .panel-body
-      %strong Columns: &nbsp;
-      name, dob, joining_date, semester, email
+      %strong Columns Required: &nbsp;
+      name, dob, joining_date, semester, email, roll_number
       %strong.pull-right
         = link_to "Download Template", new_upload_students_path(:format => :xls)
+      %br
+      %br
       .form-group
-        .col-sm-3
+        .col-sm-2
           = f.label "Course", :class => 'control-label'
         .col-sm-3
           = f.select :course_id, courses,{}, :class => 'form-control'
-        .col-sm-3.col-sm-offset-3
+        .col-sm-3
           = f.file_field :file
-    .col-sm-6
-      = f.submit "Upload", :class => "btn btn-primary pull-right"
+        .col-sm-2
+          = f.submit "Upload", :class => "btn btn-primary pull-right"

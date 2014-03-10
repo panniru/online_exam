@@ -15,7 +15,11 @@ OnlineExam::Application.routes.draw do
   end
 
   resources :faculties
-  resources :courses
+  resources :courses do
+    member do
+      get "heirarchy"
+    end
+  end
 
   resources :exams do
     collection do
@@ -38,6 +42,14 @@ OnlineExam::Application.routes.draw do
     end
   end
 
+  resources :reports do
+    collection do
+      get "exam_results"
+      get "drill_result"
+      get "print"
+    end
+  end
+
   resources :schedules do
     member do
       get "exam"
@@ -48,6 +60,7 @@ OnlineExam::Application.routes.draw do
       post "validate_exam_entrance"
     end
   end
+
 
 
   get 'auto_search/autocomplete_user_user_id'

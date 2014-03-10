@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-load_resource :only => [:show, :update, :edit, :destroy, :new]
+  load_resource :only => [:show, :update, :edit, :destroy, :new, :heirarchy]
   authorize_resource
 
   def index
@@ -39,6 +39,18 @@ load_resource :only => [:show, :update, :edit, :destroy, :new]
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:course, :destroy]
       render "show"
+    end
+  end
+
+  def heirarchy
+    respond_to do |format|
+      format.json do
+        exams = []
+        Exam.belongs_to_course(@course).find_each do |exam|
+          exams << Struct.new(:id, :subject, :semester, :exam_name).new(exam.id, exam.subject, exam.semester, exam.exam_name)
+        end
+        render :json => exams
+      end
     end
   end
 

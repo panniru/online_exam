@@ -6,10 +6,15 @@
   %td= schedule.course_name
   %td= schedule.semester
   %td= schedule.formatted_exam_date_time
-  %td= schedule.end_time
-  %td= schedule.schedule_date
   - if current_user.faculty?
+    %td= schedule.end_time
+    %td= schedule.schedule_date
     %td= schedule.access_password
   - if pending
     %td
       %span.label.label-success{ "data-countdown".to_sym => "#{schedule.count_exam_date}"}
+  - if current_user.student? and !pending
+    - result = Result.belongs_to_student_schedule(current_user.resource, schedule).first
+    %td= result.nil? ? "--" :result.total_marks
+    %td= result.nil? ? "--" :result.marks_secured
+    %td= result.nil? ? "--" : result.exam_result

@@ -34,8 +34,11 @@ class User < ActiveRecord::Base
       student
     elsif faculty?
       faculty
-    else
     end
+  end
+
+  def exams
+    resource.exams
   end
 
 end

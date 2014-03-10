@@ -48,13 +48,11 @@ module ApplicationHelper
       list << home
       list << course_details
       list << user_management
-      list << faculty
-      list << students
     elsif current_user.faculty?
       list << home
       list << exams
       list << schedules
-      #list << survey
+      list << reports
     elsif current_user.student?
       list << schedules
       list << results
@@ -75,7 +73,7 @@ module ApplicationHelper
   end
 
   def exams
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-home', 'Exams', exams_path, controller.controller_name == "exams")
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Exams', exams_path, controller.controller_name == "exams")
   end
 
   def home
@@ -100,7 +98,11 @@ module ApplicationHelper
   end
 
   def schedules
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Schedule', schedules_path, controller.controller_name == "schedules")
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-time', 'Schedule', schedules_path, controller.controller_name == "schedules")
+  end
+
+  def reports
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-file', 'Reports', reports_path, controller.controller_name == "reports")
   end
 
 end

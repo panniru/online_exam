@@ -9,6 +9,8 @@ class Faculty < ActiveRecord::Base
   attr_accessor :department_ids
   has_many :courses, :through => :faculty_courses
   has_many :faculty_courses
+  has_many :exams
+
   scope :search, lambda { |id| where(:id => id)}
 
   def selected_courses

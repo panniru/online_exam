@@ -1,5 +1,8 @@
 .navbar.navbar-inverse
   .navbar-inner.container
+    .navbar-header
+      %h2= link_to "Online Exam", "#", :class => "navbar-brand"
+
     -#= link_to image_tag "husys.gif", class: 'logo'
     %ul.nav.navbar-nav.pull-right
       - if user_signed_in?

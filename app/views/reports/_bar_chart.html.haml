@@ -1,0 +1,16 @@
+= column_chart(@bar_chart_data, :library => {:hAxis => {:title => "Students"}, :vAxis => {:title => "Marks"}} , :height => "400px")
+
+.col-sm-12
+  %table.table.table-bordered
+    %thead
+      %th Roll Number
+      %th Name
+      %th Total Marks
+      %th Marks Secured
+    %tbody
+      - @results.each do |result|
+        %tr
+          %td= link_to result.student_roll_number, student_path(result.student)
+          %td= result.student_name
+          %td= result.total_marks
+          %td= result.marks_secured

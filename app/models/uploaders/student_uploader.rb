@@ -27,7 +27,7 @@ class StudentUploader
   end
 
   def xls_template(options)
-    template_headers = ["roll_number", "name", "dob", "joining_date", "semester"]
+    template_headers = ["roll_number", "name", "dob", "joining_date", "semester", "email"]
     CSV.generate(options) do |csv|
       csv << template_headers
     end

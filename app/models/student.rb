@@ -17,4 +17,7 @@ class Student < ActiveRecord::Base
     course.name
   end
 
+  def exams
+  end
+
 end

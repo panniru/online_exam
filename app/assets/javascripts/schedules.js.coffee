@@ -21,7 +21,7 @@ $ ->
                 if data == true || data == 'true'
                     $('#validationModel').modal('toggle')
                 else
-                    $('#status').html("Invalid Password")
+                    $('#status').addClass("alert alert-danger").html("Invalid Password")
                 )
         )
 

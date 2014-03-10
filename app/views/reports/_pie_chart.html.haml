@@ -1,0 +1,12 @@
+= pie_chart(@results)
+
+.col-sm-12
+  %table.table.table-bordered
+    %thead
+      %th Group
+      %th Count
+    %tbody
+      - @results.each do |g,c|
+        %tr
+          %td= link_to g, drill_result_reports_path(:filter => g, :exam_id => @exam)
+          %td= c
