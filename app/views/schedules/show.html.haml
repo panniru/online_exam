@@ -22,6 +22,7 @@
       - if current_user.faculty?
         %td= @schedule.access_password
 
-.page-header
-  %h3 Result
-= render :partial => "result", :locals => {:result => Result.belongs_to_student_schedule(current_user.resource, @schedule).first}
+- unless current_user.faculty?
+  .page-header
+    %h3 Result
+  = render :partial => "result", :locals => {:result => Result.belongs_to_student_schedule(current_user.resource, @schedule).first}

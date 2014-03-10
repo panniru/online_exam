@@ -4,7 +4,13 @@ class ReportsController < ApplicationController
   before_action :current_user_exams
 
   def exam_results
-    @results = Result.group_by_exam_result.belongs_to_schedules(@exam.schedules.map(&:id)).count
+    schedules = @exam.schedules.map(&:id)
+    unless schedules.empty?
+      @results = Result.group_by_exam_result.belongs_to_schedules(schedules).count
+    else
+      flash.now[:fail] = I18n.t :fail, :scope => [:report, :results]
+      render "index"
+    end
   end
 
   def drill_result

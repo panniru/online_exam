@@ -2,7 +2,6 @@ class CourseHeirarchy
   @data = null
   @parent = null
   custructor:   ->
-    alert(data)
 
   arrangeGrid: (data, parent) ->
     $.each(data, (index, value) ->
@@ -12,22 +11,22 @@ class CourseHeirarchy
         exam = value.exam_name
         if $("#" + (parent+"-"+subject).replace(" ", "~")).length == 0
             #$("#content-"+parent).addClass('panel-body')
-            $("#content-"+parent).after(CourseHeirarchy.createElement("", subject, 2*2, parent))
+            $("#content-"+parent).after(CourseHeirarchy.createElement("", subject, 2*2, parent, parent))
 
         semParent = (parent+"-"+subject).replace(" ", "~")
         if $("#" +semParent+"-"+semester).length == 0
             #$("#content-"+semParent).addClass('panel-body')
-            $("#content-"+semParent).after(CourseHeirarchy.createElement("", semester, 3*3, semParent))
+            $("#"+semParent).after(CourseHeirarchy.createElement("", semester, 3*3, semParent, parent))
 
         examParent = (semParent+"-"+semester).replace(" ", "~")
         if $("#" + examParent+"-"+exam).length == 0
             #$("#content-"+examParent).addClass('panel-body')
-            $("#content-"+examParent).after(CourseHeirarchy.createElement(id, exam, 4*4, examParent))
+            $("#"+examParent).after(CourseHeirarchy.createElement(id, exam, 4*4, examParent, parent))
         )
     $("tr[rel = '"+parent+"']").show()
 
-  @createElement: (id, name, level, parent) ->
-    div = "<tr id = 'content-"+parent+"-"+name+"' rel = '"+parent+"' style = 'display: none'>"
+  @createElement: (id, name, level, parent, root) ->
+    div = "<tr id = '"+parent+"-"+name+"' rel = '"+parent+"' style = 'display: none' class = '"+root+"'>"
     div += "<td class = 'well1 panel-title'>"
     for i in [0..level]
         div += "&nbsp;"
@@ -40,10 +39,13 @@ class CourseHeirarchy
 $ ->
    $("a[rel='course-drill']").on('click', (event) ->
         parent = $(this).attr('id')
-        $.getJSON("/courses/"+$(this).attr('data-id')+"/heirarchy.json", (data)->
-           courseHir = new CourseHeirarchy()
-           courseHir.arrangeGrid(data, parent)
-        )
+        if $("tr[rel="+parent+"]").length == 0
+                $.getJSON("/courses/"+$(this).attr('data-id')+"/heirarchy.json", (data)->
+                   courseHir = new CourseHeirarchy()
+                   courseHir.arrangeGrid(data, parent)
+                )
+        else
+                $("."+parent+"").toggle "fast"
         )
    $('body').on('click', "a[rel='inner-table-grid']", (event)->
         $("tr[rel = '"+$(this).attr('id')+"']").toggle()

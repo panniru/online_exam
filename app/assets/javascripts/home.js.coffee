@@ -13,7 +13,3 @@ $ ->
    $('#collapseUser').on('hidden.bs.collapse', ->
         $("#Users").removeClass("active")
         )
-
-   $("#chart-1").on("chartkick:after", (e) ->
-          alert(e)
-        )

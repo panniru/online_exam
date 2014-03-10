@@ -110,3 +110,6 @@ en:
     update:
       success: "Exam Schedule has been updated"
       fail: "Exam Schedule has been updated"
+  report:
+    results:
+      fail: "No Results Found For This Exam"
