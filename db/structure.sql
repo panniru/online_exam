@@ -136,7 +136,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE courses (
@@ -167,7 +167,7 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 
 
 --
--- Name: descriptive_questions; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: descriptive_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE descriptive_questions (
@@ -200,7 +200,7 @@ ALTER SEQUENCE descriptive_questions_id_seq OWNED BY descriptive_questions.id;
 
 
 --
--- Name: exams; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: exams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exams (
@@ -248,7 +248,7 @@ ALTER SEQUENCE exams_id_seq OWNED BY exams.id;
 
 
 --
--- Name: faculties; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: faculties; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE faculties (
@@ -281,7 +281,7 @@ ALTER SEQUENCE faculties_id_seq OWNED BY faculties.id;
 
 
 --
--- Name: faculty_courses; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: faculty_courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE faculty_courses (
@@ -313,7 +313,7 @@ ALTER SEQUENCE faculty_courses_id_seq OWNED BY faculty_courses.id;
 
 
 --
--- Name: multiple_choice_questions; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: multiple_choice_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE multiple_choice_questions (
@@ -350,7 +350,7 @@ ALTER SEQUENCE multiple_choice_questions_id_seq OWNED BY multiple_choice_questio
 
 
 --
--- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE pg_search_documents (
@@ -383,7 +383,7 @@ ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
 
 
 --
--- Name: results; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: results; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE results (
@@ -418,7 +418,7 @@ ALTER SEQUENCE results_id_seq OWNED BY results.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE roles (
@@ -451,7 +451,7 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
--- Name: schedules; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: schedules; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schedules (
@@ -486,7 +486,7 @@ ALTER SEQUENCE schedules_id_seq OWNED BY schedules.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schema_migrations (
@@ -495,7 +495,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: sessions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE sessions (
@@ -527,7 +527,7 @@ ALTER SEQUENCE sessions_id_seq OWNED BY sessions.id;
 
 
 --
--- Name: students; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: students; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE students (
@@ -564,7 +564,7 @@ ALTER SEQUENCE students_id_seq OWNED BY students.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -698,7 +698,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY courses
@@ -706,7 +706,7 @@ ALTER TABLE ONLY courses
 
 
 --
--- Name: descriptive_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: descriptive_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY descriptive_questions
@@ -714,7 +714,7 @@ ALTER TABLE ONLY descriptive_questions
 
 
 --
--- Name: exams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: exams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exams
@@ -722,7 +722,7 @@ ALTER TABLE ONLY exams
 
 
 --
--- Name: faculties_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: faculties_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY faculties
@@ -730,7 +730,7 @@ ALTER TABLE ONLY faculties
 
 
 --
--- Name: faculty_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: faculty_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY faculty_courses
@@ -738,7 +738,7 @@ ALTER TABLE ONLY faculty_courses
 
 
 --
--- Name: multiple_choice_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: multiple_choice_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY multiple_choice_questions
@@ -746,7 +746,7 @@ ALTER TABLE ONLY multiple_choice_questions
 
 
 --
--- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -754,7 +754,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: results_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: results_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY results
@@ -762,7 +762,7 @@ ALTER TABLE ONLY results
 
 
 --
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY roles
@@ -770,7 +770,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: schedules_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: schedules_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY schedules
@@ -778,7 +778,7 @@ ALTER TABLE ONLY schedules
 
 
 --
--- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY sessions
@@ -786,7 +786,7 @@ ALTER TABLE ONLY sessions
 
 
 --
--- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY students
@@ -794,7 +794,7 @@ ALTER TABLE ONLY students
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -802,35 +802,35 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_sessions_on_session_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: index_sessions_on_session_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_sessions_on_session_id ON sessions USING btree (session_id);
 
 
 --
--- Name: index_sessions_on_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: index_sessions_on_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_sessions_on_updated_at ON sessions USING btree (updated_at);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: index_users_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: index_users_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_user_id ON users USING btree (user_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -893,5 +893,7 @@ INSERT INTO schema_migrations (version) VALUES ('20140306070512');
 INSERT INTO schema_migrations (version) VALUES ('20140311104046');
 
 INSERT INTO schema_migrations (version) VALUES ('20140311113319');
+
+INSERT INTO schema_migrations (version) VALUES ('20140311114635');
 
 INSERT INTO schema_migrations (version) VALUES ('20140311120404');
