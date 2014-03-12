@@ -1,5 +1,5 @@
 OnlineExam::Application.routes.draw do
-  devise_for :users, :controllers => { :sessions => 'sessions' }
+  devise_for :users, :controllers => { :sessions => 'sessions'}
 
   resources :users
 
@@ -61,7 +61,13 @@ OnlineExam::Application.routes.draw do
     end
   end
 
-
+  get "search/index" => "search#index"
+  get "staticpages/course_management" => "staticpages#course_management"
+  get "staticpages/exam_management" => "staticpages#exam_management"
+  get "staticpages/student_management" => "staticpages#student_management"
+  get "staticpages/online_exam" => "staticpages#online_exam"
+  get "staticpages/faculty_management" => "staticpages#faculty_management"
+  get "staticpages/reporting" => "staticpages#reporting"
 
   get 'auto_search/autocomplete_user_user_id'
   get 'auto_search/autocomplete_user_user_info'

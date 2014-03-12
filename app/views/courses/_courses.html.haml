@@ -1,0 +1,5 @@
+%table.table.table-stripped
+  - courses.each do |course|
+    %tr{:id => "content-course-#{course.id}"}
+      %td.well1.panel-title
+        = link_to course.name, "#", :data => {:id => course.id}, :rel => "course-drill", :id => "course-#{course.id}"

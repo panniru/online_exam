@@ -1,0 +1,15 @@
+%table.table.table-bordered
+  %thead
+    %th Roll No
+    %th Name
+    %th Course
+    %th Semester
+    %th email
+  %tbody
+    - students.each do |student|
+      %tr
+        %td= link_to student.roll_number, student
+        %td= student.name
+        %td= student.course_name
+        %td= student.semester
+        %td= student.user.try(:email)

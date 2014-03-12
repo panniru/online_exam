@@ -35,6 +35,8 @@ gem 'bootstrap-will_paginate'
 gem 'roo'
 gem 'virtus'
 
+gem 'pg_search'
+
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 group :test do

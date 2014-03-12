@@ -1,0 +1,18 @@
+.page-header
+  %h2
+    Change your password
+
+= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put , :class => "form-horizontal"}) do |f|
+  = devise_error_messages!
+  = f.hidden_field :reset_password_token
+  .col-sm-8
+    .form-group
+      = f.label :password, "New password", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.password_field :password, :autofocus => true, :class => 'form-control'
+  .col-sm-8
+    .form-group
+      = f.label :password_confirmation, "Confirm new password", :class => 'col-sm-2 control-label'
+    .col-sm-8
+      = f.password_field :password_confirmation, :class => 'form-control'
+  = f.submit "Change my password", :class => "btn btn-primary"

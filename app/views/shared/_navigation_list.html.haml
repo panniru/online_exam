@@ -11,6 +11,8 @@
               = link_to raw("<i class = '#{faculty.icon}'></i> #{faculty.item}"), faculty.link
             %li{:class => students.is_active ? "active" : ""}
               = link_to raw("<i class = '#{students.icon}'></i> #{students.item}"), students.link
+            %li{:class => admin.is_active ? "active" : ""}
+              = link_to raw("<i class = '#{admin.icon}'></i> #{admin.item}"), admin.link
       - else
         %a{ :href =>  item.link}
           %i{ :class => item.icon }

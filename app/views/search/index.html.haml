@@ -1,0 +1,23 @@
+- unless @grouped_results[:users].empty?
+  .page-header
+    %h4= link_to "Users", users_path
+  = render :partial => "users/users", :locals => {:users => @grouped_results[:users]}
+
+- unless @grouped_results[:students].empty?
+  .page-header
+    %h4= link_to "Students", students_path
+  = render :partial => "students/students", :locals => {:students => @grouped_results[:students]}
+- unless @grouped_results[:faculties].empty?
+  .page-header
+    %h4= link_to "Faculties", faculties_path
+  = render :partial => "faculties/faculties", :locals => {:faculties => @grouped_results[:faculties]}
+
+- unless @grouped_results[:courses].empty?
+  .page-header
+    %h4= link_to "Courses", courses_path
+  = render :partial => "courses/courses", :locals => {:courses => @grouped_results[:courses]}
+
+- unless @grouped_results[:exams].empty?
+  .page-header
+    %h4= link_to "Exams", exams_path
+  = render :partial => "exams/results", :locals => {:exams => @grouped_results[:exams]}

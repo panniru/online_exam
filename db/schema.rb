@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306070512) do
+ActiveRecord::Schema.define(version: 20140311114635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "courses", force: true do |t|
     t.string   "name"
@@ -76,6 +77,14 @@ ActiveRecord::Schema.define(version: 20140306070512) do
     t.string   "option_3"
     t.string   "option_4"
     t.string   "answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pg_search_documents", force: true do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

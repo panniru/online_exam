@@ -1,10 +1,10 @@
-= form_for @user, :html => { :class => "form-horizontal", :role => "form" } do |f|
+= form_for @user, :html => { :class => "form-horizontal", :role => "form" , :method => method} do |f|
   = render "shared/error_messages", :object => f.object
   .col-sm-8
     .form-group
       = f.label "User ID", :class => 'col-sm-2 control-label'
       .col-sm-8
-        = f.text_field :user_id, :class => 'form-control'
+        = f.text_field :user_id, :class => 'form-control', :readonly => (method == "put")
     .form-group
       = f.label :password, :class => 'col-sm-2 control-label'
       .col-sm-8
@@ -13,10 +13,11 @@
       = f.label :password_confirmation, :class => 'col-sm-2 control-label'
       .col-sm-8
         = f.password_field :password_confirmation, :class => 'form-control'
-    .form-group
-      = f.label :role, :class => 'col-sm-2 control-label'
-      .col-sm-8
-        = f.select :role_id, roles, {}, :class => 'form-control'
+    - unless method == "put"
+      .form-group
+        = f.label :role, :class => 'col-sm-2 control-label'
+        .col-sm-8
+          = f.select :role_id, roles, {}, :class => 'form-control'
     .form-group
       = f.label :email, :class => 'col-sm-2 control-label'
       .col-sm-8

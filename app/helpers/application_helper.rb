@@ -65,7 +65,7 @@ module ApplicationHelper
   end
 
   def roles
-    Role.all.map{|role| [role.role, role.id]}
+    Role.where(:role => 'admin').map{|role| [role.role, role.id]}
   end
 
   def courses
@@ -87,6 +87,10 @@ module ApplicationHelper
 
   def students
     Struct.new(:icon, :item, :link, :is_active ).new('glyphicon glyphicon-certificate', 'Students', students_path, controller.controller_name == "students")
+  end
+
+  def admin
+    Struct.new(:icon, :item, :link, :is_active ).new('glyphicon glyphicon-tower', 'Admins', users_path, controller.controller_name == "users")
   end
 
   def faculty

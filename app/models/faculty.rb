@@ -1,4 +1,6 @@
 class Faculty < ActiveRecord::Base
+  include PgSearch
+  multisearchable :against => [:name, :designation]
 
   validates :name, :presence => true
   after_save :insert_faculty_course

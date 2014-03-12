@@ -1,13 +1,15 @@
 .navbar.navbar-inverse
   .navbar-inner.container
-    .navbar-header
-      %h2= link_to "Online Exam", "#", :class => "navbar-brand"
-
-    -#= link_to image_tag "husys.gif", class: 'logo'
-    %ul.nav.navbar-nav.pull-right
+    .col-sm-8
+      .navbar-header
+        .navbar-brand= link_to "Online Exam", "#", :class => "navbar-brand"
+    .col-sm-4.sign-in-padding
       - if user_signed_in?
-        %li.dropdown
-          = link_to raw("<i class = 'glyphicon glyphicon-user'></i> &nbsp;&nbsp;#{current_user.user_id} <b class='caret'></b>"), "#", "data-toggle" => "dropdown", :class => 'dropdown-toggle'
-          %ul.dropdown-menu
-            %li
-              = link_to "Sign Out", destroy_user_session_path, :data => {:method => :delete}
+        = render "shared/global_search"
+        %ul.nav.navbar-nav.navbar-right
+          %li.dropdown
+            = link_to raw("<i class = 'glyphicon glyphicon-user'></i> &nbsp;&nbsp;#{current_user.user_id} <b class='caret'></b>"), "#", "data-toggle" => "dropdown", :class => 'dropdown-toggle'
+            %ul.dropdown-menu
+              %li
+                = link_to "Sign Out", destroy_user_session_path, :data => {:method => :delete}
+                = link_to "Change Password", edit_user_path(current_user)

@@ -1,4 +1,4 @@
 .page-header
   %h3 Edit User
 
-= render "form"
+= render :partial => "form", :locals => {:method => "put"}

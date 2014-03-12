@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     if params[:search].present?
       @users = User.search(params[:search])
     else
-      @users = User.all
+      @users = User.admins
     end
   end
 
@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    puts "=================>create"
     @user = User.new(user_params)
     if @user.save
       flash.now[:success] = I18n.t :success, :scope => [:user, :create]

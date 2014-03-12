@@ -1,4 +1,7 @@
 class Student < ActiveRecord::Base
+  include PgSearch
+  multisearchable :against => [:name, :roll_number]
+
   validates :roll_number, :presence => true, :uniqueness => true
   validates :name, :presence => true
   validates :course_id, :presence => true

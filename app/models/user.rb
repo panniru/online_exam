@@ -1,14 +1,21 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :timeoutable,
+  # :confirmable, :lockable, :timeoutable and :omniauthable, :registerable
+  devise :database_authenticatable, :timeoutable,
   :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:user_id]
+  include PgSearch
 
   validates :user_id, :presence => true, :uniqueness => true
   validates :role_id, :presence => true
   attr_accessor :time_zone
 
+  multisearchable :against => [:user_id, :email]
+
+
+
   belongs_to :role
+
+  scope :admins, lambda{ where(:role_id => Role.find_by_role("admin"))}
 
   has_one :student
   has_one :faculty

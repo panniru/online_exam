@@ -1,4 +1,4 @@
-%table.table.table-condensed
+%table.table.table-bordered
   %thead
     %th Course
     %th Subject
@@ -23,20 +23,23 @@
         %td= data.pass_criteria_1
         %td= data.pass_text_1
       %tr.info
-        %td= data.pass_criteria_2
-        %td= data.pass_text_2
+        %td= data.pass_criteria_2.present? ? data.pass_criteria_2 : "--"
+        %td= data.pass_text_2.present? ? data.pass_text_2 : "--"
       %tr.warning
-        %td= data.pass_criteria_3
-        %td= data.pass_text_3
+        %td= data.pass_criteria_3.present? ? data.pass_criteria_3 : "--"
+        %td= data.pass_text_3.present? ? data.pass_text_3 : "--"
       %tr.danger
-        %td= data.pass_criteria_4
-        %td= data.pass_text_4
-.col-md-5
+        %td= data.pass_criteria_4.present? ? data.pass_criteria_4 : "--"
+        %td= data.pass_text_4.present? ? data.pass_text_4 : "--"
+.col-md-5.pull-right
   %table.table.table-bordered
     %tbody
       %tr.info
         %th= "Negative Mark"
         %td= data.negative_mark
+  %br
+  %table.table.table-bordered
+    %tbody
       %tr.info
         %th= "Multiple Question"
         %td= data.multiple_choice

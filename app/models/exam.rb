@@ -1,4 +1,6 @@
 class Exam < ActiveRecord::Base
+  include PgSearch
+  multisearchable :against => [:subject, :exam_name]
 
   validates :course_id, :presence => true
   validates :subject, :presence => true

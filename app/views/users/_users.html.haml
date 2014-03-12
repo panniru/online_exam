@@ -1,0 +1,11 @@
+%table.table.table-bordered.table-hover
+  %thead
+    %th User Id
+    %th Role
+    %th Email
+  %tbody
+    - users.each do |user|
+      %tr
+        %td= link_to user.user_id, user_path(user)
+        %td= user.role.role
+        %td= user.email

@@ -1,0 +1,26 @@
+.row
+  .col-6.col-sm-6.col-lg-4
+    %h3 Course Management
+    %p You can create a course. Define exams of any course.
+    = link_to "View Details >>", staticpages_course_management_path, :class => "btn btn-default", :rel => "view-details", :remote => true
+  .col-6.col-sm-6.col-lg-4
+    %h3 Exam Scheduling
+    %p Faculty can schedule an exam. Upload or Add  questions(Fill in the blanks/multiple choices).
+    = link_to "View Details >>", staticpages_exam_management_path, :class => "btn btn-default", :remote => true
+  .col-6.col-sm-6.col-lg-4
+    %h3 Online Exam
+    %p Student can take an Exam online with 'Time Validation'. Validates exam results instantly. Results are persisted for future concerns.
+    = link_to "View Details >>", staticpages_online_exam_path, :class => "btn btn-default", :remote => true
+.row
+  .col-6.col-sm-6.col-lg-4
+    %h3 Student Management
+    %p Upload/Add students into different courses.
+    = link_to "View Details >>", staticpages_student_management_path, :class => "btn btn-default", :remote => true
+  .col-6.col-sm-6.col-lg-4
+    %h3 Faculty/Admin Management
+    %p Add faculty/admins into different courses.
+    = link_to "View Details >>", staticpages_faculty_management_path, :class => "btn btn-default", :remote => true
+  .col-6.col-sm-6.col-lg-4
+    %h3 Reporting
+    %p Generates reports based on the results of students
+    = link_to "View Details >>", staticpages_reporting_path, :class => "btn btn-default", :remote => true

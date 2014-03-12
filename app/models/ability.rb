@@ -15,8 +15,11 @@ class Ability
       can :manage, [User, Student, Faculty, Course]
     elsif user.faculty?
       can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule]
+      can :read, [Course]
+      can :update, [User]
     elsif user.student?
       can :read, [Schedule, Student]
+      can :update, [User]
     end
   end
 end

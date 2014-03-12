@@ -1,27 +1,3 @@
 = link_to image_tag "toy-1.png", :width => "600px", :height => "300px", :class =>"img-rounded"
-.row
-  .col-6.col-sm-6.col-lg-4
-    %h3 Course Management
-    %p You can create a course. Define exams of any course.
-    = link_to "View Details >>", "#", :class => "btn btn-default"
-  .col-6.col-sm-6.col-lg-4
-    %h3 Exam Scheduling
-    %p Faculty can schedule an exam. Upload or Add  questions(Fill in the blanks/multiple choices).
-    = link_to "View Details >>", "#", :class => "btn btn-default"
-  .col-6.col-sm-6.col-lg-4
-    %h3 Online Exam
-    %p Student can take an Exam online with 'Time Validation'. Validates exam results instantly. Results are persisted for future concerns.
-    = link_to "View Details >>", "#", :class => "btn btn-default"
-.row
-  .col-6.col-sm-6.col-lg-4
-    %h3 Student Management
-    %p Upload/Add students into different courses.
-    = link_to "View Details >>", "#", :class => "btn btn-default"
-  .col-6.col-sm-6.col-lg-4
-    %h3 Faculty Management
-    %p Add faculties into different courses.
-    = link_to "View Details >>", "#", :class => "btn btn-default"
-  .col-6.col-sm-6.col-lg-4
-    %h3 User Management
-    %p Manage user privilages. Edit/Delete an user
-    = link_to "View Details >>", "#", :class => "btn btn-default"
+#home-body
+  = render "shared/home_description"

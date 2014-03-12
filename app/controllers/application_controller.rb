@@ -3,9 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate_user!, :unless => :devise_controller?
+  before_action :authenticate_user!, :unless => "StaticpagesController"
   before_action :store_location
   check_authorization :unless => :devise_controller?
   before_action :set_time_zone, :unless => :devise_controller?
+  before_action :set_time_zone, :unless => "StaticpagesController"
+  before_filter :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
@@ -23,6 +26,14 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     session[:previous_url] || root_path
   end
+
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:role_id, :email, :password, :password_confirmation, :user_id)}
+  end
+
 
   private
   def after_sign_in_path_for(resource)

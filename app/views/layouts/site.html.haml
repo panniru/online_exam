@@ -1,0 +1,6 @@
+- content_for(:home_content) do
+  = render "shared/index_content"
+- content_for(:sign_in) do
+  = render :file => "sessions/new"
+
+= render :file => 'layouts/application'
