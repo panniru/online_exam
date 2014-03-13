@@ -13,3 +13,5 @@ $ ->
    $('#collapseUser').on('hidden.bs.collapse', ->
         $("#Users").removeClass("active")
         )
+   dt = new Date($.now())
+   $('#application-timer').html(dt.getDate()+"/"+dt.getMonth()+"/"+dt.getFullYear()+" "+dt.getHours()+":"+dt.getMinutes())

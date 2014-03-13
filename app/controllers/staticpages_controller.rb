@@ -1,5 +1,4 @@
-class StaticpagesController < ApplicationController
-  skip_authorization_check
+class StaticpagesController < ActionController::Base
 
   def course_management
     format_to_js

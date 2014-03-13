@@ -1,3 +1,4 @@
+WillPaginate.per_page = 15
 class Student < ActiveRecord::Base
   include PgSearch
   multisearchable :against => [:name, :roll_number]

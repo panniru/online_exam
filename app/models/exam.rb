@@ -1,3 +1,4 @@
+WillPaginate.per_page = 15
 class Exam < ActiveRecord::Base
   include PgSearch
   multisearchable :against => [:subject, :exam_name]

@@ -3,7 +3,7 @@ class AutoSearchController < ApplicationController
 
   autocomplete :user, :user_id, :full => true, :scopes => [:exam_ceter_roles]
 
-  autocomplete :user, :user_info, :column_name => :user_id, :full => true
+  autocomplete :user, :user_info, :column_name => :user_id, :full => true, :scopes => [:admins]
 
   autocomplete :student, :roll_number, :full => true, :extra_data => [:name, :semester]
 

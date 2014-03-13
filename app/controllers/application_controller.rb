@@ -3,11 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate_user!, :unless => :devise_controller?
-  #before_action :authenticate_user!, :unless => "StaticpagesController"
   before_action :store_location
   check_authorization :unless => :devise_controller?
   before_action :set_time_zone, :unless => :devise_controller?
-  before_action :set_time_zone, :unless => "StaticpagesController"
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message

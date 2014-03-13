@@ -38,6 +38,7 @@ class CourseHeirarchy
 
 $ ->
    $("a[rel='course-drill']").on('click', (event) ->
+        event.preventDefault()
         parent = $(this).attr('id')
         if $("tr[rel="+parent+"]").length == 0
                 $.getJSON("/courses/"+$(this).attr('data-id')+"/heirarchy.json", (data)->

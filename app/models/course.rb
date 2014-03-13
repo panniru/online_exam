@@ -1,3 +1,4 @@
+WillPaginate.per_page = 15
 class Course < ActiveRecord::Base
   include PgSearch
   validates :name, :presence => true

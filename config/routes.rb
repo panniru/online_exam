@@ -1,5 +1,8 @@
 OnlineExam::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => 'sessions'}
+  # devise_scope :user do
+  #   root to: "sessions#new"
+  # end
 
   resources :users
 
@@ -78,6 +81,5 @@ OnlineExam::Application.routes.draw do
   get 'auto_search/autocomplete_exam_exam_name'
 
   root to: "home#index"
-
 
 end

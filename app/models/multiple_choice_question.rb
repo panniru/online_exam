@@ -1,4 +1,4 @@
-WillPaginate.per_page = 10
+WillPaginate.per_page = 15
 class MultipleChoiceQuestion < ActiveRecord::Base
   validates :description, :presence => true
   validates :option_1, :presence => true
