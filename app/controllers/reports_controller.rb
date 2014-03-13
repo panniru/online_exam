@@ -1,9 +1,9 @@
 class ReportsController < ApplicationController
   skip_authorization_check
-  before_action :load_exam, :only => [:exam_results, :drill_result, :print]
+  before_action :load_exam, :only => [:exam_results, :drill_result, :print, :grouped_results]
   before_action :current_user_exams
 
-  def exam_results
+  def grouped_results
     schedules = @exam.schedules.map(&:id)
     unless schedules.empty?
       @results = Result.group_by_exam_result.belongs_to_schedules(schedules).count

@@ -37,5 +37,4 @@ class SchedulesDecorator < Draper::Decorator
     "#{exam_end_date_time.strftime("%Y/%m/%d %H:%M")}"
   end
 
-
 end

@@ -25,4 +25,4 @@
 - unless current_user.faculty?
   .page-header
     %h3 Result
-  = render :partial => "result", :locals => {:result => Result.belongs_to_student_schedule(current_user.resource, @schedule).first}
+  = render :partial => "result", :locals => {:result => ResultsDecorator.decorate(Result.belongs_to_student_schedule(current_user.resource, @schedule).first)}

@@ -1,0 +1,10 @@
+= form_tag exam_results_results_path, :method => 'get' , :class => "form-inline", :id => "exam_results" do
+  .col-sm-9
+    .col-sm-4
+      .form-group
+        = label_tag :exam, "Exam",:class => 'col-sm-3 control-label'
+        .col-sm-3
+          = select_tag :exam_id, options_from_collection_for_select(@user_exams, "id", "exam_name"), :class => 'form-control'
+    .col-sm-5
+      = submit_tag "Get Results", :name => nil, :class => "btn-primary btn"
+      = link_to "Print Results", "#", :class => "btn-primary btn", :rel => "print-report"

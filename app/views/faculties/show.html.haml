@@ -4,18 +4,15 @@
     .pull-right
       = link_to "Edit", edit_faculty_path(@faculty), :class => "btn btn-success"
       = link_to "Delete", faculty_path(@faculty), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
-.col-md-5
+.col-md-12
   %table.table.table-bordered.table-reponsive
+    %thead
+      %th Name
+      %th Department
+      %th Designation
+      %th Email
     %tbody
-      %tr
-        %td.active Name
-        %td= @faculty.name
-      %tr
-        %td.active Department
-        %td= @faculty.course_names
-      %tr
-        %td.active Semester
-        %td= @faculty.designation
-      %tr
-        %td.active Email
-        %td= @faculty.user.try(:email)
+      %td= @faculty.name
+      %td= @faculty.course_names
+      %td= @faculty.designation
+      %td= @faculty.user.try(:email)

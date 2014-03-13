@@ -4,18 +4,18 @@
     .pull-right
       = link_to "Edit", edit_student_path(@student), :class => "btn btn-success"
       = link_to "Delete", student_path(@student), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
-.col-md-5
+.col-md-12
   %table.table.table-bordered
+    %thead
+      %th Roll Number
+      %th Name
+      %th Course
+      %th Semester
+      %th Email
     %tbody
       %tr
-        %td.active Name
+        %td= @student.roll_number
         %td= @student.name
-      %tr
-        %td.active Course
         %td= @student.course_name
-      %tr
-        %td.active Semester
         %td= @student.semester
-      %tr
-        %td.active Email
         %td= @student.user.try(:email)

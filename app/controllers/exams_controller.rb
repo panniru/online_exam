@@ -6,6 +6,7 @@ class ExamsController < ApplicationController
   def new
     @exam.faculty_id = current_user.resource.id
   end
+
   def index
     page = params[:page].present? ? params[:page] : 1
     if params[:search].present?

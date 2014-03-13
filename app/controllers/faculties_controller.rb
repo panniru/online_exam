@@ -33,6 +33,7 @@ class FacultiesController < ApplicationController
 
   def update
     if @faculty.update(faculty_update_params)
+      @faculty.reload
       flash.now[:success] = I18n.t :success, :scope => [:faculty, :update]
       render "show"
     else

@@ -1,5 +1,4 @@
-class ResultsDecorator < Draper::Decorator
-  delegate_all
+class ResultsDecorator < ApplicationDecorator
 
   def exam_name
     schedule.exam.exam_name
@@ -20,6 +19,5 @@ class ResultsDecorator < Draper::Decorator
   def student_roll_number
     student.roll_number
   end
-
 
 end

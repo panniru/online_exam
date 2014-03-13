@@ -1,5 +1,10 @@
 $ ->
-   $('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+   $('.datepicker').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:+0",
+        dateFormat: 'dd/mm/yy'
+        });
    unless $.cookie("timezone")
         current_time = new Date()
         $.cookie "timezone", current_time.getTimezoneOffset(),

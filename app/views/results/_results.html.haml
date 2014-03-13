@@ -1,0 +1,17 @@
+%table.table.table-bordered.table-hover
+  %thead
+    %th Roll Number
+    %th Name
+    %th Total Marks
+    %th Secured Marks
+    %th Exam Date
+    %th Result
+  %tbody
+    - results.each do |result|
+      %tr
+        %td= link_to result.student_roll_number, student_path(result.student)
+        %td= result.student_name
+        %td= result.total_marks
+        %td= result.marks_secured
+        %td= result.exam_date
+        %td= result.exam_result

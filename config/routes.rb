@@ -47,9 +47,16 @@ OnlineExam::Application.routes.draw do
 
   resources :reports do
     collection do
-      get "exam_results"
-      get "drill_result"
       get "print"
+      get "drill_result"
+      get "grouped_results"
+      get "results"
+    end
+  end
+
+  resources :results do
+    collection do
+      get "exam_results"
     end
   end
 

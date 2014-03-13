@@ -31,20 +31,30 @@ class Faculty < ActiveRecord::Base
 
   def insert_faculty_course
     courses = []
+    unlink_courses = []
     if self.courses.present?
       courses = self.courses.map{ |course| course.id}
     end
-    courses.each do |id|
-      department_ids.delete(id.to_s)
-    end
     department_ids.delete("")
-    department_ids.each do |dept|
-      fc = FacultyCourse.new(:faculty_id => self.id, :course_id => dept)
-      unless fc.save
+    courses.each do |id|
+      unless department_ids.delete(id.to_s)
+        unlink_courses << id.to_s
+      end
+    end
+    active_courses = department_ids.map{ |dept| {:faculty_id => self.id, :course_id => dept} }
+
+    unless active_courses.empty?
+      unless FacultyCourse.create(active_courses)
+        self.errors.add :base, fc.errors.full_messages.first
+        raise ActiveRecord::Rollback
+      end
+    end
+
+    unless unlink_courses.empty?
+      unless FacultyCourse.where(:course_id => unlink_courses, :faculty_id => self.id).destroy_all
         self.errors.add :base, fc.errors.full_messages.first
         raise ActiveRecord::Rollback
       end
     end
   end
-
 end

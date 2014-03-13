@@ -1,20 +1,5 @@
 .page-header
   %h3
     = "Results #{@student.name}"
-%table.table.table-hover
-  %thead
-    %th Exam
-    %th Semester
-    %th Total Marks
-    %th Secured Marks
-    %th Exam Date
-    %th Result
-  %tbody
-    - @results.each do |result|
-      %tr
-        %td= result.exam_name
-        %td= result.semester
-        %td= result.total_marks
-        %td= result.marks_secured
-        %td= result.exam_date
-        %td= result.exam_result
+
+= render :partial => "shared/results", :locals => {:results => @results}
