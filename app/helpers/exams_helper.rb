@@ -32,7 +32,7 @@ module ExamsHelper
   end
 
   def descriptive_questions(exam)
-    link_to "Fill in The Blanks Questions", exam_descriptive_questions_path(exam)
+    link_to "Show Fill in The Blanks Questions", exam_descriptive_questions_path(exam)
   end
 
 end

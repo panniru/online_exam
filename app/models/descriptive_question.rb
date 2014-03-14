@@ -3,6 +3,9 @@ class DescriptiveQuestion < ActiveRecord::Base
   validates :description, :presence => true
   validates :answer, :presence => true
 
+  has_one :audio_video_question, :foreign_key => :question_id, :dependent => :destroy
+  accepts_nested_attributes_for :audio_video_question
+
   attr_accessor :is_descriptive
 
   belongs_to :exam

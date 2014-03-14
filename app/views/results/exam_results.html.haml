@@ -2,6 +2,8 @@
 %br
 %br
 %br
+= render "search_student"
+%br
 = render :partial => "results", :locals => {:results => @results}
 
 = will_paginate @results, param_name: "page", previous_label: h("<"), next_label: h(">")

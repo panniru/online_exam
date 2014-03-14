@@ -5,3 +5,6 @@
       %tr
         %td.success Answer
         %td= @question.answer
+- if @question.audio_video_question.present?
+  .col-md-7
+    = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file => @question.audio_video_question}

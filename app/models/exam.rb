@@ -26,6 +26,7 @@ class Exam < ActiveRecord::Base
 
   def new_multiple_choice_question
     mc_question = MultipleChoiceQuestion.new
+    mc_question.audio_video_question = AudioVideoQuestion.new
     mc_question.exam = self
     mc_question
   end
@@ -44,6 +45,7 @@ class Exam < ActiveRecord::Base
 
   def new_descriptive_question
     question = DescriptiveQuestion.new
+    question.audio_video_question = AudioVideoQuestion.new
     question.exam = self
     question
   end

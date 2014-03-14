@@ -1,0 +1,11 @@
+= form_tag exam_results_results_path, :method => 'get' , :class => "form-inline", :id => "exam_results" do
+  .form-group.col-sm-5.col-sm-offset-2
+    = autocomplete_field_tag :search_term,
+    '',
+    auto_search_autocomplete_student_roll_number_path,
+    :placeholder => "Student Roll No", :class => 'form-control',
+      :id_element => "#student"
+    = hidden_field_tag :student, :id => "search"
+    = hidden_field_tag :exam_id, @exam.id
+  .col-sm-2
+    = submit_tag "Go", :name => nil, :class => "btn-primary btn"

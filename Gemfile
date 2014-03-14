@@ -37,6 +37,11 @@ gem 'virtus'
 
 gem 'pg_search'
 
+gem 'rmagick'
+gem 'carrierwave'
+
+gem 'jw_player_helper'
+
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 group :test do

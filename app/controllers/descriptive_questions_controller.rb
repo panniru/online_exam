@@ -81,10 +81,10 @@ class DescriptiveQuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:multiple_choice_question).permit(:description, :answer, :is_descriptive)
+    params.require(:multiple_choice_question).permit(:description, :answer, :is_descriptive,:audio_video_question_attributes => [:digi_file])
   end
 
   def update_params
-    params.require(:descriptive_question).permit(:description, :answer)
+    params.require(:descriptive_question).permit(:description, :answer, :audio_video_question_attributes => [:digi_file])
   end
 end

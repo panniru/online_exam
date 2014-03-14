@@ -78,7 +78,7 @@ class MultipleChoiceQuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:multiple_choice_question).permit(:description, :option_1, :option_2, :option_3, :option_4, :answer, :is_descriptive)
+    params.require(:multiple_choice_question).permit(:description, :option_1, :option_2, :option_3, :option_4, :answer, :is_descriptive, :audio_video_question_attributes => [:digi_file])
   end
 
 end

@@ -15,7 +15,7 @@ class Ability
     if user.admin?
       can :manage, [User, Student, Faculty, Course]
     elsif user.faculty?
-      can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule]
+      can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule, AudioVideoQuestion]
       can :read, [Course]
       can :update, [User]
     elsif user.student?

@@ -10,6 +10,9 @@ class MultipleChoiceQuestion < ActiveRecord::Base
   attr_accessor :is_descriptive
 
   belongs_to :exam
+  has_one :audio_video_question, :foreign_key => :question_id, :dependent => :destroy
+
+  accepts_nested_attributes_for :audio_video_question
 
 
   def xls_template(options)

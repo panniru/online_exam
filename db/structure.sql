@@ -136,6 +136,38 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: audio_video_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE audio_video_questions (
+    id integer NOT NULL,
+    question_id integer,
+    digi_file character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: audio_video_questions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE audio_video_questions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: audio_video_questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE audio_video_questions_id_seq OWNED BY audio_video_questions.id;
+
+
+--
 -- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -610,6 +642,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY audio_video_questions ALTER COLUMN id SET DEFAULT nextval('audio_video_questions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY courses ALTER COLUMN id SET DEFAULT nextval('courses_id_seq'::regclass);
 
 
@@ -695,6 +734,14 @@ ALTER TABLE ONLY students ALTER COLUMN id SET DEFAULT nextval('students_id_seq':
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: audio_video_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY audio_video_questions
+    ADD CONSTRAINT audio_video_questions_pkey PRIMARY KEY (id);
 
 
 --
@@ -897,3 +944,11 @@ INSERT INTO schema_migrations (version) VALUES ('20140311113319');
 INSERT INTO schema_migrations (version) VALUES ('20140311114635');
 
 INSERT INTO schema_migrations (version) VALUES ('20140311120404');
+
+INSERT INTO schema_migrations (version) VALUES ('20140314083703');
+
+INSERT INTO schema_migrations (version) VALUES ('20140314094300');
+
+INSERT INTO schema_migrations (version) VALUES ('20140314122321');
+
+INSERT INTO schema_migrations (version) VALUES ('20140314123604');

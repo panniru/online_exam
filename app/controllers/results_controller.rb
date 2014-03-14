@@ -6,21 +6,31 @@ class ResultsController < ApplicationController
 
 
   def exam_results
+    schedules = @exam.schedules.map(&:id)
     page = params[:page].present? ? params[:page] : 1
-    @results = Result.belongs_to_schedules(@exam.schedules.map(&:id)).paginate(:page => page)
-    @results = ResultsDecorator.decorate_collection(@results)
-    respond_to do |format|
-      format.html { }
-      format.pdf do
-        render :pdf => "#{@exam.exam_name} Results ",
-        :template => 'reports/results',
-        :formats => [:pdf],
-        :page_size  => 'A4',
-        :margin => {:top => '8mm',
-          :bottom => '8mm',
-          :left => '14mm',
-          :right => '14mm'}
+    unless schedules.empty?
+      if params[:student].present?
+        @results = Result.belongs_to_student(params[:student]).belongs_to_schedules(@exam.schedules.map(&:id)).paginate(:page => 1)
+      else
+        @results = Result.belongs_to_schedules(@exam.schedules.map(&:id)).paginate(:page => page)
       end
+      @results = ResultsDecorator.decorate_collection(@results)
+      respond_to do |format|
+        format.html { }
+        format.pdf do
+          render :pdf => "#{@exam.exam_name} Results ",
+          :template => 'reports/results',
+          :formats => [:pdf],
+          :page_size  => 'A4',
+          :margin => {:top => '8mm',
+            :bottom => '8mm',
+            :left => '14mm',
+            :right => '14mm'}
+        end
+      end
+    else
+      flash.now[:fail] = I18n.t :fail, :scope => [:report, :results]
+      render "index"
     end
   end
 

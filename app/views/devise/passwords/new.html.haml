@@ -1,10 +1,14 @@
 .panel.panel-default
-  %h4 Forgot your password?
-
-  = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-    = render "shared/error_messages", :object => f.object
-    .form-group
-      = f.label :email, :class => 'col-sm-2 control-label'
-      .col-sm-8
-        = f.email_field :email, :autofocus => true, :class => 'form-control'
-      = f.submit "Send me reset password instructions", :class => "btn btn-primary"
+  .panel-heading
+    %h4 Forgot your password?
+  .panel-body
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+      = render "shared/error_messages", :object => f.object
+      .form-group
+        = f.label :email, :class => 'col-sm-4 control-label'
+        .col-sm-8
+          = f.email_field :email, :autofocus => true, :class => 'form-control'
+      %br
+      %br
+      .col-sm-offset-3
+        = f.submit "Send me reset password instructions", :class => "btn btn-primary"
