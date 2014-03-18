@@ -71,7 +71,7 @@ class SchedulesController < ApplicationController
       @exam = @schedule.exam
       @schedule = SchedulesDecorator.decorate(@schedule)
       unless selected_questions.present?
-        selected_questions = RandomQuestionGenerator.generate_questions(@exam)
+        selected_questions = RandomQuestionGenerator.new(@exam).generate_questions
         session[:current_user_exam_questions] = selected_questions
       end
       @question = RandomQuestionGenerator.next_question(params, selected_questions)
@@ -138,6 +138,7 @@ class SchedulesController < ApplicationController
     if ((start_time -  system_time)/60) <= 10.00 and system_time <= end_time
       @status = true
     end
+    true
   end
 
   def formatted_start_time

@@ -7,4 +7,4 @@
         %td= @question.answer
 - if @question.audio_video_question.present?
   .col-md-7
-    = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file => @question.audio_video_question}
+    = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.audio_video_question.digi_file_url}

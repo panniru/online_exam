@@ -1,51 +1,36 @@
 class RandomQuestionGenerator
+  include Virtus.model
+  attribute :exam
 
-  def self.generate_questions(exam)
+  def initialize(exam)
+    self.exam = exam
+  end
+
+  def generate_questions()
     selected_qtns = []
     selected_descriptive_qtns = []
-    total_mc_questions = exam.multiple_choice_questions.count
-    total_descriptive = exam.descriptive_questions.count
-
+    mc_questions = exam.multiple_choice_questions.map(&:id).shuffle
+    ds_questions = exam.descriptive_questions.map(&:id).shuffle
     (1..exam.multiple_choice).each do |no|
-      random_no = Random.rand(1..total_mc_questions)
+      random_no = mc_questions[Random.rand(0..mc_questions.length-1)]
       while include_question?(random_no, selected_qtns) do
-        random_no = Random.rand(1..total_mc_questions)
+        random_no = mc_questions[Random.rand(0..mc_questions.length-1)]
       end
       question = load_question(random_no)
-      selected_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :is_descriptive => false)
+      selected_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :is_descriptive => false, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.digi_file_url : nil))
     end
 
     (exam.multiple_choice+1..exam.no_of_questions).each do |no|
-      random_no = Random.rand(1..total_descriptive)
+      random_no = ds_questions[Random.rand(0..ds_questions.length-1)]
       while include_question?(random_no, selected_descriptive_qtns) do
-        random_no = Random.rand(1..total_descriptive)
+        random_no = ds_questions[Random.rand(0..ds_questions.length-1)]
       end
       question = load_descriptive_question(random_no)
-      selected_descriptive_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :is_descriptive => true)
+      selected_descriptive_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :is_descriptive => true, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.digi_file_url : nil))
     end
-
     selected_qtns.concat(selected_descriptive_qtns).shuffle.each_with_index { |qtn, index| qtn.active_question_no = index+1 }
   end
 
-  def self.load_question(random_no)
-    question = nil
-    begin
-      question = MultipleChoiceQuestion.find(random_no)
-    rescue ActiveRecord::RecordNotFound
-      question = load_question(random_no+1)
-    end
-    question
-  end
-
-  def self.load_descriptive_question(random_no)
-    question = nil
-    begin
-      question = DescriptiveQuestion.find(random_no)
-    rescue ActiveRecord::RecordNotFound
-      question = load_descriptive_question(random_no+1)
-    end
-    question
-  end
 
   def self.next_question(params, selected_questions)
     prev_qtn = nil
@@ -77,10 +62,17 @@ class RandomQuestionGenerator
 
   private
 
-  def self.include_question?(active_id, questions)
+  def include_question?(active_id, questions)
     matched_questions = questions.select {|question| question.question_id == active_id}
     matched_questions.length > 0
   end
 
+  def load_question(random_no)
+    MultipleChoiceQuestion.find(random_no)
+  end
+
+  def load_descriptive_question(random_no)
+    DescriptiveQuestion.find(random_no)
+  end
 
 end

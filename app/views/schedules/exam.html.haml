@@ -4,12 +4,17 @@
     .pull-right
       = link_to "Submit", "#", :class => "btn btn-primary", :rel => "question-nav-submit"
 = form_tag(exam_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
-  - if @question.descriptive?
-    = render "descriptive_answer"
-  - else
-    = render "mc_answer"
-  = hidden_field_tag :active_question_no, @question.active_question_no
-  = hidden_field_tag :action_for
+  .row
+    .col-sm-6
+      - if @question.descriptive?
+        = render "descriptive_answer"
+      - else
+        = render "mc_answer"
+    .col-sm-6
+      - if @question.digi_file_url.present?
+        = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
+    = hidden_field_tag :active_question_no, @question.active_question_no
+    = hidden_field_tag :action_for
 
 %ul.pager
   %li.previous

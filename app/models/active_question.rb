@@ -9,6 +9,7 @@ class ActiveQuestion
   attribute :option_3
   attribute :option_4
   attribute :is_descriptive
+  attribute :digi_file_url
 
   def descriptive?
     is_descriptive
