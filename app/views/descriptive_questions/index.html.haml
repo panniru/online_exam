@@ -3,13 +3,13 @@
 
 %table.table.table-striped
   %thead
-    %th Id
+    -#%th Id
     %th Description
     %th Answer
   %tbody
     - @questions.each do |question|
       %tr
-        %td= question.id
+        -#%td= question.id
         %td= link_to question.description, exam_descriptive_question_path(question.exam, question)
         %td= question.answer
 
