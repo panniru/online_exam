@@ -48,6 +48,10 @@ module ApplicationHelper
     if current_user.admin?
       list << home
       list << course_details
+      list << exams
+      list << schedules
+      list << exam_results
+      list << reports
       list << user_management
     elsif current_user.faculty?
       list << home

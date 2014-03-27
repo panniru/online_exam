@@ -1,5 +1,5 @@
 %tr
-  - if current_user.faculty?
+  - unless current_user.student?
     %td= link_to schedule.exam_name, schedule
   - else
     %td= link_to schedule.exam_name, exam_entrance_schedule_path(schedule)

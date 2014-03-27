@@ -13,10 +13,10 @@ class Ability
 
     user ||= User.new
     if user.admin?
-      can :manage, [User, Student, Faculty, Course]
+      can :manage, :all
     elsif user.faculty?
       can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule, AudioVideoQuestion]
-      can :read, [Course]
+      can :read, [Course, Student]
       can :update, [User]
     elsif user.student?
       can :read, [Schedule, Student]

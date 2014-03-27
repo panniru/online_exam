@@ -3,7 +3,7 @@
 
 = form_for [@exam, @question], :html => { :class => "form-horizontal", :role => "form", :method => "put" } do |f|
   = render "shared/error_messages", :object => f.object
-  .col-sm-8
+  .col-sm-7
     .form-group
       = f.label "Question", :class => 'col-sm-4 control-label'
       .col-sm-8
@@ -12,6 +12,10 @@
       = f.label "Answer", :class => 'col-sm-4 control-label'
       .col-sm-8
         = f.text_field :answer, :class => 'form-control'
-    .form-group
-      .col-sm-offset-6
-        = f.submit "Update", :class => 'btn btn-primary'
+  .col-sm-5
+    = f.fields_for :audio_video_question do |f|
+      = render "multiple_choice_questions/audio_video_question_form", :f => f
+  .form-group
+    .col-sm-3.col-sm-offset-4
+      = f.submit "Update", :class => 'btn btn-primary'
+  

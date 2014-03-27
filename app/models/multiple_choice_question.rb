@@ -14,6 +14,19 @@ class MultipleChoiceQuestion < ActiveRecord::Base
 
   accepts_nested_attributes_for :audio_video_question
 
+  def update(params)
+    if params[:audio_video_question_attributes].present?
+      if !params[:audio_video_question_attributes][:digi_file].present? and params[:audio_video_question_attributes][:remove_digi_file] == "0"
+        params.delete(:audio_video_question_attributes)
+      elsif params[:audio_video_question_attributes][:remove_digi_file] == "1"
+        self.audio_video_question.remove_digi_file!
+        self.audio_video_question.save
+        params.delete(:audio_video_question_attributes)
+      end
+    end
+    super
+  end
+
 
   def xls_template(options)
     template_headers = ['description', 'option_1', 'option_2', 'option_3', 'option_4', 'answer']
@@ -21,5 +34,5 @@ class MultipleChoiceQuestion < ActiveRecord::Base
       csv << attribute_names.select { |name| template_headers.include?name }
     end
   end
-
+  
 end

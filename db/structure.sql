@@ -256,7 +256,11 @@ CREATE TABLE exams (
     fill_in_blanks integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    faculty_id integer
+    faculty_id integer,
+    pass_criteria_5 double precision,
+    pass_text_5 character varying(255),
+    pass_criteria_6 double precision,
+    pass_text_6 character varying(255)
 );
 
 
@@ -952,3 +956,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140314094300');
 INSERT INTO schema_migrations (version) VALUES ('20140314122321');
 
 INSERT INTO schema_migrations (version) VALUES ('20140314123604');
+
+INSERT INTO schema_migrations (version) VALUES ('20140327055445');

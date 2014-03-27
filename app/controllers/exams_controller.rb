@@ -4,7 +4,7 @@ class ExamsController < ApplicationController
 
 
   def new
-    @exam.faculty_id = current_user.resource.id
+    @exam.faculty_id = current_user.admin? ? nil : current_user.resource.id
   end
 
   def index
@@ -12,7 +12,8 @@ class ExamsController < ApplicationController
     if params[:search].present?
       @exams = Exam.search_by_name(params[:search]).paginate(:page => 1)
     else
-      @exams = Exam.belongs_to_faculty(current_user.resource.id).order("exam_name").paginate(:page => page)
+      @exams = current_user.admin? ? Exam.all : Exam.belongs_to_faculty(current_user.resource.id)
+      @exams = @exams.order("exam_name").paginate(:page => page)
     end
   end
 
@@ -50,7 +51,9 @@ class ExamsController < ApplicationController
     respond_to do |format|
       format.json do
         data = [""]
-        data = Exam.belongs_to_course(params[:course_id]).belongs_to_faculty(current_user.resource.id).map do |exam|
+        data = Exam.belongs_to_course(params[:course_id])
+        data = current_user.admin? ? data : data.belongs_to_faculty(current_user.resource.id)
+        data = data.map do |exam|
           ["#{exam.exam_name}, #{exam.semester}, #{exam.subject}", exam.id]
         end
         render :json => data
@@ -61,7 +64,7 @@ class ExamsController < ApplicationController
   private
 
   def exam_params
-    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id)
+    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :pass_criteria_5, :pass_text_5, :pass_criteria_6, :pass_text_6, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id)
   end
 
 end

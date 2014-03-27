@@ -1,6 +1,6 @@
 = form_for [@exam, @question], :html => { :class => "form-horizontal", :role => "form" } do |f|
   = render "shared/error_messages", :object => f.object
-  .col-sm-8
+  .col-sm-7
     .form-group
       = f.label "Question", :class => 'col-sm-4 control-label'
       .col-sm-8
@@ -15,8 +15,10 @@
       = f.label "Answer", :class => 'col-sm-4 control-label'
       .col-sm-8
         = f.text_field :answer, :class => 'form-control'
+  .col-sm-5
     = f.fields_for :audio_video_question do |f|
       = render "audio_video_question_form", :f => f
+        
 
-    .col-sm-offset-6
-      = f.submit "Create", :class => 'btn btn-primary'
+  .col-sm-6.col-sm-offset-3
+    = f.submit "Create", :class => 'btn btn-primary'

@@ -1,5 +1,7 @@
 module ExamsHelper
 
+  CRITERIAS = ["O", "A", "B", "C", "D", "E"]
+
   def exam_action_bar(exam)
     buttons = []
     buttons << edit_exam(exam)

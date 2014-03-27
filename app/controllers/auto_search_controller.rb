@@ -16,4 +16,5 @@ class AutoSearchController < ApplicationController
   def get_autocomplete_items(parameters)
     items = super(parameters)
   end
+
 end

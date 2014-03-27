@@ -1,6 +1,6 @@
 .page-header
   %h4 Pass Criteria
-.col-md-6.col-xs-6
+.col-md-4.col-xs-4
   .form-group
     .col-md-6
       = f.text_field :pass_criteria_1, :class => 'form-control', :placeholder => "Numeric Pass Criteria 1 "
@@ -9,10 +9,10 @@
 
   .form-group
     .col-md-6
-      = f.text_field :pass_text_1, :class => 'form-control', :placeholder => "Pass Text 1"
+      = f.text_field :pass_text_1, :class => 'form-control', :value => (f.object.pass_text_1 || ExamsHelper::CRITERIAS[0])
     .col-md-6
-      = f.text_field :pass_text_2, :class => 'form-control', :placeholder => "Pass Text 2"
-.col-md-6.col-xs-6
+      = f.text_field :pass_text_2, :class => 'form-control', :value => (f.object.pass_text_2 || ExamsHelper::CRITERIAS[1])
+.col-md-4.col-xs-4
   .form-group
     .col-md-6
       = f.text_field :pass_criteria_3, :class => 'form-control', :placeholder => "Numeric Pass Criteria 3"
@@ -20,6 +20,18 @@
       = f.text_field :pass_criteria_4, :class => 'form-control', :placeholder => "Numeric Pass Criteria 4"
   .form-group
     .col-md-6
-      = f.text_field :pass_text_3, :class => 'form-control', :placeholder => "Pass Text 3"
+      = f.text_field :pass_text_3, :class => 'form-control', :value => (f.object.pass_text_3 || ExamsHelper::CRITERIAS[2])
     .col-md-6
-      = f.text_field :pass_text_4, :class => 'form-control', :placeholder => "Pass Text 4"
+      = f.text_field :pass_text_4, :class => 'form-control', :value => (f.object.pass_text_4 || ExamsHelper::CRITERIAS[3])
+.col-md-4.col-xs-4
+  .form-group
+    .col-md-6
+      = f.text_field :pass_criteria_5, :class => 'form-control', :placeholder => "Numeric Pass Criteria 1 "
+    .col-md-6
+      = f.text_field :pass_criteria_6, :class => 'form-control', :placeholder => "Numeric Pass Criteria 2"
+
+  .form-group
+    .col-md-6
+      = f.text_field :pass_text_5, :class => 'form-control', :value => (f.object.pass_text_5 || ExamsHelper::CRITERIAS[4])
+    .col-md-6
+      = f.text_field :pass_text_6, :class => 'form-control', :value => (f.object.pass_text_6 || ExamsHelper::CRITERIAS[5])

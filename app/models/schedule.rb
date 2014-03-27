@@ -8,7 +8,7 @@ class Schedule < ActiveRecord::Base
   before_save :start_time_format
   before_save :generate_access_password
   belongs_to :exam
-  has_many :results
+  has_many :results, :dependent => :destroy
 
   scope :belongs_to_faculty, lambda { |id| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.faculty_id = ?)', id )}
 

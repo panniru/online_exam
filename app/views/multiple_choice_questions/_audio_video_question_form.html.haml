@@ -1,6 +1,18 @@
 - if f.object.digi_file?
   = video_player({:file => f.object.digi_file_url})
+
 .form-group
-  = f.label "Upload Audio/Video", :class => 'col-sm-4 control-label'
-  .col-sm-8
+  - if f.object.digi_file?
+    = f.label "Change Audio/Video", :class => 'col-sm-3 control-label'
+  - else
+    = f.label "Upload Audio/Video", :class => 'col-sm-3 control-label'
+  .col-sm-5
     = f.file_field :digi_file
+    = f.hidden_field :digi_file_cache
+.form-group
+  - if f.object.digi_file?    
+    .col-sm-1
+      = f.check_box :remove_digi_file, :class => 'form-control'
+    .col-sm-2
+      = f.label "Remove"
+          

@@ -41,7 +41,7 @@ class ResultsController < ApplicationController
   end
 
   def current_user_exams
-    @user_exams = current_user.exams
+    @user_exams = current_user.admin? ? Exam.all : current_user.exams
   end
 
 end

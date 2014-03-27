@@ -10,6 +10,19 @@ class DescriptiveQuestion < ActiveRecord::Base
 
   belongs_to :exam
 
+  def update(params)
+    if params[:audio_video_question_attributes].present?
+      if !params[:audio_video_question_attributes][:digi_file].present? and params[:audio_video_question_attributes][:remove_digi_file] == "0"
+        params.delete(:audio_video_question_attributes)
+      elsif params[:audio_video_question_attributes][:remove_digi_file] == "1"
+        self.audio_video_question.remove_digi_file!
+        self.audio_video_question.save
+        params.delete(:audio_video_question_attributes)
+      end
+    end
+    super
+  end
+  
   def xls_template(options)
     template_headers = ['description', 'answer']
     CSV.generate(options) do |csv|

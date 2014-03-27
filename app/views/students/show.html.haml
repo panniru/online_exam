@@ -2,8 +2,9 @@
   %h3
     = @student.name
     .pull-right
-      = link_to "Edit", edit_student_path(@student), :class => "btn btn-success"
-      = link_to "Delete", student_path(@student), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
+      - if can?:create, :Student
+        = link_to "Edit", edit_student_path(@student), :class => "btn btn-success"
+        = link_to "Delete", student_path(@student), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
 .col-md-12
   %table.table.table-bordered
     %thead

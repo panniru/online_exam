@@ -42,7 +42,9 @@ class DescriptiveQuestionsController < ApplicationController
   end
 
   def edit
-    render "edit"
+    unless @question.audio_video_question.present? and  @question.audio_video_question.digi_file.present?
+      @question.build_audio_video_question
+    end
   end
 
   def destroy
@@ -85,6 +87,6 @@ class DescriptiveQuestionsController < ApplicationController
   end
 
   def update_params
-    params.require(:descriptive_question).permit(:description, :answer, :audio_video_question_attributes => [:digi_file])
+    params.require(:descriptive_question).permit(:description, :answer, :audio_video_question_attributes => [:digi_file, :remove_digi_file, :digi_file_cache])
   end
 end

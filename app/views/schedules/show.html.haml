@@ -2,7 +2,7 @@
   %h3
     = @schedule.exam_name
     .pull-right
-      - if current_user.faculty?
+      - unless current_user.student?
         = link_to "Edit", edit_schedule_path(@schedule), :class => "btn btn-success"
         = link_to "Delete", @schedule, :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
 
@@ -11,7 +11,7 @@
     %th Registration Date
     %th Exam Date and Time
     %th Exam End Time
-    - if current_user.faculty?
+    - unless current_user.student?
       %th Access Password
 
   %tbody
@@ -19,10 +19,10 @@
       %td= @schedule.schedule_date
       %td= @schedule.formatted_exam_date_time
       %td= @schedule.end_time
-      - if current_user.faculty?
+      - unless current_user.student?
         %td= @schedule.access_password
 
-- unless current_user.faculty?
+- if current_user.student?
   .page-header
     %h3 Result
   = render :partial => "result", :locals => {:result => ResultsDecorator.decorate(Result.belongs_to_student_schedule(current_user.resource, @schedule).first)}

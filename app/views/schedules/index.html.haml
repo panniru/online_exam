@@ -2,7 +2,7 @@
   %h4
     = link_to "Active Schedules", schedules_path
     .pull-right
-      - if current_user.faculty?
+      - unless current_user.student?
         = link_to "Schedule Exam", new_schedule_path, :class => "btn btn-primary"
 
 = render :partial => "schedules", :locals => {:data => @active_schedules, :pending => true }

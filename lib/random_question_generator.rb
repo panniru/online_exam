@@ -17,7 +17,7 @@ class RandomQuestionGenerator
         random_no = mc_questions[Random.rand(0..mc_questions.length-1)]
       end
       question = load_question(random_no)
-      selected_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :is_descriptive => false, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.digi_file_url : nil))
+      selected_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :is_descriptive => false, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil))
     end
 
     (exam.multiple_choice+1..exam.no_of_questions).each do |no|
@@ -26,7 +26,7 @@ class RandomQuestionGenerator
         random_no = ds_questions[Random.rand(0..ds_questions.length-1)]
       end
       question = load_descriptive_question(random_no)
-      selected_descriptive_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :is_descriptive => true, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.digi_file_url : nil))
+      selected_descriptive_qtns << ActiveQuestion.new(:question_id => question.id, :active_question_no => no, :description => question.description, :is_descriptive => true, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil))
     end
     selected_qtns.concat(selected_descriptive_qtns).shuffle.each_with_index { |qtn, index| qtn.active_question_no = index+1 }
   end

@@ -25,6 +25,12 @@ class MultipleChoiceQuestionsController < ApplicationController
     end
   end
 
+  def edit
+    unless @question.audio_video_question.present? and  @question.audio_video_question.digi_file.present?
+      @question.build_audio_video_question
+    end
+  end
+
   def update
     if @question.update(question_params)
       flash.now[:success] = I18n.t :success, :scope => [:question, :update]
@@ -78,7 +84,7 @@ class MultipleChoiceQuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:multiple_choice_question).permit(:description, :option_1, :option_2, :option_3, :option_4, :answer, :is_descriptive, :audio_video_question_attributes => [:digi_file])
+    params.require(:multiple_choice_question).permit(:description, :option_1, :option_2, :option_3, :option_4, :answer, :is_descriptive, :audio_video_question_attributes => [:digi_file, :remove_digi_file, :digi_file_cache])
   end
 
 end

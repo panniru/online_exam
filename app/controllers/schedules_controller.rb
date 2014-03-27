@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
   authorize_resource
 
   def index
-    @schedules = Schedule.role_based_schedules(current_user)
+    @schedules = current_user.admin? ? Schedule.all : Schedule.role_based_schedules(current_user)
     @active_schedules = []
     @closed_schedules = []
     @schedules.each do |schedule|
