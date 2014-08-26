@@ -9,4 +9,13 @@ module SchedulesHelper
     end
   end
 
+  def schedule_results
+    result = Result.belongs_to_student_schedule(current_user.resource, @schedule).first 
+    if result.present?
+      ResultsDecorator.decorate(result)
+    else
+      nil
+    end
+  end
+
 end

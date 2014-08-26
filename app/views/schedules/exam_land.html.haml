@@ -1,11 +1,11 @@
 .page-header
   %h4 Instructions
 %ul.list-group
-  %li Instrunction1
-  %li Instrunction2
-  %li Instrunction3
-  %li Instrunction4
-  %li Instrunction5
+  %li Exam Consisting of #{@schedule.exam.no_of_questions} questions
+  %li Exam Duration is #{@schedule.exam.duration.minutes.to_i} minutes
+  %li Exam can be submitted at any time. Submit will redirects you to review page, where you can review all the questions 
+  %li Exam will automatically submitted when the count down timer reahces 00:00
+  %li Exam will be validated and results will be shown instantly after submission.
 .row
   .col-sm-6.col-sm-offset-4
     %h3

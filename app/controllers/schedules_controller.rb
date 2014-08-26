@@ -135,10 +135,10 @@ class SchedulesController < ApplicationController
     system_time = session[:current_time]
     start_time = formatted_start_time
     end_time = formatted_end_time
-    if ((start_time -  system_time)/60) <= 10.00 and system_time <= end_time
+    if ((start_time -  system_time)/60) <= 10.00 and system_time <= end_time and !Result.belongs_to_student_schedule(current_user.resource, @schedule).first.present? 
       @status = true
     end
-    true
+    @status
   end
 
   def formatted_start_time

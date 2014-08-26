@@ -12,4 +12,6 @@
         = link_to "Enter", "#", :rel => "validation-submit", :class => "btn btn-primary"
 
 %script{ :type => "text/javascript"}
-  $('#validationModel').modal('show')
+  $('#validationModel').modal({
+  keyboard: false
+  });

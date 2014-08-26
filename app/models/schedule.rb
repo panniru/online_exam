@@ -3,10 +3,13 @@ class Schedule < ActiveRecord::Base
 
   validates :exam_date, :presence => true
   validates :start_time, :presence => true
-
+  validate :start_time_format
+  validate :validate_exam_questions
+  
   before_save :set_exam_date_time
   before_save :start_time_format
   before_save :generate_access_password
+  
   belongs_to :exam
   has_many :results, :dependent => :destroy
 
@@ -25,7 +28,13 @@ class Schedule < ActiveRecord::Base
 
 
   private
-
+  
+  def validate_exam_questions
+    unless self.exam.multiple_choice_questions.count >= self.exam.multiple_choice and self.exam.descriptive_questions.count >= self.exam.fill_in_blanks
+      self.errors.add :base, "Exam Has not enough questions to schedule as per inputs"
+    end
+  end
+  
   def start_time_format
     unless (start_time =~ /\b[0-9]{1,2}\b:\b[0-9]{1,2}\b/) == 0
       self.errors.add :base, "Invalid Start Time"
