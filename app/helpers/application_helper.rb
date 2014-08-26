@@ -46,7 +46,7 @@ module ApplicationHelper
   def navigation_list
     list = []
     if current_user.admin?
-      list << home
+      #list << home
       list << course_details
       list << exams
       list << schedules

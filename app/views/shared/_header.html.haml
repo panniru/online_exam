@@ -1,9 +1,9 @@
 .navbar.navbar-inverse
   .navbar-inner.container
-    .col-sm-7
+    .col-sm-6
       .navbar-header
         .navbar-brand= link_to "Online Exam", "#", :class => "navbar-brand"
-    .col-sm-5.sign-in-padding
+    .col-sm-6.sign-in-padding.pull-right
       - if user_signed_in?
         = render "shared/global_search"
         %ul.nav.navbar-nav

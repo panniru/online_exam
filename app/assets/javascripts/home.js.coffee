@@ -19,4 +19,4 @@ $ ->
         $("#Users").removeClass("active")
         )
    dt = new Date($.now())
-   $('#application-timer').html(dt.getDate()+"/"+dt.getMonth()+"/"+dt.getFullYear()+" "+dt.getHours()+":"+dt.getMinutes())
+   $('#application-timer').html(dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear()+" "+dt.getHours()+":"+dt.getMinutes())
