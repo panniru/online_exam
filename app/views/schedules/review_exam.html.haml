@@ -15,4 +15,7 @@
               = link_to question.active_question_no, exam_schedule_path(:id => @schedule, :active_question_no =>question.active_question_no)
 .row
   .col-sm-3.pull-right
-    = link_to "Submit", submit_exam_schedule_path(@schedule), :class => "btn btn-primary"
+    = link_to "Submit", submit_exam_schedule_path(@schedule), :class => "btn btn-primary", :id => "submit_exam_link"
+.col-sm-2.pull-right
+  %h4
+    %span.label.label-danger{"data-end-countdown".to_sym => "#{@schedule.count_down_exam_end_time}", :id => "time-out-timer"}

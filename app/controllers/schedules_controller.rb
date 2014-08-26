@@ -94,6 +94,7 @@ class SchedulesController < ApplicationController
   end
 
   def review_exam
+    @schedule = SchedulesDecorator.decorate(@schedule)
     if @status
       @questions = session[:current_user_exam_questions]
     else
