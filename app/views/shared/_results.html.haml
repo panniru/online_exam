@@ -1,7 +1,11 @@
 %table.table.table-bordered.table-hover
   %thead
-    %th Exam
-    %th Semester
+    - if current_user.student?
+      %th Exam
+      %th Semester
+    - else
+      %th Roll Number
+      %th Name
     %th Total Marks
     %th Secured Marks
     %th Exam Date
@@ -9,8 +13,13 @@
   %tbody
     - results.each do |result|
       %tr
-        %td= result.exam_name
-        %td= result.semester
+        - if current_user.student?
+          %td= link_to result.exam_name, result_in_detail_result_path(result)
+          %td= result.semester
+        - else
+          %td= link_to result.student_roll_number, result_in_detail_result_path(result)
+          %td= result.student_name
+
         %td= result.total_marks
         %td= result.marks_secured
         %td= result.exam_date

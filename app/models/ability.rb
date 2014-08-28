@@ -10,6 +10,7 @@ class Ability
     alias_action :validate_exam_entrance, :to => :read
     alias_action :results, :to => :read
     alias_action :heirarchy, :to => :read
+    alias_action :next_question, :to => :read
 
     user ||= User.new
     if user.admin?

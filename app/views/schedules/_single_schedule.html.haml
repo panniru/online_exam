@@ -1,0 +1,15 @@
+%table.table.table-bordered
+  %thead
+    %th Registration Date
+    %th Exam Date and Time
+    %th Exam End Time
+    - unless current_user.student?
+      %th Access Password
+
+  %tbody
+    %tr
+      %td= schedule.schedule_date
+      %td= schedule.formatted_exam_date_time
+      %td= schedule.end_time
+      - unless current_user.student?
+        %td= schedule.access_password

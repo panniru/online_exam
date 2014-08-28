@@ -1,6 +1,7 @@
 class ResultsController < ApplicationController
 
   skip_authorization_check
+  load_resource :only => [:result_in_detail]
   before_action :load_exam, :only => [:exam_results]
   before_action :current_user_exams
 
@@ -34,6 +35,16 @@ class ResultsController < ApplicationController
     end
   end
 
+  def result_in_detail
+    page = params[:page].present? ? params[:page] : 1
+    @schedule = SchedulesDecorator.decorate(@result.schedule)
+    @student = @result.student
+    @schedule_details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no").paginate(:page => page)
+    @schedule_details = ScheduleDetailsDecorator.decorate_collection(@schedule_details)
+  end
+
+
+  
   private
 
   def load_exam

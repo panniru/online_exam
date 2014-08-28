@@ -1,5 +1,9 @@
 class ResultsDecorator < ApplicationDecorator
 
+  def to_model
+    source
+  end
+
   def exam_name
     schedule.exam.exam_name
   end

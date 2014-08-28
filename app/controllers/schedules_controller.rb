@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
-  load_resource :only => [:new, :edit, :show, :update, :destroy, :exam, :review_exam, :submit_exam, :exam_entrance, :validate_exam_entrance]
-  before_action :validate_exam_status, :only => [:exam, :exam_entrance, :review_exam]
+  load_resource :only => [:new, :edit, :show, :update, :destroy, :exam, :review_exam, :submit_exam, :exam_entrance, :validate_exam_entrance, :next_question]
+  before_action :validate_exam_status, :only => [:exam, :exam_entrance, :review_exam, :next_question]
 
   authorize_resource
 
@@ -66,23 +66,42 @@ class SchedulesController < ApplicationController
   end
 
   def exam
+    @exam = @schedule.exam
+    @schedule = SchedulesDecorator.decorate(@schedule)
+
     if @status
-      selected_questions = session[:current_user_exam_questions]
+      @question = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id).session_first_question
+      render "exam"
+    else
+      render "show"
+    end
+  end
+
+  def next_question
+    if @status
       @exam = @schedule.exam
+      random_question_gen = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id)
       @schedule = SchedulesDecorator.decorate(@schedule)
-      unless selected_questions.present?
-        selected_questions = RandomQuestionGenerator.new(@exam).generate_questions
-        session[:current_user_exam_questions] = selected_questions
+      if params[:action_for] == "prev"
+        @question = random_question_gen.prev_question(params[:question_no])
+      elsif params[:action_for] == "current"
+        @question = random_question_gen.current_question(params[:question_no])
+      else
+        if params[:question_id].present?
+          ScheduleDetail.make_entry(@schedule.id, params, current_user.resource.id)
+        end
+        @question = random_question_gen.next_question(params[:question_no])
       end
-      @question = RandomQuestionGenerator.next_question(params, selected_questions)
-      if @question.nil?
+      if @question.nil? or params[:action_for] == "submit"
         redirect_to review_exam_schedule_path(@schedule)
+      else
+        render "exam"
       end
     else
       redirect_to submit_exam_schedule_path(@schedule)
     end
   end
-
+  
   def exam_entrance
     @schedule = SchedulesDecorator.decorate(@schedule)
     if @status
@@ -96,21 +115,16 @@ class SchedulesController < ApplicationController
   def review_exam
     @schedule = SchedulesDecorator.decorate(@schedule)
     if @status
-      @questions = session[:current_user_exam_questions]
+      @schedule_details = @schedule.schedule_details.belongs_to_student(current_user.resource.id).order("question_no")
     else
       redirect_to submit_exam_schedule_path(@schedule)
     end
   end
 
   def submit_exam
-    active_questions = session[:current_user_exam_questions]
-    if active_questions.present?
-      validator = ExamValidator.new(active_questions, @schedule, current_user)
-      result = validator.validate
-      redirect_to @schedule
-    else
-      flash[:fail] = I18n.t :fail, :scope => [:schedule, :exam]
-    end
+    validator = ExamValidator.new(@schedule, current_user)
+    result = validator.validate
+    redirect_to @schedule
   end
 
   def validate_exam_entrance

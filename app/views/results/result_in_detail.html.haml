@@ -1,0 +1,28 @@
+.page-header
+  %h3
+    = @schedule.exam_name
+.row
+  = render :partial => "schedules/single_schedule", :locals => {:schedule => @schedule}
+  %h4 Questions
+    
+%table.table.table-bordered
+  %thead
+    %th No
+    %th Description
+    %th Answer
+    %th Answer Caught
+    %th Result
+  %tbody
+    - @schedule_details.each do |schedule_detail|
+      %tr
+        %td= schedule_detail.question_no
+        %td= schedule_detail.question_description
+        %td= schedule_detail.answer
+        %td= schedule_detail.answer_caught
+        %td
+          - if schedule_detail.right_answer?
+            %span.glyphicon.glyphicon-ok
+          - else
+            %span.glyphicon.glyphicon-remove
+
+

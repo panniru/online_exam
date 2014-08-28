@@ -55,6 +55,9 @@ OnlineExam::Application.routes.draw do
   end
 
   resources :results do
+    member do
+      get "result_in_detail"
+    end
     collection do
       get "exam_results"
     end
@@ -63,11 +66,12 @@ OnlineExam::Application.routes.draw do
   resources :schedules do
     member do
       get "exam"
-      post "exam"
       get "review_exam"
       get "submit_exam"
       get "exam_entrance"
       post "validate_exam_entrance"
+      post "next_question" 
+      get "next_question" 
     end
   end
 

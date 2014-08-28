@@ -5,19 +5,22 @@ class ExamValidator
   attribute :exam
   attribute :user
 
-  def initialize(active_questions, schedule, current_user)
-    self.active_questions = active_questions
+  def initialize(schedule, current_user)
     self.schedule = schedule
     self.exam = schedule.exam
     self.user = current_user
   end
-
+  
+  def self.validate_answer(answer, answer_caught)
+    answer.upcase == answer_caught.try(:upcase)
+  end
+  
   def validate
     right_answers = 0
     wrong_answers = 0.0
-    active_questions.each do |act_qtn|
-      question = load_question(act_qtn.question_id, act_qtn.is_descriptive)
-      if question.answer.upcase == act_qtn.answer_caught.try(:upcase)
+    schedule.schedule_details.belongs_to_student(user.resource.id).each do |act_qtn|
+      question = act_qtn.question
+      if self.class.validate_answer
         right_answers +=1
       else
         wrong_answers += exam.negative_mark
@@ -33,14 +36,6 @@ class ExamValidator
   end
 
   private
-
-  def load_question(id, is_descriptive)
-    if is_descriptive
-      DescriptiveQuestion.find(id)
-    else
-      MultipleChoiceQuestion.find(id)
-    end
-  end
 
   def analyse_result(right_answers)
     pass_percent = (right_answers.to_f/exam.no_of_questions)*100

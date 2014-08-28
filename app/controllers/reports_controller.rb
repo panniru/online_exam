@@ -14,7 +14,7 @@ class ReportsController < ApplicationController
   end
 
   def drill_result
-    @results = Result.belongs_to_schedules(@exam.schedules.map(&:id)).filter_by_exam_result(params[:filter])
+    @results = Result.belongs_to_schedules(@exam.schedules.map(&:id)).filter_by_exam_result(params[:filter]).order("marks_secured")
     @bar_chart_data = Hash[@results.map{|result| [result.student.roll_number, result.marks_secured]}]
     @results = ResultsDecorator.decorate_collection(@results)
   end

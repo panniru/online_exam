@@ -12,6 +12,7 @@ class Schedule < ActiveRecord::Base
   
   belongs_to :exam
   has_many :results, :dependent => :destroy
+  has_many :schedule_details
 
   scope :belongs_to_faculty, lambda { |id| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.faculty_id = ?)', id )}
 

@@ -3,16 +3,16 @@
 .col-sm-8.off
   %table
     %tbody
-      - @questions.each_with_index do |question, index|
+      - @schedule_details.each_with_index do |question, index|
         - if index%10 == 0
           %tr
         %td
           - if question.answer_caught.present?
             %span.label.label-success
-              = link_to question.active_question_no, exam_schedule_path(:id => @schedule, :active_question_no =>question.active_question_no)
+              = link_to question.question_no, next_question_schedule_path(:id => @schedule, :question_no =>question.question_no, :action_for => "current")
           - else
             %span.label.label-danger
-              = link_to question.active_question_no, exam_schedule_path(:id => @schedule, :active_question_no =>question.active_question_no)
+              = link_to question.question_no, next_question_schedule_path(:id => @schedule, :question_no =>question.question_no, :action_for => "current")
 .row
   .col-sm-3.pull-right
     = link_to "Submit", submit_exam_schedule_path(@schedule), :class => "btn btn-primary", :id => "submit_exam_link"

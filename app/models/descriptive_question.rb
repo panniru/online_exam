@@ -29,4 +29,13 @@ class DescriptiveQuestion < ActiveRecord::Base
       csv << attribute_names.select { |name| template_headers.include?name }
     end
   end
+
+  def method_missing(name, *args, &block)
+    if name =~ /^option_*/
+      nil
+    else
+      super
+    end
+  end
+
 end
