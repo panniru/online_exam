@@ -76,6 +76,65 @@ class StudentsController < ApplicationController
     @results = ResultsDecorator.decorate_collection(@student.results)
   end
 
+  def students_to_pramote
+    page = params[:page].present? ? params[:page] : 1
+    @students = Student.belongs_to_course(params[:course_id]).belongs_to_semester(params[:semester]).order("roll_number DESC").paginate(:page => page)
+    respond_to do |format|
+      data = {}
+      format.json do
+        students = @students.map do |student|
+          {id: student.id, name: student.name, course: student.course.name, semester: student.semester, roll_number: student.roll_number}
+        end
+        data[:total_entries] = @students.total_entries
+        previous_page = @students.previous_page.present? ? @students.previous_page : 0
+        data[:current_page] = previous_page+1
+        data[:to_index] = (data[:current_page] * @students.per_page) > @students.total_entries ? @students.total_entries : (data[:current_page] * @students.per_page)
+        data[:from_index] = (previous_page * @students.per_page)+1
+        data[:students] = students
+        render :json => data
+      end
+      format.html do
+        render "students_to_pramote"
+      end
+    end
+  end
+
+  def promote_or_demote_all
+    respond_to do |format|
+      format.json do
+        new_semester = params[:semester]
+        if params[:action_type] == 'promote'
+          new_semester = (params[:semester].to_i+1)
+        elsif params[:action_type] == 'demote'
+          new_semester = (params[:semester].to_i-1)
+        end
+        status = false
+        if new_semester > 0
+          status = Student.belongs_to_course(params[:course_id]).belongs_to_semester(params[:semester]).update_all({:semester => new_semester}) 
+        end
+        render :json => status
+      end
+    end
+  end
+
+  def promote_or_demote
+    respond_to do |format|
+      format.json do
+        new_semester = params[:semester];
+        if params[:action_type] == 'promote'
+          new_semester = (params[:semester].to_i+1)
+        elsif params[:action_type] == 'demote'
+          new_semester = (params[:semester].to_i-1)
+        end
+        status = false
+        if new_semester > 0
+          status = Student.where(:id => params[:students].map{|st| st["id"]}).update_all({:semester => new_semester}) 
+        end
+        render :json => status
+      end
+    end
+  end
+  
   private
 
   def student_params

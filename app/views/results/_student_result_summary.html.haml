@@ -1,0 +1,28 @@
+.col-md-6
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %th.active Subject
+        %td= @schedule.exam.subject
+      %tr
+        %th.active Exam Date
+        %td= @schedule.schedule_date
+      %tr
+        %th.active Exam Name
+        %td= @schedule.exam_name
+      %tr
+        %th.active Course/Semister
+        %td= "#{@schedule.exam.course.name} / #{@schedule.exam.semester}"
+
+.col-md-5.col-md-offset-1
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %th.active Total Marks
+        %td= @result.total_marks
+      %tr
+        %th.active Marks Secured
+        %td {{marks_secured}}
+      %tr
+        %th.active Result
+        %td {{result_text}}

@@ -1,0 +1,39 @@
+.page-header
+  %h3 
+    - if current_user.faculty?
+      = link_to @exam.exam_full_name, @exam
+      %br
+      Instructions
+      .pull-right
+        = link_to '<span class="glyphicon glyphicon-pencil"></span> New Instruction'.html_safe, new_instruction_path(:exam_id => @exam.id), :class => "btn btn-primary"
+    - else
+      Instructions
+      .pull-right
+        = link_to '<span class="glyphicon glyphicon-pencil"></span> New Instruction'.html_safe, new_instruction_path, :class => "btn btn-primary"
+.row
+  - if current_user.admin?
+    = render "search"
+%br
+.row      
+  %table.table.table-bordered.table-hover
+    %thead
+      %th Description
+      %th Exam
+      %th Defined by
+      %th
+      %th
+
+    - @instructions.each do |instruction|
+      %tr
+        %td= instruction.description
+        %td= instruction.exam.try(:exam_name)
+        %td= instruction.user.user_id
+        %td
+          - if current_user.admin? or @exam.id = instruction.exam_id
+            = link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_instruction_path(instruction), :title => "Edit"
+        %td
+          - if current_user.admin? or @exam.id = instruction.exam_id
+            = link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, instruction, :method => :delete, :data => { :confirm => 'Are you sure?' }, :title => "Delete"
+
+
+

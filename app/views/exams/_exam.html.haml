@@ -45,10 +45,16 @@
         %td= data.negative_mark
   %br
   %table.table.table-bordered
+    %thead
+      %th Type
+      %th Total
+      %th Mark/qn
     %tbody
       %tr.info
         %th= "Multiple Question"
         %td= data.multiple_choice
+        %td= data.mark_per_mc
       %tr.warning
         %th= "Fill in the blanks"
         %td= data.fill_in_blanks
+        %td= data.mark_per_fib

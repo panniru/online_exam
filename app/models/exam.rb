@@ -19,6 +19,8 @@ class Exam < ActiveRecord::Base
   has_many :registraions
   belongs_to :course
   has_many :schedules, :dependent => :destroy
+  has_many :results, :dependent => :destroy
+  has_many :instructions, :dependent => :destroy
 
   scope :search_by_name, lambda{|name| where(:exam_name => name)}
   scope :belongs_to_faculty, lambda{|faculty| where(:faculty_id => faculty)}
@@ -48,6 +50,14 @@ class Exam < ActiveRecord::Base
     question.audio_video_question = AudioVideoQuestion.new
     question.exam = self
     question
+  end
+
+  def total_marks
+    (multiple_choice * (mark_per_mc.present? ? mark_per_mc : 1 )) + (fill_in_blanks * (mark_per_fib.present? ? mark_per_fib : 1 ))
+  end
+
+  def exam_full_name
+    "#{course.name} - #{semester} - #{subject} - #{exam_name}"
   end
 
   private

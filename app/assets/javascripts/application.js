@@ -9,6 +9,8 @@
 //= require jsapi
 //= require chartkick
 
+//= require angular
+
 //= require bootstrap/tooltip
 //= require bootstrap/scrollspy
 //= require bootstrap/modal

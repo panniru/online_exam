@@ -5,9 +5,9 @@ class ExamValidator
   attribute :exam
   attribute :user
 
-  def initialize(schedule, current_user)
+  def initialize(exam,schedule = nil, current_user=nil)
     self.schedule = schedule
-    self.exam = schedule.exam
+    self.exam = exam
     self.user = current_user
   end
   
@@ -20,25 +20,56 @@ class ExamValidator
     wrong_answers = 0.0
     schedule.schedule_details.belongs_to_student(user.resource.id).each do |act_qtn|
       question = act_qtn.question
-      if self.class.validate_answer
-        right_answers +=1
+      if self.class.validate_answer(question.answer, act_qtn.answer_caught)
+        act_qtn.update_attributes({:valid_answer => true})
+        right_answers += question_marks(question)
       else
-        wrong_answers += exam.negative_mark
+        act_qtn.update_attributes({:valid_answer => false})
+        wrong_answers += negetive_mark_of_qtn(question)
       end
     end
     marks_secured = right_answers - wrong_answers
-
     result = analyse_result(marks_secured)
-
-    result = Result.new(:schedule_id => schedule.id, :total_marks => exam.no_of_questions, :marks_secured => marks_secured, :exam_result => result, :student_id => user.resource.id)
+    result = Result.new(:schedule_id => schedule.id, :total_marks => exam.total_marks, :marks_secured => marks_secured, :exam_result => result, :student_id => user.resource.id)
     result.save
     result
+  end
+  
+
+  def manipulate_student_result(result, schedule_detail_params)
+    right_answer_marks = 0
+    wrong_answer_marks = 0
+    schedule_detail_params.each do |param|
+      detail = ScheduleDetail.find(param[:id])
+      detail.update_attributes({:valid_answer => param[:valid_answer]})
+      if param[:valid_answer] || param[:valid_answer] == "true"
+        right_answer_marks += question_marks(detail.question)
+      else
+        wrong_answer_marks += negetive_mark_of_qtn(detail.question)
+      end
+    end
+    marks_secured = right_answer_marks - wrong_answer_marks
+    result_text = analyse_result(marks_secured)
+    result.update_attributes!({:marks_secured => marks_secured, :exam_result => result_text})
   end
 
   private
 
+  def question_marks(qtn)
+    if qtn.is_a? MultipleChoiceQuestion
+      exam.mark_per_mc.present? ? exam.mark_per_mc : 1
+    else
+      exam.mark_per_fib.present? ? exam.mark_per_fib : 1
+    end
+  end
+
+  def negetive_mark_of_qtn(qtn)
+    question_mark = question_marks(qtn)
+    ((exam.negative_mark/100)*question_mark)
+  end
+
   def analyse_result(right_answers)
-    pass_percent = (right_answers.to_f/exam.no_of_questions)*100
+    pass_percent = (right_answers.to_f/exam.total_marks)*100
     if pass_percent >= exam.pass_criteria_1
       exam.pass_text_1
     elsif exam.pass_criteria_2.present? and pass_percent >= exam.pass_criteria_2 and pass_percent < exam.pass_criteria_1

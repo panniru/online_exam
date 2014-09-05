@@ -1,5 +1,5 @@
 !!!
-%html
+%html{ "ng-app" => 'oleApp'}    
   %head
     %title Online Exam
   = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
@@ -14,16 +14,17 @@
         - if user_signed_in?
           .col-md-2.sidebar-offcanvas
             = render "shared/navigation_list"
-          .col-xs-12.col-sm-9
+          .col-xs-12.col-sm-12.col-md-9
             %div
               %section
                 - flash.each do |key, value|
                   = content_tag(:div,value,:class => "#{flash_alert_class(key)}")
-              = render "shared/bread_crumb"
+              -#= render "shared/bread_crumb"
             = yield
         - else
-          .col-xs-12.col-sm-8
+          .col-xs-12.col-sm-12.col-md-8
             = render "shared/index_content"
-          .col-xs-6.col-sm-4.sidebar-offcanvas
+          .col-xs-6.col-sm-4.sidebar-offcanvas.col-md-4
             = yield
-    = render "shared/footer"
+    .footer
+      = render "shared/footer"

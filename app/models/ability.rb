@@ -11,14 +11,14 @@ class Ability
     alias_action :results, :to => :read
     alias_action :heirarchy, :to => :read
     alias_action :next_question, :to => :read
-
+    alias_action :update_result_details, :to => :update
     user ||= User.new
     if user.admin?
       can :manage, :all
     elsif user.faculty?
-      can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule, AudioVideoQuestion]
+      can :manage, [Exam, MultipleChoiceQuestion, DescriptiveQuestion, Schedule, AudioVideoQuestion, Instruction]
       can :read, [Course, Student]
-      can :update, [User]
+      can :update, [User, Result]
     elsif user.student?
       can :read, [Schedule, Student]
       can :update, [User]

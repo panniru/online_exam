@@ -1,0 +1,10 @@
+= form_for @instruction, :html => { :class => "form-horizontal", :role => "form" } do |f|
+  = render "shared/error_messages", :object => f.object
+  .col-sm-8
+    .form-group
+      = f.label :description, :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_area :description, :class => 'form-control'
+      = f.hidden_field :exam_id
+  .col-sm-8.pull-right
+    = f.submit "Save", :class => 'btn btn-primary'

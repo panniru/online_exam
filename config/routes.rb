@@ -1,4 +1,6 @@
 OnlineExam::Application.routes.draw do
+  resources :instructions
+
   devise_for :users, :controllers => { :sessions => 'sessions'}
   # devise_scope :user do
   #   root to: "sessions#new"
@@ -10,6 +12,10 @@ OnlineExam::Application.routes.draw do
     collection do
       get "new_upload"
       post "upload"
+      post "pramote"
+      get "students_to_pramote"
+      post "promote_or_demote_all"
+      post "promote_or_demote"
     end
 
     member do
@@ -57,6 +63,7 @@ OnlineExam::Application.routes.draw do
   resources :results do
     member do
       get "result_in_detail"
+      put "update_result_details"
     end
     collection do
       get "exam_results"

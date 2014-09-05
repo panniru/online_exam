@@ -49,5 +49,5 @@ $ ->
         $(this).html event.strftime("%H:%M:%S")
         if event.strftime("%D-%H-%M-%S") == '00-00-00-00'
                 $("#action_for").val("submit")
-                $("form#ol_exam").submit()
+                #$("form#ol_exam").submit()
 

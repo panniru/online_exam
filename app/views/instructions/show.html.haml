@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Description:
+  = @instruction.description
+%p
+  %b Exam:
+  = @instruction.exam_id
+%p
+  %b Defined by:
+  = @instruction.defined_by
+
+= link_to 'Edit', edit_instruction_path(@instruction)
+\|
+= link_to 'Back', instructions_path

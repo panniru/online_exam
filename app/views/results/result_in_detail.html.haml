@@ -1,28 +1,35 @@
 .page-header
   %h3
-    = @schedule.exam_name
-.row
-  = render :partial => "schedules/single_schedule", :locals => {:schedule => @schedule}
-  %h4 Questions
-    
-%table.table.table-bordered
-  %thead
-    %th No
-    %th Description
-    %th Answer
-    %th Answer Caught
-    %th Result
-  %tbody
-    - @schedule_details.each do |schedule_detail|
-      %tr
-        %td= schedule_detail.question_no
-        %td= schedule_detail.question_description
-        %td= schedule_detail.answer
-        %td= schedule_detail.answer_caught
-        %td
-          - if schedule_detail.right_answer?
-            %span.glyphicon.glyphicon-ok
-          - else
-            %span.glyphicon.glyphicon-remove
-
-
+    = "#{@result.student.roll_number} - #{@result.student.name}"
+.row{:ng_controller => "ResultManagerController", :ng_init => "initialize('#{@result.id}')"}
+  = render :partial => "student_result_summary", :locals => {:schedule => @schedule}
+  .col-md-12
+    .col-md-10
+      %h4 Questions
+    .col-md-offset-10
+      - if can?:update, :Result
+        = link_to "Update", "#", :class => "btn btn-primary", :ng_show => "editAnswer", :ng_click => "updateDetails()"
+        = link_to "Edit", "#", :class => "btn", :ng_click => "editAnswer = true", :ng_class => "{'btn-primary' : !editAnswer , 'btn-default': editAnswer}"
+      
+  .col-md-12
+    %table.table.table-bordered
+      %thead
+        %th No
+        %th Description
+        %th Answer
+        %th Answer Caught
+        %th Result
+      %tbody
+        %tr{:ng_repeat => "schedule_detail in results"}
+          %td {{schedule_detail.question_no}}
+          %td {{schedule_detail.question_description}}
+          %td {{schedule_detail.answer}}
+          %td {{schedule_detail.answer_caught}}
+          %td.width-10
+            %span{:ng_class => "{'glyphicon glyphicon-ok success' : schedule_detail.valid_answer, 'glyphicon glyphicon-remove danger' : !schedule_detail.valid_answer}", :ng_hide => "editAnswer"}
+            .btn-group.btn-group-sm{:ng_show => "editAnswer"}
+              %button{:ng_class => "{'btn btn-success' : schedule_detail.valid_answer, 'btn btn-default' : !schedule_detail.valid_answer}", :ng_click => "schedule_detail.valid_answer= true"}
+                %span.glyphicon.glyphicon-ok
+              %button{:ng_class => "{'btn btn-default' : schedule_detail.valid_answer, 'btn btn-danger' : !schedule_detail.valid_answer}", :ng_click => "schedule_detail.valid_answer= false"}
+                %span.glyphicon.glyphicon-remove
+                  

@@ -6,6 +6,8 @@ gem 'sass-rails', '>= 3.2'
 gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'formtastic'
 gem 'formtastic-bootstrap'
+gem 'angularjs-rails', '~> 1.2.22'
+gem 'font-awesome-rails', '~> 4.2.0.0'
 
 group :assets do
   gem 'uglifier', '>= 1.3.0'

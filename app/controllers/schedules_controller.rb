@@ -122,7 +122,7 @@ class SchedulesController < ApplicationController
   end
 
   def submit_exam
-    validator = ExamValidator.new(@schedule, current_user)
+    validator = ExamValidator.new(@schedule.exam, @schedule, current_user)
     result = validator.validate
     redirect_to @schedule
   end

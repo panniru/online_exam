@@ -1,4 +1,4 @@
-WillPaginate.per_page = 15
+WillPaginate.per_page = 10
 class Student < ActiveRecord::Base
   include PgSearch
   multisearchable :against => [:name, :roll_number]
@@ -9,13 +9,15 @@ class Student < ActiveRecord::Base
   validates :semester, :presence => true
 
   belongs_to :course
-  has_many :results
+  has_many :results, :dependent => :destroy
 
   belongs_to :user
 
   accepts_nested_attributes_for :user
 
   scope :search, lambda { |id| where(:id => id)}
+  scope :belongs_to_course, lambda { |course_id| where(:course_id => course_id)}
+  scope :belongs_to_semester, lambda { |semester| where(:semester => semester)}
 
   def course_name
     course.name

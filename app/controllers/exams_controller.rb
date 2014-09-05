@@ -64,7 +64,7 @@ class ExamsController < ApplicationController
   private
 
   def exam_params
-    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :pass_criteria_5, :pass_text_5, :pass_criteria_6, :pass_text_6, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id)
+    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :pass_criteria_5, :pass_text_5, :pass_text_6, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id, :mark_per_fib, :mark_per_mc) #:pass_criteria_6
   end
 
 end

@@ -6,12 +6,17 @@ module ExamsHelper
     buttons = []
     buttons << edit_exam(exam)
     buttons << delete_exam(exam)
+    buttons << instruction(exam) if current_user.faculty?
     buttons << question_btn_group(exam)
     content_tag(:div,raw(buttons.join(" ")))
   end
 
   def new_exam
     link_to "New Exam", new_exam_path, :class => "btn btn-primary"
+  end
+
+  def instruction(exam)
+    link_to '<span class="glyphicon glyphicon-list-alt"></span> Instructions'.html_safe, instructions_path(:exam_id => exam.id), :class => "btn btn-info"
   end
 
   def question_btn_group(exam)

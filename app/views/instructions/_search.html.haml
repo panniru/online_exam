@@ -1,0 +1,7 @@
+= form_tag instructions_path, :method => 'get' , :class => "form-inline" do
+  .col-md-12
+    = label_tag :exam, "Exam",:class => 'col-md-1 control-label'
+    .col-md-6
+      = select_tag :exam_id, options_for_select(Exam.all.map {|e| [e.exam_full_name, e.id]} << ["All","all"], params[:exam_id]),  :class => 'form-control'
+    .col-md-4
+      = submit_tag "Go", :name => nil, :class => "btn-primary btn"

@@ -260,7 +260,9 @@ CREATE TABLE exams (
     pass_criteria_5 double precision,
     pass_text_5 character varying(255),
     pass_criteria_6 double precision,
-    pass_text_6 character varying(255)
+    pass_text_6 character varying(255),
+    mark_per_fib double precision,
+    mark_per_mc double precision
 );
 
 
@@ -346,6 +348,39 @@ CREATE SEQUENCE faculty_courses_id_seq
 --
 
 ALTER SEQUENCE faculty_courses_id_seq OWNED BY faculty_courses.id;
+
+
+--
+-- Name: instructions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE instructions (
+    id integer NOT NULL,
+    description character varying(255),
+    exam_id integer,
+    defined_by integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: instructions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE instructions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: instructions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE instructions_id_seq OWNED BY instructions.id;
 
 
 --
@@ -499,7 +534,8 @@ CREATE TABLE schedule_details (
     answer_caught character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    question_no integer
+    question_no integer,
+    valid_answer boolean
 );
 
 
@@ -724,6 +760,13 @@ ALTER TABLE ONLY faculty_courses ALTER COLUMN id SET DEFAULT nextval('faculty_co
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY instructions ALTER COLUMN id SET DEFAULT nextval('instructions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY multiple_choice_questions ALTER COLUMN id SET DEFAULT nextval('multiple_choice_questions_id_seq'::regclass);
 
 
@@ -829,6 +872,14 @@ ALTER TABLE ONLY faculties
 
 ALTER TABLE ONLY faculty_courses
     ADD CONSTRAINT faculty_courses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: instructions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY instructions
+    ADD CONSTRAINT instructions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1013,3 +1064,9 @@ INSERT INTO schema_migrations (version) VALUES ('20140327055445');
 INSERT INTO schema_migrations (version) VALUES ('20140826144226');
 
 INSERT INTO schema_migrations (version) VALUES ('20140827070235');
+
+INSERT INTO schema_migrations (version) VALUES ('20140828071842');
+
+INSERT INTO schema_migrations (version) VALUES ('20140828094549');
+
+INSERT INTO schema_migrations (version) VALUES ('20140904052109');

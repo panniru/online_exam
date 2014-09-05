@@ -43,6 +43,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    angularjs-rails (1.2.22)
     anticipate (0.1.1)
     arel (4.0.2)
     atomic (1.1.14)
@@ -125,6 +126,8 @@ GEM
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
     ffi (1.9.3)
+    font-awesome-rails (4.2.0.0)
+      railties (>= 3.2, < 5.0)
     formtastic (2.2.1)
       actionpack (>= 3.0)
     formtastic-bootstrap (3.0.0)
@@ -266,6 +269,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-nulldb-adapter!
   activerecord-session_store!
+  angularjs-rails (~> 1.2.22)
   anticipate
   bootstrap-sass (~> 3.0.3.0)
   bootstrap-will_paginate
@@ -281,6 +285,7 @@ DEPENDENCIES
   devise
   draper
   factory_girl_rails (~> 4.0)
+  font-awesome-rails (~> 4.2.0.0)
   formtastic
   formtastic-bootstrap
   groupdate

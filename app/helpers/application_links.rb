@@ -52,4 +52,12 @@ module ApplicationLinks
     Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-th-list', 'Results', results_path, controller.controller_name == "results")
   end
 
+  def pramote
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-check', 'Pramote', students_to_pramote_students_path, controller.action_name == "students_to_pramote")
+  end
+
+  def instructions
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-list-alt', 'Instructions', instructions_path, controller.controller_name == "instructions")
+  end
+
 end

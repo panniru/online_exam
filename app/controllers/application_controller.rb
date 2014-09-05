@@ -6,9 +6,14 @@ class ApplicationController < ActionController::Base
   before_action :store_location
   check_authorization :unless => :devise_controller?
   before_action :set_time_zone, :unless => :devise_controller?
+  after_filter :set_csrf_cookie_for_ng
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
+  end
+  
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
   def store_location
@@ -38,4 +43,11 @@ class ApplicationController < ActionController::Base
     current_user.time_zone ||= ActiveSupport::TimeZone[-min.minutes]
     session[:current_time] = Time.zone.now.in_time_zone(current_user.time_zone)
   end
+
+  protected
+  
+  def verified_request?
+    super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
+  end
+
 end

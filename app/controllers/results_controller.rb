@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
 
   skip_authorization_check
-  load_resource :only => [:result_in_detail]
+  load_resource :only => [:result_in_detail, :update_result_details]
   before_action :load_exam, :only => [:exam_results]
   before_action :current_user_exams
 
@@ -36,11 +36,33 @@ class ResultsController < ApplicationController
   end
 
   def result_in_detail
-    page = params[:page].present? ? params[:page] : 1
-    @schedule = SchedulesDecorator.decorate(@result.schedule)
-    @student = @result.student
-    @schedule_details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no").paginate(:page => page)
-    @schedule_details = ScheduleDetailsDecorator.decorate_collection(@schedule_details)
+    respond_to do |format|
+      @schedule = SchedulesDecorator.decorate(@result.schedule)
+      format.html do
+      end
+      format.json do
+        @student = @result.student
+        @schedule_details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no")
+        @schedule_details = ScheduleDetailsDecorator.decorate_collection(@schedule_details)
+        details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no").map do |detail|
+          {:id => detail.id, :question_no => detail.question_no, :question_description => detail.question.description, :answer => detail.question.answer, :answer_caught => detail.answer_caught, :valid_answer => detail.valid_answer?}
+        end
+        render :json => {:marks_secured => @result.marks_secured, :result_text => @result.exam_result, :details => details}
+      end
+    end
+  end
+
+  def update_result_details
+    validator = ExamValidator.new(@result.schedule.exam)
+    respond_to do |format|
+      format.json do
+        if validator.manipulate_student_result(@result, params[:schedule_details])
+          render :json => {:marks_secured => @result.marks_secured, :result_text => @result.exam_result}
+        else
+          render :json => false
+        end
+      end
+    end
   end
 
 

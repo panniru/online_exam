@@ -53,6 +53,8 @@ module ApplicationHelper
       list << exam_results
       list << reports
       list << user_management
+      list << pramote
+      list << instructions
     elsif current_user.faculty?
       list << home
       list << exams

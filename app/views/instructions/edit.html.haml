@@ -1,0 +1,6 @@
+.page-header
+  %h3 Editing instruction
+.row
+  = render 'form'
+.row
+  = link_to 'Back', instructions_path(:exam_id => @instruction.exam_id)
