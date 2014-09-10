@@ -22,6 +22,10 @@ class DescriptiveQuestion < ActiveRecord::Base
     end
     super
   end
+
+  def description
+    self.attributes["description"].gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
+  end
   
   def xls_template(options)
     template_headers = ['description', 'answer']

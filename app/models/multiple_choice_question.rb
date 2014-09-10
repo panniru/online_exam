@@ -27,6 +27,9 @@ class MultipleChoiceQuestion < ActiveRecord::Base
     super
   end
 
+  def description
+    self.attributes["description"].gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
+  end
 
   def xls_template(options)
     template_headers = ['description', 'option_1', 'option_2', 'option_3', 'option_4', 'answer']

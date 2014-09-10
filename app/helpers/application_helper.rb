@@ -69,7 +69,7 @@ module ApplicationHelper
   end
 
   def user_management?
-    controller.controller_name == "faculties" || controller.controller_name == "students" || controller.controller_name == "users"
+    (controller.action_name != "students_to_promote") and (controller.controller_name == "faculties" || controller.controller_name == "students" || controller.controller_name == "users")
   end
 
 end

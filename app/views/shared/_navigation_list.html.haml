@@ -9,12 +9,13 @@
             = item.item
         #collapseUser{:class => "panel-collapse collapse in"}
           %ul.nav.nav-pills.nav-stacked
+            %li{:class => admin.is_active ? "active" : ""}
+              = link_to raw("<i class = '#{admin.icon}'></i> #{admin.item}"), admin.link
             %li{:class => faculty.is_active ? "active" : ""}
               = link_to raw("<i class = '#{faculty.icon}'></i> #{faculty.item}"), faculty.link
             %li{:class => students.is_active ? "active" : ""}
               = link_to raw("<i class = '#{students.icon}'></i> #{students.item}"), students.link
-            %li{:class => admin.is_active ? "active" : ""}
-              = link_to raw("<i class = '#{admin.icon}'></i> #{admin.item}"), admin.link
+
     - else
       %li{:class => active_class, :id => "#{item.item}"}
         %a{ :href =>  item.link}

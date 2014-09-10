@@ -19,7 +19,7 @@ class Exam < ActiveRecord::Base
   has_many :registraions
   belongs_to :course
   has_many :schedules, :dependent => :destroy
-  has_many :results, :dependent => :destroy
+  #has_many :results, :dependent => :destroy
   has_many :instructions, :dependent => :destroy
 
   scope :search_by_name, lambda{|name| where(:exam_name => name)}

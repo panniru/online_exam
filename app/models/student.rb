@@ -20,7 +20,7 @@ class Student < ActiveRecord::Base
   scope :belongs_to_semester, lambda { |semester| where(:semester => semester)}
 
   def course_name
-    course.name
+    course.try(:name)
   end
 
   def exams
