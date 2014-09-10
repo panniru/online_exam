@@ -1,0 +1,7 @@
+%span
+  {{from_index}} - {{to_index}} of {{total_entries}}
+.btn-group.btn-group-sm
+  %button.btn.btn-default{:ng_click => "previousPage()", :ng_class => "{'disabled': from_index == 1}"} 
+    %span.glyphicon.glyphicon-chevron-left
+  %button.btn.btn-default{:ng_click => "nextPage()", :ng_class => "{'disabled': to_index == total_entries}"} 
+    %span.glyphicon.glyphicon-chevron-right

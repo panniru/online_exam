@@ -11,7 +11,7 @@
         %td= @question.option_1
         %td= @question.option_2
         %td= @question.option_3
-        %td= @question.option_4
+        %td= @question.option_4.present? ? @question.option_4 : "--"
 
 .col-sm-5
   %table.table.table-bordered

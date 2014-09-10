@@ -1,1 +1,39 @@
-= render "search_exam"
+.col-md-12{:ng_controller => "StudentResultController"}
+  = render "search_exam"
+  %br
+  .row{:ng_show => "results"}
+    .row
+      = render "search_student"
+    %br
+    .row
+      .col-md-3.col-md-offset-9
+        = render "shared/pagination_text"
+      %table.table.table-bordered.table-hover
+        %thead
+          - if current_user.student?
+            %th Exam
+            %th Semester
+          - else
+            %th Roll Number
+            %th Name
+          %th Total Marks
+          %th Secured Marks
+          %th Exam Date
+          %th Result
+        %tbody
+          %tr{:ng_repeat => "result in results"}
+            - if current_user.student?
+              %td
+                %a{:href => "{{result.url}}"} {{result.exam_name}}
+              %td result.semester
+            - else
+              %td
+                %a{:href => "{{result.url}}"} {{result.roll_number}}
+            %td {{result.student_name}}
+            %td {{result.total_marks}}
+            %td {{result.marks_secured}}
+            %td {{result.exam_date}}
+            %td {{result.exam_result}}
+
+
+

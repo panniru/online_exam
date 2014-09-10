@@ -2,10 +2,12 @@
   - navigation_list.each do |item|
     - active_class = ''
     - active_class = 'active' if item.is_active
-    %li{:class => active_class, :id => "#{item.item}"}
-      - if item.item == 'Users'
-        = link_to raw("<i class = '#{item.icon}'></i> #{item.item}"), "#collapseUser", :data => { :toggle => "collapse", :parent => "#accordion"}
-        #collapseUser.panel-collapse.collapse.in
+    - if item.item == 'Users'
+      %li{:class => "#{user_management? ? 'active' : ''}", :id => "#{item.item}"}
+        %a{:href => "#collapseUser", :data => { :toggle => "collapse", :parent => "#accordion"}}
+          %i{ :class => item.icon }
+            = item.item
+        #collapseUser{:class => "panel-collapse collapse in"}
           %ul.nav.nav-pills.nav-stacked
             %li{:class => faculty.is_active ? "active" : ""}
               = link_to raw("<i class = '#{faculty.icon}'></i> #{faculty.item}"), faculty.link
@@ -13,7 +15,8 @@
               = link_to raw("<i class = '#{students.icon}'></i> #{students.item}"), students.link
             %li{:class => admin.is_active ? "active" : ""}
               = link_to raw("<i class = '#{admin.icon}'></i> #{admin.item}"), admin.link
-      - else
+    - else
+      %li{:class => active_class, :id => "#{item.item}"}
         %a{ :href =>  item.link}
           %i{ :class => item.icon }
             = item.item

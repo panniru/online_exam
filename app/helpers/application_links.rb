@@ -12,7 +12,7 @@ module ApplicationLinks
   end
 
   def exams
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Exams', exams_path, controller.controller_name == "exams")
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Exams', exams_path, (controller.controller_name == "exams" or controller.controller_name == "descriptive_questions" or controller.controller_name == "multiple_choice_questions"))
   end
 
   def home
@@ -37,7 +37,7 @@ module ApplicationLinks
   end
 
   def user_management
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-user', 'Users', users_path, controller.controller_name == "users")
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-user', 'Users', users_path, controller.controller_name == "")
   end
 
   def schedules
@@ -52,8 +52,8 @@ module ApplicationLinks
     Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-th-list', 'Results', results_path, controller.controller_name == "results")
   end
 
-  def pramote
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-check', 'Pramote', students_to_pramote_students_path, controller.action_name == "students_to_pramote")
+  def promote
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-check', 'Promote', students_to_promote_students_path, controller.action_name == "students_to_promote")
   end
 
   def instructions

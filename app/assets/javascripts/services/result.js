@@ -10,10 +10,33 @@
             var url = "/results/"+resultId+"/update_result_details.json"
             return $http.put(url, {schedule_details: details})
         }
+
+        var examResults = function(examId, date, page){
+            var url = "/results/exam_results.json"
+            return $http.get(url, {params:{exam_id: examId, schedule_date: date, page:page}});
+        }
+
+        var searchOnStudent = function(examId, date, studentId){
+            var url = "/results/exam_results.json"
+            return $http.get(url, {params:{exam_id: examId, schedule_date: date, student_id: studentId}});
+        }
+
+        var printUrl = function(examId, date){
+            return "/results/exam_results.pdf?exam_id="+examId+"&schedule_date="+date
+        }
+
+        var mail = function(formData){
+            var url = "/results/mail.json"
+            return $http.get(url, {params: formData});
+        }
         
         return {
             resultInDetail : resultInDetail,
-            updateResultDetails : updateResultDetails
+            updateResultDetails : updateResultDetails,
+            examResults : examResults,
+            searchOnStudent : searchOnStudent,
+            printUrl : printUrl,
+            mail : mail
         };
                     
     }]);

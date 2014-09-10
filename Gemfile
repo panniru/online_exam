@@ -61,3 +61,4 @@ group :development, :test do
   gem 'anticipate'
 end
 gem 'factory_girl_rails', '~> 4.0'
+gem 'delayed_job_active_record'

@@ -80,10 +80,11 @@ class ExamValidator
       exam.pass_text_4
     elsif exam.pass_criteria_5.present? and pass_percent >= exam.pass_criteria_5 and pass_percent < exam.pass_criteria_4
       exam.pass_text_5
-    elsif exam.pass_criteria_6.present? and pass_percent >= exam.pass_criteria_6 and pass_percent < exam.pass_criteria_5
-      exam.pass_text_6
+    # elsif exam.pass_criteria_6.present? and pass_percent >= exam.pass_criteria_6 and pass_percent < exam.pass_criteria_5
+    #   exam.pass_text_6
     else
-      "FAIL"
+      exam.pass_text_6
+      #"FAIL"
     end
   end
 end

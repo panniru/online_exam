@@ -60,6 +60,13 @@ class Exam < ActiveRecord::Base
     "#{course.name} - #{semester} - #{subject} - #{exam_name}"
   end
 
+  # Overriden method to show last criteria as fail
+  # Since pass_criteria fileds are numeric here we are hard coding getter
+  # with FAIL
+  def pass_criteria_6 
+    "FAIL"
+  end
+
   private
 
   def set_default_nagative_mark

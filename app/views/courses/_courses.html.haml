@@ -2,7 +2,8 @@
   - courses.each do |course|
     %tr{:id => "content-course-#{course.id}"}
       %td.well1.panel-title
-        = link_to course.name, "#", :data => {:id => course.id}, :rel => "course-drill", :id => "course-#{course.id}"
-        .pull-right
-          - if can? [:create], Course
-            = link_to raw("<span class= 'glyphicon glyphicon-edit'/>"), course
+        = link_to course.name, course, :data => {:id => course.id}, :id => "course-#{course.id}"
+        -# , :rel => "course-drill"
+        -# .pull-right
+        -#   - if can? [:create], Course
+        -#     = link_to raw("<span class= 'glyphicon glyphicon-edit'/>"), course

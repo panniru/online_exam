@@ -1,0 +1,23 @@
+= wicked_pdf_stylesheet_link_tag "bootstrap"
+= wicked_pdf_stylesheet_link_tag "custom"
+
+
+%strong= "Exam : #{exam_name}"
+%br
+%strong= "Date : #{date}"
+
+%table.table.table-bordered
+  %thead
+    %th Roll Number
+    %th Name
+    %th Marks Secured
+    %th Total Marks
+    %th Grade
+  %tbody
+    - results.each do |result|
+      %tr
+        %td= result.student_roll_number
+        %td= result.student_name
+        %td= result.marks_secured
+        %td= result.total_marks
+        %td= result.exam_result

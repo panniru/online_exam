@@ -6,35 +6,52 @@ class ResultsController < ApplicationController
   before_action :current_user_exams
 
 
+  def index
+  end
+
   def exam_results
-    schedules = @exam.schedules.map(&:id)
-    page = params[:page].present? ? params[:page] : 1
-    unless schedules.empty?
-      if params[:student].present?
-        @results = Result.belongs_to_student(params[:student]).belongs_to_schedules(@exam.schedules.map(&:id)).paginate(:page => 1)
-      else
-        @results = Result.belongs_to_schedules(@exam.schedules.map(&:id)).paginate(:page => page)
-      end
-      @results = ResultsDecorator.decorate_collection(@results)
-      respond_to do |format|
-        format.html { }
+
+    respond_to do |format|
+      schedules = @exam.schedules.dated_on(params[:schedule_date]).map(&:id)
+      page = params[:page].present? ? params[:page] : 1
+      unless schedules.empty?
+        if params[:student].present?
+          @results = Result.belongs_to_student(params[:student]).belongs_to_schedules(schedules).paginate(:page => 1)
+        else
+          @results = Result.belongs_to_schedules(schedules).paginate(:page => page)
+        end
+        
+        format.html do
+          @results = ResultsDecorator.decorate_collection(@results)
+        end
         format.pdf do
+          @results = ResultsDecorator.decorate_collection(@results)
           render :pdf => "#{@exam.exam_name} Results ",
-          :template => 'reports/results',
+          :template => 'results/results',
           :formats => [:pdf],
+          :locals => { exam_name: @exam.exam_full_name, date: params[:schedule_date], results: @results },
           :page_size  => 'A4',
           :margin => {:top => '8mm',
             :bottom => '8mm',
             :left => '14mm',
             :right => '14mm'}
         end
+        format.json do
+          json_data = {}
+          json_data[:results] = @results.map do |r|
+            r = ResultsDecorator.decorate(r)
+            { :id => r.id , :roll_number => r.student_roll_number, :marks_secured=> r.marks_secured, :total_marks => r.total_marks, :url => result_in_detail_result_path(r), :semester => r.semester, :exam_date => r.exam_date, :exam_result => r.exam_result, :exam_name => r.exam_name, :student_name => r.student_name }
+          end
+          render :json => JsonPagination.inject_pagination_entries(@results, json_data)
+        end
+      else
+        format.json do
+          render :json => {results: []}
+        end
       end
-    else
-      flash.now[:fail] = I18n.t :fail, :scope => [:report, :results]
-      render "index"
     end
   end
-
+  
   def result_in_detail
     respond_to do |format|
       @schedule = SchedulesDecorator.decorate(@result.schedule)
@@ -65,6 +82,17 @@ class ResultsController < ApplicationController
     end
   end
 
+  def mail
+    respond_to do |format|
+      format.json do
+        @exam = Exam.find(params[:exam_id])
+        tos = params[:email].split(",").map(&:strip)
+        mail_job = ResultMailingJob.new(@exam, tos, params[:subject], params[:content], params[:schedule_date])
+        Delayed::Job.enqueue mail_job
+        render :json => {status: true}
+      end
+    end
+  end
 
   
   private

@@ -4,9 +4,11 @@
 .radio
   = radio_button_tag(:answer_caught, @question.option_2, @question.option_2 == @question.answer_caught)
   = label_tag(:label_2, @question.option_2)
-.radio
-  = radio_button_tag(:answer_caught, @question.option_3, @question.option_3 == @question.answer_caught)
-  = label_tag(:label_3, @question.option_3)
-.radio
-  = radio_button_tag(:answer_caught, @question.option_4, @question.option_4 == @question.answer_caught)
-  = label_tag(:label_4, @question.option_4)
+- if @question.option_3.present?
+  .radio
+    = radio_button_tag(:answer_caught, @question.option_3, @question.option_3 == @question.answer_caught)
+    = label_tag(:label_3, @question.option_3)
+- if @question.option_4.present?
+  .radio
+    = radio_button_tag(:answer_caught, @question.option_4, @question.option_4 == @question.answer_caught)
+    = label_tag(:label_4, @question.option_4)

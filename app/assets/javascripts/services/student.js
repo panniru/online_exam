@@ -2,7 +2,7 @@
     "use strict";
     app.service("studentService",["$http", function($http) {
         var getStudents = function(courseId, semester, page){
-            var url = "/students/students_to_pramote.json"
+            var url = "/students/students_to_promote.json"
             return $http.get(url, {params: {course_id: courseId, semester: semester, page: page}});
         }
 

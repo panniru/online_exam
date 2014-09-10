@@ -5,13 +5,16 @@ class AutoSearchController < ApplicationController
 
   autocomplete :user, :user_info, :column_name => :user_id, :full => true, :scopes => [:admins]
 
-  autocomplete :student, :roll_number, :full => true, :extra_data => [:name, :semester]
-
   autocomplete :faculty, :name, :full => true, :extra_data => [:designation]
 
   autocomplete :course, :name, :full => true
   autocomplete :exam, :subject, :full => true
   autocomplete :exam, :exam_name, :full => true
+
+  def autocomplete_student_roll_number
+    students = Student.where("(lower(roll_number) ILIKE '%#{params[:term]}%') AND (id in (SELECT student_id from results where schedule_id in (SELECT id from schedules where exam_id = #{params[:exam_id]} AND schedule_date = '#{params[:schedule_date]}')))")
+    render :json => students.map{ |student| {:id => student.id, :label => student.roll_number}}
+  end
 
   def get_autocomplete_items(parameters)
     items = super(parameters)

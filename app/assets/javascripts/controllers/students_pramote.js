@@ -2,6 +2,7 @@
     "use strict";
     app.controller("StudentsPramoteController",["$scope", "studentService", function($scope, studentService) {
         $scope.page = 1 
+
         $scope.getStudents = function(){
             studentService.getStudents($scope.course, $scope.semester, $scope.page)
             .then(function(responce){
@@ -21,6 +22,7 @@
                 val.isChecked = $scope.allChecked
             });
         };
+
         $scope.nextPage = function(){
             $scope.page = $scope.current_page + 1;
             $scope.getStudents();

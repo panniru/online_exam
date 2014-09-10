@@ -45,7 +45,11 @@ class User < ActiveRecord::Base
   end
 
   def exams
-    resource.exams
+    if admin?
+      Exam.all
+    else
+      resource.exams
+    end
   end
 
 end

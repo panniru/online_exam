@@ -1,8 +1,13 @@
-= form_tag exam_results_results_path, :method => 'get' , :class => "form-inline", :id => "exam_results" do
-  .col-md-12
-    = label_tag :exam, "Exam",:class => 'col-md-1 control-label'
-    .col-md-5
-      = select_tag :exam_id, options_from_collection_for_select(@user_exams, "id", "exam_full_name", params[:exam_id]),  :class => 'form-control'
-    .col-md-4
-      = submit_tag "Get Results", :name => nil, :class => "btn-primary btn"
-      = link_to "Print Results", "#", :class => "btn-primary btn", :rel => "print-report"
+.row{:ng_controller => "ExamSearchController as examCtrl", :ng_init => "getExams()"}
+  %form{:method => 'get' , :class => "form-inline", :id => "exam_results", :ng_submit => "$parent.getResults()"}
+    .col-md-12
+      .col-md-6.form-group
+        = label_tag :exam, "Exam",:class => 'col-md-2 control-label'
+        .col-md-10
+          %select{:class => 'form-control', :ng_model => "$parent.examId", :ng_change => "getSchedules()", :ng_options => "exam.id as exam.exam_full_name for exam in exams"}
+      .col-md-4.form-group
+        = label_tag :schedule_date, "Date",:class => 'col-md-4 control-label'
+        .col-md-8
+          %select{ :id => "schedule_date", :class => 'form-control', :ng_model => "$parent.scheduleDate", :ng_options => "schedule.schedule_date as schedule.schedule_date for schedule in schedules", :name => "schedule_date" }
+      .col-md-1.form-group
+        = submit_tag "Get", :name => nil, :class => "btn-primary btn"

@@ -3,8 +3,8 @@ class MultipleChoiceQuestion < ActiveRecord::Base
   validates :description, :presence => true
   validates :option_1, :presence => true
   validates :option_2, :presence => true
-  validates :option_3, :presence => true
-  validates :option_4, :presence => true
+  # validates :option_3, :presence => true
+  # validates :option_4, :presence => true
   validates :answer, :presence => true
 
   attr_accessor :is_descriptive

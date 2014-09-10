@@ -12,8 +12,7 @@ OnlineExam::Application.routes.draw do
     collection do
       get "new_upload"
       post "upload"
-      post "pramote"
-      get "students_to_pramote"
+      get "students_to_promote"
       post "promote_or_demote_all"
       post "promote_or_demote"
     end
@@ -49,6 +48,10 @@ OnlineExam::Application.routes.draw do
         get 'xls_template'
       end
     end
+    
+    member do
+      get "schedules"
+    end
   end
 
   resources :reports do
@@ -67,6 +70,7 @@ OnlineExam::Application.routes.draw do
     end
     collection do
       get "exam_results"
+      get "mail"
     end
   end
 

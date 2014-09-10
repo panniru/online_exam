@@ -1,7 +1,7 @@
 = form_tag courses_path, :method => 'get' , :class => "form-inline" do
   .form-group.col-md-6
     = autocomplete_field_tag :search_term,
-    '',
+    params[:search_term],
     auto_search_autocomplete_course_name_path,
     :placeholder => "Course Name", :class => 'form-control',
     :id_element => "#search"

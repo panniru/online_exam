@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-  load_resource :only => [:show, :update, :destroy, :edit, :new]
+  load_resource :only => [:show, :update, :destroy, :edit, :new, :schedules]
   authorize_resource
 
 
@@ -8,12 +8,21 @@ class ExamsController < ApplicationController
   end
 
   def index
-    page = params[:page].present? ? params[:page] : 1
-    if params[:search].present?
-      @exams = Exam.search_by_name(params[:search]).paginate(:page => 1)
-    else
-      @exams = current_user.admin? ? Exam.all : Exam.belongs_to_faculty(current_user.resource.id)
-      @exams = @exams.order("exam_name").paginate(:page => page)
+    respond_to do |format|
+      format.html do
+        page = params[:page].present? ? params[:page] : 1
+        if params[:search].present?
+          @exams = Exam.search_by_name(params[:search]).paginate(:page => 1)
+        else
+          @exams = current_user.exams.order("exam_name").paginate(:page => page)
+        end
+      end
+      format.json do
+        exams = current_user.exams.order("exam_name").map do |exam|
+          exam.attributes.merge(:exam_full_name => exam.exam_full_name)
+        end
+        render :json => exams
+      end
     end
   end
 
@@ -57,6 +66,14 @@ class ExamsController < ApplicationController
           ["#{exam.exam_name}, #{exam.semester}, #{exam.subject}", exam.id]
         end
         render :json => data
+      end
+    end
+  end
+
+  def schedules
+    respond_to do |format|
+      format.json do
+        render :json => @exam.schedules.select(:schedule_date).uniq
       end
     end
   end

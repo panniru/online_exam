@@ -4,3 +4,17 @@
     .pull-right
       = link_to "Edit", edit_course_path(@course), :class => "btn btn-success"
       = link_to "Delete", course_path(@course), :class => "btn btn-danger", :data => {:confirm => "Are You Sure?", :method => :delete}
+
+.row
+  %table.table.table-bordered.table-hover
+    %thead
+      %th Exam Name
+      %th Subject
+      %th Semester
+    %tbody
+      - @course.exams.each do |exam|
+        %tr
+          %td= link_to exam.exam_name, exam
+          %td= exam.subject
+          %td= exam.semester
+

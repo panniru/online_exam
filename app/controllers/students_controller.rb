@@ -76,7 +76,7 @@ class StudentsController < ApplicationController
     @results = ResultsDecorator.decorate_collection(@student.results)
   end
 
-  def students_to_pramote
+  def students_to_promote
     page = params[:page].present? ? params[:page] : 1
     @students = Student.belongs_to_course(params[:course_id]).belongs_to_semester(params[:semester]).order("roll_number DESC").paginate(:page => page)
     respond_to do |format|
@@ -85,16 +85,11 @@ class StudentsController < ApplicationController
         students = @students.map do |student|
           {id: student.id, name: student.name, course: student.course.name, semester: student.semester, roll_number: student.roll_number}
         end
-        data[:total_entries] = @students.total_entries
-        previous_page = @students.previous_page.present? ? @students.previous_page : 0
-        data[:current_page] = previous_page+1
-        data[:to_index] = (data[:current_page] * @students.per_page) > @students.total_entries ? @students.total_entries : (data[:current_page] * @students.per_page)
-        data[:from_index] = (previous_page * @students.per_page)+1
         data[:students] = students
-        render :json => data
+        render :json => JsonPagination.inject_pagination_entries(@students, data)
       end
       format.html do
-        render "students_to_pramote"
+        render "students_to_promote"
       end
     end
   end

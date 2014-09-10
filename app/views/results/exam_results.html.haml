@@ -1,8 +1,10 @@
-= render "search_exam"
-%br
-%br
-%br
+.row
+  = render "search_exam"
+  %br
+  %br
+
 = render "search_student"
+%br
 %br
 = render :partial => "shared/results", :locals => {:results => @results}
 

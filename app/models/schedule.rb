@@ -17,6 +17,8 @@ class Schedule < ActiveRecord::Base
   scope :belongs_to_faculty, lambda { |id| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.faculty_id = ?)', id )}
 
   scope :belongs_to_student, lambda{|course_id, semester| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.course_id = ? and semester = ? )', course_id, semester)}
+  scope :dated_on, lambda{|date| where(:schedule_date => date)}
+  
 
   def self.role_based_schedules(user)
     if user.faculty?

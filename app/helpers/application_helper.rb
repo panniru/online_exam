@@ -52,9 +52,9 @@ module ApplicationHelper
       list << schedules
       list << exam_results
       list << reports
-      list << user_management
-      list << pramote
+      list << promote
       list << instructions
+      list << user_management
     elsif current_user.faculty?
       list << home
       list << exams
@@ -66,6 +66,10 @@ module ApplicationHelper
       list << results
     end
     list
+  end
+
+  def user_management?
+    controller.controller_name == "faculties" || controller.controller_name == "students" || controller.controller_name == "users"
   end
 
 end
