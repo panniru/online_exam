@@ -291,8 +291,8 @@ CREATE TABLE exams (
     pass_text_3 character varying(255),
     pass_criteria_4 double precision,
     pass_text_4 character varying(255),
-    multiple_choice integer,
-    fill_in_blanks integer,
+    multiple_choice integer DEFAULT 0,
+    fill_in_blanks integer DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     faculty_id integer,
@@ -1133,3 +1133,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140828094549');
 INSERT INTO schema_migrations (version) VALUES ('20140904052109');
 
 INSERT INTO schema_migrations (version) VALUES ('20140905130238');
+
+INSERT INTO schema_migrations (version) VALUES ('20140911063924');

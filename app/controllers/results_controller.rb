@@ -62,7 +62,7 @@ class ResultsController < ApplicationController
         @schedule_details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no")
         @schedule_details = ScheduleDetailsDecorator.decorate_collection(@schedule_details)
         details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no").map do |detail|
-          {:id => detail.id, :question_no => detail.question_no, :question_description => detail.question.description, :answer => detail.question.answer, :answer_caught => detail.answer_caught, :valid_answer => detail.valid_answer?}
+          {:id => detail.id, :question_no => detail.question_no, :question_description => detail.question.description_without_html, :answer => detail.question.answer, :answer_caught => detail.answer_caught, :valid_answer => detail.valid_answer?}
         end
         render :json => {:marks_secured => @result.marks_secured, :result_text => @result.exam_result, :details => details}
       end

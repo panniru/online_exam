@@ -10,6 +10,7 @@ class DescriptiveQuestion < ActiveRecord::Base
 
   belongs_to :exam
 
+  
   def update(params)
     if params[:audio_video_question_attributes].present?
       if !params[:audio_video_question_attributes][:digi_file].present? and params[:audio_video_question_attributes][:remove_digi_file] == "0"
@@ -23,10 +24,6 @@ class DescriptiveQuestion < ActiveRecord::Base
     super
   end
 
-  def description
-    self.attributes["description"].gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
-  end
-  
   def xls_template(options)
     template_headers = ['description', 'answer']
     CSV.generate(options) do |csv|
@@ -41,5 +38,15 @@ class DescriptiveQuestion < ActiveRecord::Base
       super
     end
   end
+  
+  def description
+    self.attributes["description"]
+  end
+
+  def description_with_html
+    self.attributes["description"].gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
+  end
+  
+  alias_method_chain :description, :html
 
 end
