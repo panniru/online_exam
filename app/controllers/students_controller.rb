@@ -29,8 +29,6 @@ class StudentsController < ApplicationController
   end
 
   def update
-    p "========"
-    p student_update_params
     if @student.update_student(student_update_params)
       flash.now[:success] = I18n.t :success, :scope => [:student, :update]
       render "show"
