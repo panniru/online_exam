@@ -10,4 +10,8 @@ class Course < ActiveRecord::Base
   scope :search, lambda { |id| where(:id => id)}
 
 
+  def self.current_academic_year
+    "#{Date.today.year}-#{(Date.today.year+1).to_s[2..3]}"
+  end
+  
 end

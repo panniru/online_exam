@@ -37,6 +37,7 @@
           %th Roll Number
           %th Name
           %th Course
+          %th Year
           %th Semester
           %th
             %lable.checkbox
@@ -46,6 +47,7 @@
             %td {{student.roll_number}}
             %td {{student.name}}
             %td {{student.course}}
+            %td {{student.year}}
             %td {{student.semester}}
             %td.width-10
               %input{:type => "checkbox", :ng_model => "student.isChecked", :class=> "form-control"}

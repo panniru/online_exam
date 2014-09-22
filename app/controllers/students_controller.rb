@@ -4,6 +4,7 @@ class StudentsController < ApplicationController
 
   def new
     @student.build_user
+    @student.academic_year = Course.current_academic_year
     @student.user.role_id = Role.student_role.id
   end
 
@@ -28,7 +29,9 @@ class StudentsController < ApplicationController
   end
 
   def update
-    if @student.update(student_update_params)
+    p "========"
+    p student_update_params
+    if @student.update_student(student_update_params)
       flash.now[:success] = I18n.t :success, :scope => [:student, :update]
       render "show"
     else
@@ -83,7 +86,7 @@ class StudentsController < ApplicationController
       data = {}
       format.json do
         students = @students.map do |student|
-          {id: student.id, name: student.name, course: student.course.name, semester: student.semester, roll_number: student.roll_number}
+          {id: student.id, name: student.name, course: student.course.name, semester: student.semester, roll_number: student.roll_number, year: student.year}
         end
         data[:students] = students
         render :json => JsonPagination.inject_pagination_entries(@students, data)
@@ -97,15 +100,13 @@ class StudentsController < ApplicationController
   def promote_or_demote_all
     respond_to do |format|
       format.json do
+        status = false
         new_semester = params[:semester]
         if params[:action_type] == 'promote'
+          status = Student.pramote_semester(params[:course_id], params[:semester]) 
           new_semester = (params[:semester].to_i+1)
         elsif params[:action_type] == 'demote'
-          new_semester = (params[:semester].to_i-1)
-        end
-        status = false
-        if new_semester > 0
-          status = Student.belongs_to_course(params[:course_id]).belongs_to_semester(params[:semester]).update_all({:semester => new_semester}) 
+          status = Student.demote_semester(params[:course_id], params[:semester]) 
         end
         render :json => status
       end
@@ -115,15 +116,12 @@ class StudentsController < ApplicationController
   def promote_or_demote
     respond_to do |format|
       format.json do
+        status = false
         new_semester = params[:semester];
         if params[:action_type] == 'promote'
-          new_semester = (params[:semester].to_i+1)
+          status = Student.pramote(params[:students].map{|st| st["id"]}, params[:semester])
         elsif params[:action_type] == 'demote'
-          new_semester = (params[:semester].to_i-1)
-        end
-        status = false
-        if new_semester > 0
-          status = Student.where(:id => params[:students].map{|st| st["id"]}).update_all({:semester => new_semester}) 
+          status = Student.demote(params[:students].map{|st| st["id"]}, params[:semester])
         end
         render :json => status
       end
@@ -133,11 +131,11 @@ class StudentsController < ApplicationController
   private
 
   def student_params
-    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semester, :roll_number, :user_attributes => [:user_id, :email, :password, :password_confirmation, :role_id])
+    params.require(:student).permit(:name, :year, :academic_year, :email, :course_id, :semester, :roll_number, :user_attributes => [:user_id, :email, :password, :password_confirmation, :role_id])
   end
 
   def student_update_params
-    params.require(:student).permit(:name, :dob, :joining_date, :email, :course_id, :semester, :roll_number)
+    params.require(:student).permit(:name, :year, :academic_year, :email, :course_id, :semester, :roll_number, :user_attributes => [:email, :new_password, :new_password_confirmation, :user_id, :id])
   end
 
 end

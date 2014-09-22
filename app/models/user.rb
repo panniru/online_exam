@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   validates :user_id, :presence => true, :uniqueness => true
   validates :role_id, :presence => true
-  attr_accessor :time_zone
+  attr_accessor :time_zone, :new_password, :new_password_confirmation
 
   multisearchable :against => [:user_id, :email]
 
@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     else
       resource.exams
     end
+  end
+  
+  def email_required?
+    false
   end
 
 end

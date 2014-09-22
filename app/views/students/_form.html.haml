@@ -12,24 +12,26 @@
     - unless @student.id.present?
       = f.fields_for :user do |f|
         = render "shared/sign_up", :f => f
+    - else
+      = f.fields_for :user do |f|
+        = render "edit_sign_up", :f => f
 
-    .form-group
-      = f.label "Date Of Birth", :class => 'col-sm-2 control-label'
-      .col-sm-8
-        = f.text_field :dob, :class => 'datepicker form-control'
-    .form-group
-      = f.label "Joining Date", :class => 'col-sm-2 control-label'
-      .col-sm-8
-        = f.text_field :joining_date, :class => 'datepicker form-control'
     .form-group
       = f.label :course, :class => 'col-sm-2 control-label'
       .col-sm-8
         = f.select :course_id, courses,{}, :class => 'form-control'
     .form-group
+      = f.label "Year", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :year, :class => 'form-control', :numeric => true
+    .form-group
       = f.label :semester, :class => 'col-sm-2 control-label'
       .col-sm-8
         = f.text_field :semester, :class => 'form-control'
-
+    .form-group
+      = f.label "Academic Year", :class => 'col-sm-2 control-label'
+      .col-sm-8
+        = f.text_field :academic_year, :class => 'form-control', :readonly => true
   .col-sm-8.pull-right
     - unless @student.id.present?
       = f.submit "Create", :class => 'btn btn-primary'

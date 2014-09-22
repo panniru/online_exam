@@ -680,14 +680,14 @@ ALTER SEQUENCE sessions_id_seq OWNED BY sessions.id;
 CREATE TABLE students (
     id integer NOT NULL,
     name character varying(255),
-    dob date,
-    joining_date date,
     course_id integer,
     semester integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     roll_number character varying(255),
-    user_id integer
+    user_id integer,
+    year integer,
+    academic_year character varying(255)
 );
 
 
@@ -1135,3 +1135,7 @@ INSERT INTO schema_migrations (version) VALUES ('20140904052109');
 INSERT INTO schema_migrations (version) VALUES ('20140905130238');
 
 INSERT INTO schema_migrations (version) VALUES ('20140911063924');
+
+INSERT INTO schema_migrations (version) VALUES ('20140916055341');
+
+INSERT INTO schema_migrations (version) VALUES ('20140916055910');

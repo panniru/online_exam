@@ -3,6 +3,7 @@
     %th Roll No
     %th Name
     %th Course
+    %th Year
     %th Semester
     %th email
   %tbody
@@ -11,5 +12,6 @@
         %td= link_to student.roll_number, student
         %td= student.name
         %td= student.course_name
+        %td= student.year
         %td= student.semester
         %td= student.user.try(:email)

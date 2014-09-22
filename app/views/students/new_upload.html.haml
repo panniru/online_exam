@@ -17,7 +17,7 @@
         .col-sm-2
           = f.label "Course", :class => 'control-label'
         .col-sm-3
-          = f.select :course_id, courses,{}, :class => 'form-control'
+          = f.select :course_id, courses << ['All', "all"],{}, :class => 'form-control'
         .col-sm-3
           = f.file_field :file
         .col-sm-2

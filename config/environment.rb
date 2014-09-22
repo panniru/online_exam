@@ -6,3 +6,7 @@ OnlineExam::Application.initialize!
 
 Date::DATE_FORMATS[:default] = lambda { |date| I18n.l(date) }
 Time::DATE_FORMATS[:default] = "%d/%m/%Y %H:%M:%S"
+
+Rails.logger = Logger.new(STDOUT)
+Rails.logger.level = 0
+
