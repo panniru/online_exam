@@ -3,8 +3,8 @@
     app.controller("StudentsPramoteController",["$scope", "studentService", function($scope, studentService) {
         $scope.page = 1 
 
-        $scope.getStudents = function(){
-            studentService.getStudents($scope.course, $scope.semester, $scope.page)
+        $scope.getStudents = function(page){
+            studentService.getStudents($scope.course, $scope.semester, page)
             .then(function(responce){
                 $scope.students = responce.data.students
                 $scope.total_entries = responce.data.total_entries;

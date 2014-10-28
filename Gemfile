@@ -8,6 +8,7 @@ gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'angularjs-rails', '~> 1.2.22'
 gem 'font-awesome-rails', '~> 4.2.0.0'
+gem 'angular-rails-templates'
 
 group :assets do
   gem 'uglifier', '>= 1.3.0'

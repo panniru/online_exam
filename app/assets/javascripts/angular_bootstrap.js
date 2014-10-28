@@ -1,1 +1,1 @@
-var oleApp = angular.module("oleApp", []);
+var oleApp = angular.module("oleApp", ['templates']);

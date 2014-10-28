@@ -10,6 +10,7 @@
 //= require chartkick
 
 //= require angular
+//= require angular-rails-templates
 
 //= require bootstrap/tooltip
 //= require bootstrap/scrollspy

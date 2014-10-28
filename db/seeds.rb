@@ -66,7 +66,7 @@ end
 def seed_user_details
   student = User.where(user_id: "student").first
 
-  Student.first_or_create!(name: "student", dob: "17/06/1989", joining_date: "06/06/2009", course_id: Course.first.id, semester: 1, roll_number: "088072010", user_id: student.id )
+  Student.first_or_create!(name: "student", course_id: Course.first.id, semester: 1, roll_number: "088072010", user_id: student.id )
 end
 
 def seed_user

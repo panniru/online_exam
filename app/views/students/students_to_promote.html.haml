@@ -13,10 +13,10 @@
         .col-sm-8.col-md-8
           = select_tag :semester, options_for_select((1..6).map{|i| i}) , :class => 'form-control', :ng_model => "semester"
       .form-group
-        = link_to "Get Students", "#", :class => "btn btn-primary", :ng_click => "getStudents()"
+        = link_to "Get Students", "#", :class => "btn btn-primary", :ng_click => "getStudents(1)"
   .row{:ng_show => "students"}
     .col-md-4.col-md-offset-8
-      = render "shared/pagination_text"
+      %my-pagination{:from => "from_index", :to => "to_index", :total=> "total_entries", :action => "getStudents(page)"}
       .btn-group.btn-group-sm
         %button.btn.btn-danger.dropdown-toggle{"data-toggle" => "dropdown"}
           %span.glyphicon.glyphicon-cog
