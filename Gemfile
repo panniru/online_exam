@@ -41,7 +41,7 @@ gem 'virtus'
 
 gem 'pg_search'
 
-gem 'rmagick'
+#gem 'rmagick'
 gem 'carrierwave'
 
 gem 'jw_player_helper'
