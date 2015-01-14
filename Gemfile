@@ -64,12 +64,12 @@ group :development, :test do
 end
 gem 'factory_girl_rails', '~> 4.0'
 gem 'delayed_job_active_record'
-gem 'unicorn', '~> 4.8.3'
+gem 'unicorn'
 
 group :development do
   gem 'capistrano', '~> 3.3.0'
   gem 'capistrano-rbenv', '~> 2.0'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rails', '~> 1.1'
-  gem 'capistrano-unicorn-nginx', '~> 3.1.0'
+  #gem 'capistrano-unicorn-nginx', '~> 3.1.0'
 end
