@@ -17,3 +17,4 @@
 public/system
 public/stylesheets/
 public/uploads/
+config/database.yml
