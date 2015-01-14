@@ -2,7 +2,7 @@
 lock '3.3.5'
 
 set :application, 'online_exam'
-set :repo_url, 'git@bitbucket.org:GopikaArun/online_exam.git'
+set :repo_url, 'git@github.com:sri-sankl/online_exam.git' #'git@bitbucket.org:GopikaArun/online_exam.git'
 set :scm, :git
 set :user, "deployer"
 set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
@@ -34,10 +34,10 @@ set :rbenv_roles, :all # default value
 # set :pty, true
 
 # Default value for :linked_files is []
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+set :linked_files, %w{config/database.yml} 
 
 # Default value for linked_dirs is []
-# set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -47,33 +47,43 @@ set :rbenv_roles, :all # default value
 
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
+  # after :restart, :clear_cache do
+  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
+  #     # Here we can do anything such as:
+  #     # within release_path do
+  #     #   execute :rake, 'cache:clear'
+  #     # end
+  #   end
+  # end
 
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command do
-      on roles(:app) do
-        run "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
-      end
-    end
-  end
+  # %w[start stop restart].each do |command|
+  #   desc "#{command} unicorn server"
+  #   task command do
+  #     on roles(:app) do
+  #       run "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
+  #     end
+  #   end
+  # end
 
-  task :setup_config do
-    on roles(:app) do
-      execute :sudo , "ln -nfs #{fetch(:current_path)}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
-      execute :sudo , "ln -nfs #{fetch(:current_path)}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
-      execute :sudo , "mkdir -p #{fetch(:shared_path)}/config"
-      put File.read("config/database.example.yml"), "#{fetch(:shared_path)}/config/database.yml"
-      puts "Now edit the config files in #{fetch(:shared_path)}."
-    end
-  end
-  before :published, "deploy:setup_config"
+  # task :setup_config do
+  #   desc "==============#{fetch(:current_path)}/config/unicorn_init.sh"
+  #   on roles(:app) do
+  #     execute :sudo , "ln -nfs #{fetch(:current_path)}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+  #     execute :sudo , "ln -nfs #{fetch(:current_path)}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
+      
+  #     #put File.read("config/database.example.yml"), "#{fetch(:shared_path)}/config/database.yml"
+  #     puts "Now edit the config files in #{fetch(:shared_path)}."
+  #   end
+  # end
+  # after :updating, "deploy:setup_config"
+
+  # task :symlink_config do
+  #   on roles(:app) do
+  #     puts "excecuting"
+  #     execute :sudo , "mkdir -p #{fetch(:shared_path)}/config"
+  #     execute "ln -nfs #{fetch(:shared_path)}/config/database.yml #{fetch(:release_path)}/config/database.yml"
+  #   end
+  # end
+  # before :updated, "deploy:symlink_config"
 
 end

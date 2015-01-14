@@ -8,6 +8,7 @@ set :stage, "production"
 
 server '10.2.192.248', user: 'deployer', roles: %w{web app db}, primary: true, password: 'welcome'
 
+set :rails_env, :production
 
 # Extended Server Syntax
 # ======================
