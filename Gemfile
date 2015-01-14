@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.5'
 
 gem 'rails', '4.0.2'
 
@@ -63,3 +64,11 @@ group :development, :test do
 end
 gem 'factory_girl_rails', '~> 4.0'
 gem 'delayed_job_active_record'
+gem 'unicorn', '~> 4.8.3'
+
+group :development do
+  gem 'capistrano', '~> 3.3.0'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rails', '~> 1.1'
+end

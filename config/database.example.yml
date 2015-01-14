@@ -1,0 +1,8 @@
+production:
+  adapter: postgresql
+  database: online_exam_production
+  pool: 5
+  timeout: 5000
+  host: localhost
+  username: postgres
+  password: welcome
