@@ -223,7 +223,6 @@ GEM
     raindrops (0.13.0)
     rake (10.1.1)
     request_store (1.0.5)
-    rmagick (2.13.2)
     roo (1.13.2)
       nokogiri
       rubyzip
@@ -342,7 +341,6 @@ DEPENDENCIES
   pg_search
   rails (= 4.0.2)
   rails3-jquery-autocomplete
-  rmagick
   roo
   rspec-rails
   sass-rails (>= 3.2)
