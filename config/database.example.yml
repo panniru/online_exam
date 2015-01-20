@@ -25,4 +25,4 @@ production:
   timeout: 5000
   host: local
   username: deployer
-  password: welcome
+  password: secret
