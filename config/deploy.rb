@@ -2,7 +2,7 @@
 lock '3.3.5'
 
 set :application, 'online_exam'
-set :repo_url, 'git@github.com:sri-sankl/online_exam.git' #'git@bitbucket.org:GopikaArun/online_exam.git'
+set :repo_url, 'git@bitbucket.org:GopikaArun/online_exam.git'
 set :scm, :git
 set :user, "deployer"
 set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
