@@ -6,7 +6,7 @@
 
 set :stage, "production"
 
-server '10.0.1.69', user: 'deployer', roles: %w{web app db}, primary: true
+server '10.0.1.39', user: 'deployer', roles: %w{web app db}, primary: true
 
 set :rails_env, :production
 
