@@ -40,7 +40,7 @@ gem 'virtus'
 
 gem 'pg_search'
 
-#gem 'rmagick'
+gem 'rmagick'
 gem 'carrierwave'
 
 gem 'jw_player_helper'
@@ -53,7 +53,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  #gem "capybara-webkit", '~> 0.7.2'
+  gem "capybara-webkit", '~> 0.7.2'
   gem 'activerecord-nulldb-adapter', :git => 'https://github.com/krasio/nulldb.git', :branch => 'activerecord-3.2.1'
   gem 'launchy'
   gem 'capybara', '~> 1.1.2'

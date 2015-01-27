@@ -88,6 +88,8 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    capybara-webkit (0.7.2)
+      capybara (>= 1.0.0, < 1.2)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -224,6 +226,7 @@ GEM
     raindrops (0.13.0)
     rake (10.1.1)
     request_store (1.0.5)
+    rmagick (2.13.2)
     roo (1.13.2)
       nokogiri
       rubyzip
@@ -319,6 +322,7 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.0)
   capistrano-unicorn-nginx (~> 3.1.0)
   capybara (~> 1.1.2)
+  capybara-webkit (~> 0.7.2)
   carrierwave
   chartkick
   coffee-rails (~> 4.0.0)
@@ -342,6 +346,7 @@ DEPENDENCIES
   pg_search
   rails (= 4.0.2)
   rails3-jquery-autocomplete
+  rmagick
   roo
   rspec-rails
   sass-rails (>= 3.2)
