@@ -19,6 +19,7 @@ module ApplicationHelper
 
   def flash_alert_class(key)
     key = 'danger' if key == :error or key == :alert
+    key = 'success' if key == "notice"
     alert_class = ["alert"]
     if key.to_s == "fail"
       alert_class << "alert-danger"

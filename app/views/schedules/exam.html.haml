@@ -1,7 +1,7 @@
 .page-header
   %h4
     = "#{@question.question_no}."
-    %span= @question.description.html_safe
+    %span= @question.description.gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
     .pull-right
       = link_to "Submit", "#", :class => "btn btn-primary", :rel => "question-nav-submit"
 = form_tag(next_question_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
@@ -16,7 +16,7 @@
         = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
     = hidden_field_tag :question_no, @question.question_no
     = hidden_field_tag :question_id, @question.question_id
-    = hidden_field_tag :question_type, @question.is_descriptive ? "descriptive" : "multiple_choice" 
+    = hidden_field_tag :question_type, @question.question_type
     = hidden_field_tag :action_for
 
 %ul.pager

@@ -19,7 +19,8 @@
           %th Total Marks
           %th Secured Marks
           %th Exam Date
-          %th Result
+          - unless current_user.student?
+            %th Result
         %tbody
           %tr{:ng_repeat => "result in results"}
             - if current_user.student?
@@ -33,7 +34,11 @@
             %td {{result.total_marks}}
             %td {{result.marks_secured}}
             %td {{result.exam_date}}
-            %td {{result.exam_result}}
+            - unless current_user.student?
+              %td {{result.exam_result}}
 
-
+  .row{:ng_show => "noData"}
+    .col-md-offset-4
+      %h4 
+        %b No Data Found
 

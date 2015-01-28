@@ -13,6 +13,6 @@
     - if current_user.student? and !pending
       %th Total Marks
       %th Marks Secured
-      %th Result
+      -#%th Result
   %tbody
     = render :partial => "schedule", :collection => data, :as => :schedule, :locals => {:pending => pending}

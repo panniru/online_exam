@@ -8,4 +8,8 @@ class Notifier < ActionMailer::Base
     }
     mail(to: recipients, subject: subject)
   end
+
+  def welcome_mail(recipient)
+    mail(to: recipient, subject: "Hello World Test Mail")
+  end
 end

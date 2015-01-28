@@ -84,6 +84,9 @@ class SchedulesController < ApplicationController
       @schedule = SchedulesDecorator.decorate(@schedule)
       if params[:action_for] == "prev"
         @question = random_question_gen.prev_question(params[:question_no])
+        if params[:question_id].present?
+          ScheduleDetail.make_entry(@schedule.id, params, current_user.resource.id)
+        end
       elsif params[:action_for] == "current"
         @question = random_question_gen.current_question(params[:question_no])
       else
@@ -114,7 +117,10 @@ class SchedulesController < ApplicationController
 
   def review_exam
     @schedule = SchedulesDecorator.decorate(@schedule)
+    @exam = @schedule.exam
+    random_question_gen = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id, current_user)
     if @status
+      random_question_gen.generate_all_questions_on_submit
       @schedule_details = @schedule.schedule_details.belongs_to_student(current_user.resource.id).order("question_no")
     else
       redirect_to submit_exam_schedule_path(@schedule)

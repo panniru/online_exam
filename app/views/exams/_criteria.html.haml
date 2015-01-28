@@ -4,11 +4,11 @@
   .form-group
     .col-md-6
       .input-group
-        = f.text_field :pass_criteria_1, :class => 'form-control', :placeholder => "Numeric"
+        = f.text_field :pass_criteria_1, :class => 'form-control', :value => (f.object.pass_criteria_1 || ExamsHelper::CRITERIA_VALUES[0])
         %span.input-group-addon %
     .col-md-6
       .input-group
-        = f.text_field :pass_criteria_2, :class => 'form-control', :placeholder => "Numeric"
+        = f.text_field :pass_criteria_2, :class => 'form-control', :value => (f.object.pass_criteria_2 || ExamsHelper::CRITERIA_VALUES[1])
         %span.input-group-addon %
   .form-group
     .col-md-6
@@ -19,11 +19,11 @@
   .form-group
     .col-md-6
       .input-group
-        = f.text_field :pass_criteria_3, :class => 'form-control', :placeholder => "Numeric"
+        = f.text_field :pass_criteria_3, :class => 'form-control', :value => (f.object.pass_criteria_3 || ExamsHelper::CRITERIA_VALUES[2])
         %span.input-group-addon %
     .col-md-6
       .input-group
-        = f.text_field :pass_criteria_4, :class => 'form-control', :placeholder => "Numeric"
+        = f.text_field :pass_criteria_4, :class => 'form-control', :value => (f.object.pass_criteria_4 || ExamsHelper::CRITERIA_VALUES[3])
         %span.input-group-addon %
   .form-group
     .col-md-6
@@ -34,10 +34,10 @@
   .form-group
     .col-md-6
       .input-group
-        = f.text_field :pass_criteria_5, :class => 'form-control', :placeholder => "Numeric"
+        = f.text_field :pass_criteria_5, :class => 'form-control', :value => (f.object.pass_criteria_5 || ExamsHelper::CRITERIA_VALUES[4])
         %span.input-group-addon %
     .col-md-6
-      = f.text_field :pass_criteria_6, :class => 'form-control', :placeholder => "Numeric", :value => "FAIL", :readonly => true
+      = f.text_field :pass_criteria_6, :class => 'form-control', :value => (f.object.pass_criteria_6 || ExamsHelper::CRITERIA_VALUES[5])
 
   .form-group
     .col-md-6

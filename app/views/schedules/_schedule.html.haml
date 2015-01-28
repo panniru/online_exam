@@ -17,4 +17,4 @@
     - result = Result.belongs_to_student_schedule(current_user.resource, schedule).first
     %td= result.nil? ? "--" :result.total_marks
     %td= result.nil? ? "--" :result.marks_secured
-    %td= result.nil? ? "--" : result.exam_result
+    -#%td= result.nil? ? "--" : result.exam_result

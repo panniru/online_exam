@@ -3,15 +3,17 @@ class RandomQuestionGenerator
   attribute :exam
   attribute :student_id
   attribute :schedule_id
+  attribute :current_user
 
-  def initialize(exam, schedule_id, student_id)
+  def initialize(exam, schedule_id, student_id, current_user = nil)
     self.exam = exam
     self.schedule_id = schedule_id
     self.student_id = student_id
+    self.current_user = current_user
   end
 
   def session_first_question
-    schedule_details = ScheduleDetail.belongs_to_student(student_id).belongs_to_schedule(schedule_id).last
+    schedule_details = get_schedule_details.last
     schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.answer_caught) : new_question
   end
 
@@ -34,7 +36,16 @@ class RandomQuestionGenerator
     ScheduleDetail.belongs_to_student(student_id).belongs_to_schedule(schedule_id).where(:question_no => number).first
   end
 
-
+  def generate_all_questions_on_submit
+    schedule_details = get_schedule_details
+    until schedule_details.count >= exam.no_of_questions
+      current_details = get_schedule_details.last
+      question = new_question
+      schedule_details << question
+      ScheduleDetail.make_entry(schedule_id, question, current_user.resource.id)
+    end
+  end
+  
 
   def new_question
     return nil if existed_questions.count >= exam.no_of_questions
@@ -71,7 +82,7 @@ class RandomQuestionGenerator
   private
 
   def existed_questions
-    @existed_questions ||= ScheduleDetail.select(:question_id, :question_type).belongs_to_student(student_id).belongs_to_schedule(schedule_id)
+    ScheduleDetail.select(:question_id, :question_type).belongs_to_student(student_id).belongs_to_schedule(schedule_id) #@existed_questions ||= 
   end
 
   def exists?(id, type)
@@ -82,8 +93,12 @@ class RandomQuestionGenerator
     existed_questions.select{|qtn| qtn.question_type == type}.count
   end
   
+  def get_schedule_details
+    @schedule_details ||= ScheduleDetail.belongs_to_student(student_id).belongs_to_schedule(schedule_id)
+  end
+
   def active_question(question, sequence, answer = nil)
-    active_question = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :is_descriptive => ((question.is_a?DescriptiveQuestion) ? true : false), :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil), :answer_caught => answer)
+    active_question = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :is_descriptive => ((question.is_a?DescriptiveQuestion) ? true : false), :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil), :answer_caught => answer, :question_type => question.is_descriptive ? "descriptive" : "multiple_choice" )
   end
   
   def load_multiple_choice_question(random_no)
@@ -106,7 +121,8 @@ class RandomQuestionGenerator
     attribute :option_4
     attribute :is_descriptive
     attribute :digi_file_url
-    
+    attribute :question_type
+
     def descriptive?
       is_descriptive
     end

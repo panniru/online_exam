@@ -11,9 +11,9 @@
             return $http.put(url, {schedule_details: details})
         }
 
-        var examResults = function(examId, date, page){
+        var examResults = function(examId, date_from, date_to, page){
             var url = "/results/exam_results.json"
-            return $http.get(url, {params:{exam_id: examId, schedule_date: date, page:page}});
+            return $http.get(url, {params:{exam_id: examId, schedule_date_from: date_from, schedule_date_to: date_to, page:page}});
         }
 
         var searchOnStudent = function(examId, date, studentId){

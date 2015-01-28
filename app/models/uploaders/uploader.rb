@@ -36,7 +36,7 @@ module Uploader
       spreadsheet.each_with_pagename do |name, sheet|
         puts "Loading Sheet ######## #{name}"
         #Logger.info "Loading Sheet ######## #{name}"
-        header = sheet.row(1).map(&:downcase)
+        header = sheet.row(1).map{|h| h.try(:downcase)}
         models = (2..sheet.last_row).map do |i|
           row = Hash[[header, sheet.row(i)].transpose]
           yield row

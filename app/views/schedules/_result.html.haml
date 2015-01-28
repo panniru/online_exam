@@ -4,11 +4,11 @@
     %th Total Marks
     %th Secured Marks
     %th Exam Date
-    %th Result
+    -#%th Result
   %tbody
     %tr
       %td= result.nil? ? "--" : result.semester
       %td= result.nil? ? "--" : result.total_marks
       %td= result.nil? ? "--" : result.marks_secured
       %td= result.nil? ? "--" : result.exam_date
-      %td= result.nil? ? "--" : result.exam_result
+      -#%td= result.nil? ? "--" : result.exam_result

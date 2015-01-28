@@ -2,7 +2,7 @@
   %h4 Instructions
 %ul.list-group
   %li Exam Consisting of #{@schedule.exam.no_of_questions} questions
-  %li Exam Duration is #{@schedule.exam.duration.minutes.to_i} minutes
+  %li Exam Duration is #{@schedule.exam.duration.to_i} minutes
   - Instruction.belongs_to_all_and_exam(@schedule.exam.id).each do |instruction|
     %li= instruction.description
 

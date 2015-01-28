@@ -9,7 +9,8 @@
     %th Total Marks
     %th Secured Marks
     %th Exam Date
-    %th Result
+    - unless current_user.student?
+      %th Result
   %tbody
     - results.each do |result|
       %tr
@@ -23,4 +24,5 @@
         %td= result.total_marks
         %td= result.marks_secured
         %td= result.exam_date
-        %td= result.exam_result
+        - unless current_user.student?
+          %td= result.exam_result

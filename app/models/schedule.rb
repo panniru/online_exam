@@ -18,7 +18,7 @@ class Schedule < ActiveRecord::Base
 
   scope :belongs_to_student, lambda{|course_id, semester| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.course_id = ? and semester = ? )', course_id, semester)}
   scope :dated_on, lambda{|date| where(:schedule_date => date)}
-  
+  scope :scheduled_between, lambda{|from_date, to_date| where(:schedule_date => (from_date..to_date))}
 
   def self.role_based_schedules(user)
     if user.faculty?
@@ -48,7 +48,7 @@ class Schedule < ActiveRecord::Base
     start_times = start_time.split(":")
     date = Date.parse(exam_date)
     self.exam_date_time = DateTime.new(date.year, date.month, date.day, start_times[0].to_i, start_times[1].to_i)
-    self.exam_end_date_time = self.exam_date_time+self.exam.duration.hours
+    self.exam_end_date_time = self.exam_date_time+(self.exam.duration.to_f/60).hours #make duration in mins to seconds
   end
 
   def generate_access_password

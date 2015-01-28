@@ -18,7 +18,7 @@ class SchedulesDecorator < Draper::Decorator
   end
 
   def duration
-    "#{exam.duration} Hrs"
+    "#{exam.duration} Mins"
   end
 
   def formatted_exam_date_time

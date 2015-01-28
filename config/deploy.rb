@@ -2,11 +2,13 @@
 lock '3.3.5'
 
 set :application, 'online_exam'
-set :pty, true
-set :repo_url, 'git@bitbucket.org:GopikaArun/online_exam.git'
+set :pty, false
+set :use_sudo, true
+set :repo_url, 'git@github.com:sri-sankl/online_exam.git' #'git@bitbucket.org:GopikaArun/online_exam.git'
 set :scm, :git
 set :user, "deployer"
-set :use_sudo, true
+#set :ssh_options , { :forward_agent => true }
+
 set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :current_path, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :deploy_via, :remote_cache
@@ -17,6 +19,7 @@ set :rbenv_ruby, '2.0.0-p598'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
+
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call

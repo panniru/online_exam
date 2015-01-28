@@ -12,7 +12,9 @@ class ResultsController < ApplicationController
   def exam_results
 
     respond_to do |format|
-      schedules = @exam.schedules.dated_on(params[:schedule_date]).map(&:id)
+      date_from = params[:schedule_date_from].present? ? Date.strptime(params[:schedule_date_from], "%d-%m-%Y") : nil
+      date_to = params[:schedule_date_to].present? ? Date.strptime(params[:schedule_date_to], "%d-%m-%Y") : nil
+      schedules = @exam.schedules.scheduled_between(date_from, date_to).map(&:id)
       page = params[:page].present? ? params[:page] : 1
       unless schedules.empty?
         if params[:student].present?
