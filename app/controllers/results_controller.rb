@@ -10,11 +10,15 @@ class ResultsController < ApplicationController
   end
 
   def exam_results
-
     respond_to do |format|
       date_from = params[:schedule_date_from].present? ? Date.strptime(params[:schedule_date_from], "%d-%m-%Y") : nil
       date_to = params[:schedule_date_to].present? ? Date.strptime(params[:schedule_date_to], "%d-%m-%Y") : nil
-      schedules = @exam.schedules.scheduled_between(date_from, date_to).map(&:id)
+      schedules = []
+      if date_from.present?
+        schedules = @exam.schedules.dated_on_or_after(date_from).map(&:id)
+      else
+        schedules = @exam.schedules.scheduled_between(date_from, date_to).map(&:id)
+      end
       page = params[:page].present? ? params[:page] : 1
       unless schedules.empty?
         if params[:student].present?
@@ -22,7 +26,6 @@ class ResultsController < ApplicationController
         else
           @results = Result.belongs_to_schedules(schedules).paginate(:page => page)
         end
-        
         format.html do
           @results = ResultsDecorator.decorate_collection(@results)
         end
@@ -64,7 +67,7 @@ class ResultsController < ApplicationController
         @schedule_details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no")
         @schedule_details = ScheduleDetailsDecorator.decorate_collection(@schedule_details)
         details = @schedule.schedule_details.belongs_to_student(@student.id).order("question_no").map do |detail|
-          {:id => detail.id, :question_no => detail.question_no, :question_description => detail.question.description_without_html, :answer => detail.question.answer, :answer_caught => detail.answer_caught, :valid_answer => detail.valid_answer?}
+          {:id => detail.id, :question_no => detail.question_no, :question_description => detail.question_for_validation.description_without_html, :answer => detail.question_for_validation.answer, :answer_caught => detail.answer_caught, :valid_answer => detail.valid_answer?, :question_type => detail.question_type.try(:titleize)}
         end
         render :json => {:marks_secured => @result.marks_secured, :result_text => @result.exam_result, :details => details}
       end
@@ -95,7 +98,6 @@ class ResultsController < ApplicationController
       end
     end
   end
-
   
   private
 

@@ -18,7 +18,7 @@ class MultipleChoiceQuestionsController < ApplicationController
     @question = @exam.add_multiple_choice_question(question_params)
     if @question.save
       flash.now[:success] = I18n.t :success, :scope => [:question, :create]
-      render "show"
+      redirect_to exam_multiple_choice_question_path(@exam, @question)
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:question, :create]
       render "new"
@@ -66,7 +66,7 @@ class MultipleChoiceQuestionsController < ApplicationController
   def destroy
     if @question.destroy
       flash[:success] = I18n.t :success, :scope => [:question, :destroy]
-      redirect_to exam_multiple_choice_questions_path
+      redirect_to exam_multiple_choice_question_path(@exam, @question)
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:question, :destroy]
       render "show"

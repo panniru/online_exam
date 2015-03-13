@@ -13,10 +13,12 @@ class Exam < ActiveRecord::Base
   validates :pass_text_1, :presence => true
 #  validate :pass_criteria
   before_save :set_default_nagative_mark
+  validate :check_total_question_count
 
   has_many :multiple_choice_questions, :dependent => :destroy
   has_many :descriptive_questions, :class_name => "DescriptiveQuestion", :dependent => :destroy
   has_many :registraions
+  has_many :audio_video_question_masters
   belongs_to :course
   has_many :schedules, :dependent => :destroy
   #has_many :results, :dependent => :destroy
@@ -33,9 +35,24 @@ class Exam < ActiveRecord::Base
     mc_question
   end
 
+  def new_audio_video_question_master(type)
+    a_v_question = AudioVideoQuestionMaster.new 
+    a_v_question.exam = self
+    a_v_question.question_type = type
+    4.times.each do |i|
+      a_v_question.multiple_choice_questions << MultipleChoiceQuestion.new do |m_c_question|
+        m_c_question.exam = self
+        m_c_question.question_type = type
+      end
+    end
+    a_v_question
+  end
+
+
   def add_multiple_choice_question(params)
     mc_question = MultipleChoiceQuestion.new(params)
     mc_question.exam = self
+    mc_question.question_type = "multiple_choice"
     mc_question
   end
 
@@ -53,7 +70,7 @@ class Exam < ActiveRecord::Base
   end
 
   def total_marks
-    (multiple_choice * (mark_per_mc.present? ? mark_per_mc : 1 )) + (fill_in_blanks * (mark_per_fib.present? ? mark_per_fib : 1 ))
+    ((multiple_choice * (mark_per_mc.present? ? mark_per_mc : 1 )) + (fill_in_blanks * (mark_per_fib.present? ? mark_per_fib : 1 )) + (audio_questions * (mark_per_audio.present? ? mark_per_audio : 4 )) + (video_questions * (mark_per_video.present? ? mark_per_video : 4 )))
   end
 
   def exam_full_name
@@ -73,6 +90,12 @@ class Exam < ActiveRecord::Base
   def set_default_nagative_mark
     if self.negative_mark.nil?
       self.negative_mark = 0.0
+    end
+  end
+
+  def check_total_question_count
+    if (no_of_questions != (multiple_choice +  fill_in_blanks + audio_questions + video_questions))
+      self.errors.add :base,  "Total questions and question distributions are not matching"
     end
   end
 

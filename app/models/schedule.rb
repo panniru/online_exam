@@ -19,6 +19,7 @@ class Schedule < ActiveRecord::Base
   scope :belongs_to_student, lambda{|course_id, semester| where('exam_id IN (SELECT DISTINCT id FROM exams where exams.course_id = ? and semester = ? )', course_id, semester)}
   scope :dated_on, lambda{|date| where(:schedule_date => date)}
   scope :scheduled_between, lambda{|from_date, to_date| where(:schedule_date => (from_date..to_date))}
+  scope :dated_on_or_after, lambda{|from_date| where("schedule_date >= ?", from_date)}
 
   def self.role_based_schedules(user)
     if user.faculty?
@@ -33,7 +34,7 @@ class Schedule < ActiveRecord::Base
   private
   
   def validate_exam_questions
-    unless self.exam.multiple_choice_questions.count >= self.exam.multiple_choice and self.exam.descriptive_questions.count >= self.exam.fill_in_blanks
+    unless (self.exam.multiple_choice_questions.count >= self.exam.multiple_choice and self.exam.descriptive_questions.count >= self.exam.fill_in_blanks and self.exam.audio_video_question_masters.having_question_type("audio").count >= self.exam.audio_questions and self.exam.audio_video_question_masters.having_question_type("video").count >= self.exam.video_questions)
       self.errors.add :base, "Exam Has not enough questions to schedule as per inputs"
     end
   end

@@ -19,7 +19,7 @@ class ExamValidator
     right_answers = 0
     wrong_answers = 0.0
     schedule.schedule_details.belongs_to_student(user.resource.id).each do |act_qtn|
-      question = act_qtn.question
+      question = act_qtn.question_for_validation
       if self.class.validate_answer(question.answer, act_qtn.answer_caught)
         act_qtn.update_attributes({:valid_answer => true})
         right_answers += question_marks(question)
@@ -56,8 +56,12 @@ class ExamValidator
   private
 
   def question_marks(qtn)
-    if qtn.is_a? MultipleChoiceQuestion
+    if qtn.question_type == 'multiple_choice'
       exam.mark_per_mc.present? ? exam.mark_per_mc : 1
+    elsif qtn.question_type == 'audio' 
+      exam.mark_per_audio.present? ? (exam.mark_per_audio.to_f/4) : 1
+    elsif qtn.question_type == 'video'
+      exam.mark_per_video.present? ? (exam.mark_per_video.to_f/4) : 1
     else
       exam.mark_per_fib.present? ? exam.mark_per_fib : 1
     end

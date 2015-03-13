@@ -10,12 +10,13 @@
         - if index%10 == 0
           %tr
         %td
+          - icon_class = (question.question_type == 'audio' or question.question_type == 'video') ? "fa fa-microphone" : ""
           - if question.answer_caught.present?
-            %span.label.label-success
-              = link_to question.question_no, next_question_schedule_path(:id => @schedule, :question_no =>question.question_no, :action_for => "current")
+            %span.label.label-success{:class => "#{}"}
+              = link_to raw("<i class='#{icon_class}'>#{question.question_no}</i>"), next_question_schedule_path(:id => @schedule, :question_no =>question.question_no, :action_for => "current")
           - else
             %span.label.label-danger
-              = link_to question.question_no, next_question_schedule_path(:id => @schedule, :question_no =>question.question_no, :action_for => "current")
+              = link_to raw("<i class='#{icon_class}'>#{question.question_no}</i>"), next_question_schedule_path(:id => @schedule, :question_no =>question.question_no, :action_for => "current")
 .row
 
 .col-sm-2.pull-right

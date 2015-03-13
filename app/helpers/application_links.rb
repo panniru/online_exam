@@ -12,7 +12,7 @@ module ApplicationLinks
   end
 
   def exams
-    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Exams', exams_path, (controller.controller_name == "exams" or controller.controller_name == "descriptive_questions" or controller.controller_name == "multiple_choice_questions"))
+    Struct.new(:icon, :item, :link, :is_active).new('glyphicon glyphicon-tasks', 'Exams', exams_path, (controller.controller_name == "exams" or controller.controller_name == "descriptive_questions" or controller.controller_name == "multiple_choice_questions" or controller.controller_name == "audio_video_question_masters"))
   end
 
   def home

@@ -1,14 +1,14 @@
 .radio
-  = radio_button_tag(:answer_caught, @question.option_1, @question.option_1 == @question.answer_caught)
-  = label_tag(:label_1, @question.option_1)
+  = radio_button_tag(:answer_caught, question.option_1, question.option_1 == question.answer_caught)
+  = label_tag(:label_1, question.option_1)
 .radio
-  = radio_button_tag(:answer_caught, @question.option_2, @question.option_2 == @question.answer_caught)
-  = label_tag(:label_2, @question.option_2)
-- if @question.option_3.present?
+  = radio_button_tag(:answer_caught, question.option_2, question.option_2 == question.answer_caught)
+  = label_tag(:label_2, question.option_2)
+- if question.option_3.present?
   .radio
-    = radio_button_tag(:answer_caught, @question.option_3, @question.option_3 == @question.answer_caught)
-    = label_tag(:label_3, @question.option_3)
-- if @question.option_4.present?
+    = radio_button_tag(:answer_caught, question.option_3, question.option_3 == question.answer_caught)
+    = label_tag(:label_3, question.option_3)
+- if question.option_4.present?
   .radio
-    = radio_button_tag(:answer_caught, @question.option_4, @question.option_4 == @question.answer_caught)
-    = label_tag(:label_4, @question.option_4)
+    = radio_button_tag(:answer_caught, question.option_4, question.option_4 == question.answer_caught)
+    = label_tag(:label_4, question.option_4)

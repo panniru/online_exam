@@ -1,5 +1,5 @@
 - if f.object.digi_file?
-  = video_player({:file => f.object.digi_file_url})
+  = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url =>  f.object.digi_file_url}
 
 .form-group
   - if f.object.digi_file?
@@ -10,7 +10,7 @@
     = f.file_field :digi_file
     = f.hidden_field :digi_file_cache
 .form-group
-  - if f.object.digi_file?    
+  - if f.object.digi_file? and (not f.object.is_a? AudioVideoQuestionMaster)
     .col-sm-1
       = f.check_box :remove_digi_file, :class => 'form-control'
     .col-sm-2

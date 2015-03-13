@@ -19,7 +19,7 @@ class MultipleChoiceQuestion < ActiveRecord::Base
   end
 
   def description_with_html
-    self.attributes["description"].gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
+    self.attributes["description"].gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe if self.attributes["description"].present?
   end
   
   alias_method_chain :description, :html

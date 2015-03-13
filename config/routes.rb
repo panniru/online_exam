@@ -48,7 +48,9 @@ OnlineExam::Application.routes.draw do
         get 'xls_template'
       end
     end
-    
+
+    resources :audio_video_question_masters
+
     member do
       get "schedules"
     end

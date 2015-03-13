@@ -136,6 +136,40 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: audio_video_question_masters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE audio_video_question_masters (
+    id integer NOT NULL,
+    exam_id integer,
+    digi_file character varying(255),
+    question_type character varying(255) DEFAULT 'audio'::character varying,
+    description character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: audio_video_question_masters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE audio_video_question_masters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: audio_video_question_masters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE audio_video_question_masters_id_seq OWNED BY audio_video_question_masters.id;
+
+
+--
 -- Name: audio_video_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -301,7 +335,11 @@ CREATE TABLE exams (
     pass_criteria_6 double precision,
     pass_text_6 character varying(255),
     mark_per_fib double precision,
-    mark_per_mc double precision
+    mark_per_mc double precision,
+    audio_questions integer,
+    video_questions integer,
+    mark_per_audio double precision,
+    mark_per_video double precision
 );
 
 
@@ -436,7 +474,9 @@ CREATE TABLE multiple_choice_questions (
     option_4 character varying(255),
     answer character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    question_type character varying(255) DEFAULT 'multiple_choice'::character varying,
+    audio_video_question_master_id integer
 );
 
 
@@ -573,8 +613,9 @@ CREATE TABLE schedule_details (
     answer_caught character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    question_no integer,
-    valid_answer boolean
+    question_no character varying(255),
+    valid_answer boolean,
+    audio_video_question_master_id integer
 );
 
 
@@ -757,6 +798,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY audio_video_question_masters ALTER COLUMN id SET DEFAULT nextval('audio_video_question_masters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY audio_video_questions ALTER COLUMN id SET DEFAULT nextval('audio_video_questions_id_seq'::regclass);
 
 
@@ -870,6 +918,14 @@ ALTER TABLE ONLY students ALTER COLUMN id SET DEFAULT nextval('students_id_seq':
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: audio_video_question_masters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY audio_video_question_masters
+    ADD CONSTRAINT audio_video_question_masters_pkey PRIMARY KEY (id);
 
 
 --
@@ -1139,3 +1195,13 @@ INSERT INTO schema_migrations (version) VALUES ('20140911063924');
 INSERT INTO schema_migrations (version) VALUES ('20140916055341');
 
 INSERT INTO schema_migrations (version) VALUES ('20140916055910');
+
+INSERT INTO schema_migrations (version) VALUES ('20150309094231');
+
+INSERT INTO schema_migrations (version) VALUES ('20150309102901');
+
+INSERT INTO schema_migrations (version) VALUES ('20150309103058');
+
+INSERT INTO schema_migrations (version) VALUES ('20150311124846');
+
+INSERT INTO schema_migrations (version) VALUES ('20150313105558');

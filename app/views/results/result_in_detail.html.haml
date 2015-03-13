@@ -11,13 +11,14 @@
         = link_to "Update", "#", :class => "btn btn-primary", :ng_show => "editAnswer", :ng_click => "updateDetails()"
         = link_to "Edit", "#", :class => "btn", :ng_click => "editAnswer = true", :ng_class => "{'btn-primary' : !editAnswer , 'btn-default': editAnswer}"
       
-  .col-md-12
+        .col-md-12
     %table.table.table-bordered
       %thead
         %th No
         %th Description
         %th Answer
         %th Answer Caught
+        %th Type
         %th Result
       %tbody
         %tr{:ng_repeat => "schedule_detail in results"}
@@ -25,6 +26,7 @@
           %td {{schedule_detail.question_description}}
           %td {{schedule_detail.answer}}
           %td {{schedule_detail.answer_caught}}
+          %td {{schedule_detail.question_type}}
           %td.width-10
             %span{:ng_class => "{'glyphicon glyphicon-ok success' : schedule_detail.valid_answer, 'glyphicon glyphicon-remove danger' : !schedule_detail.valid_answer}", :ng_hide => "editAnswer"}
             .btn-group.btn-group-sm{:ng_show => "editAnswer"}

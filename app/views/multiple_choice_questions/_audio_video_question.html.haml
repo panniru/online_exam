@@ -1,1 +1,28 @@
-= video_player({:file => file_url})
+-#= video_player({:file => file_url, :skin => "glow"}, {:width => 250, :height => 250, :id => "onlineExamVideo"}, {:onclick => "reflectswf();"})
+= hidden_field_tag :file_url_for_js_access, file_url  
+#mediaspace
+
+:javascript
+    var playCount= 0;
+    jwplayer('mediaspace').setup({
+        'flashplayer': '/jw/player.swf',
+        'file': $("#file_url_for_js_access").val(),
+        'autostart': 'false',
+        'icons': 'false',
+        'stretching': 'fill',
+        'controlbar': 'none',
+        'width': '250',
+        'height': '250',
+        events: {
+            onReady: function(event){
+                $("#mediaspace_logo").hide();
+                playCount = 0;
+            },
+            onPlay: function(event){
+                playCount +=1;
+                if(playCount > 3){
+                    jwplayer('mediaspace').stop();
+                }
+            }
+        }
+    });

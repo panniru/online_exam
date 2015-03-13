@@ -6,13 +6,15 @@
       = link_to "Submit", "#", :class => "btn btn-primary", :rel => "question-nav-submit"
 = form_tag(next_question_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
   .row
-    .col-sm-6
-      - if @question.descriptive?
+    .col-sm-9
+      - if @question.question_type == 'desciptive'
         = render "descriptive_answer"
+      - elsif @question.question_type == 'audio' or @question.question_type == 'video' 
+        = render :partial => "a_v_answer", :locals => {:a_v_question => @question}
       - else
-        = render "mc_answer"
-    .col-sm-6
-      - if @question.digi_file_url.present?
+        = render :partial => "mc_answer", :locals => {:question => @question}
+    .col-md-3
+      - if @question.digi_file_url.present? or @question.question_type == 'audio' or @question.question_type == 'video'
         = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
     = hidden_field_tag :question_no, @question.question_no
     = hidden_field_tag :question_id, @question.question_id

@@ -1,0 +1,22 @@
+.page-header
+  %h2 
+    = raw "#{link_to @exam.exam_name, @exam}: #{params[:question_type].try(:titleize)} Questions"
+    .pull-right
+      = raw question_btn_group(@exam)
+      -#= link_to "Add #{params[:question_type]} question", new_exam_audio_video_question_master_path(:question_type => params[:question_type], :exam_id => @exam.id), :class => "btn btn-success"
+.row
+  
+  %table.table.table-striped
+    %thead
+      %th S No
+      %th Description
+      %th 
+    %tbody
+      - @audio_video_question_masters.each_with_index do |question, index|
+        %tr
+          %td= index+1
+          %td= link_to question.description, exam_audio_video_question_master_path(question.exam, question)
+          %td 
+            %i{:class => "fa fa-1x fa-film"}
+
+  = will_paginate @audio_video_question_masters, param_name: "page", previous_label: h("<"), next_label: h(">")

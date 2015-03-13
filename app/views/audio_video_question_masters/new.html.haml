@@ -1,0 +1,4 @@
+.page-header
+  %h3= raw "#{link_to @exam.exam_name, @exam}: New #{params[:question_type].try(:titleize)} Question" 
+    
+= render "form"

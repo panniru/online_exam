@@ -59,6 +59,28 @@
   .row
     .col-md-6.col-sm-6
       .form-group
+        = f.label :audio_questions, :class => 'col-sm-3 col-md-3 control-label'
+        .col-sm-3.col-md-3
+          .input-group
+            = f.text_field :audio_questions, :class => 'form-control'
+            %span.input-group-addon X4
+        = f.label "mark/qn", :class => 'col-sm-3 col-md-3 control-label'
+        .col-sm-3.col-md-3
+          = f.text_field :mark_per_audio, :class => 'form-control'
+    .col-md-6.col-sm-6
+      .form-group
+        = f.label :video_questions, :class => 'col-sm-3 col-md-3 control-label'
+        .col-sm-3.col-md-3
+          .input-group
+            = f.text_field :video_questions, :class => 'form-control'
+            %span.input-group-addon X4
+        = f.label "mark/qn", :class => 'col-sm-3 col-md-3 control-label'
+        .col-sm-3.col-md-3
+          = f.text_field :mark_per_video, :class => 'form-control'
+
+  .row
+    .col-md-6.col-sm-6
+      .form-group
         = f.label :negative_mark, :class => 'col-sm-3 col-md-3 control-label'
         .col-sm-8.col-md-8
           .input-group

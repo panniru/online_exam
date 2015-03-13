@@ -1,0 +1,46 @@
+.row
+  %h3
+    = raw "#{link_to @exam.exam_name, @exam}: #{@audio_video_question_master.question_type.try(:titleize)} Question" 
+.page-header
+  %h4
+    = @audio_video_question_master.description
+    .pull-right
+      = link_to "Edit", send("edit_exam_audio_video_question_master_path".to_sym, @exam, @audio_video_question_master), :class => "btn btn-primary"
+      = link_to "Delete", send("exam_audio_video_question_master_path".to_sym, @exam, @audio_video_question_master), :class => "btn btn-danger", :data => { :confirm => 'Are you sure?', :method => :delete }
+      = link_to "Add #{params[:type]} Question", new_exam_audio_video_question_master_path(:type => @audio_video_question_master.question_type, :exam_id => @exam.id), :class => "btn btn-success"
+
+%br
+.row
+  .col-md-9
+    #tab{:role => "tabpanel"}
+      %ul.nav.nav-tabs{:role => "tablis"}
+        - @audio_video_question_master.multiple_choice_questions.each_with_index do |question, index|
+          %li{:class => "#{index == 0 ? 'active' : ''}"}
+            %a{:href => "#question#{index+1}", :role => "tab",  :data => { :toggle => "tab"}}= "Qn# #{index+1}"
+    #tab-content.tab-content
+      - @audio_video_question_master.multiple_choice_questions.each_with_index do |question, index|
+        %div{:id => "question#{index+1}", :class => "tab-pane #{index == 0 ? 'active' : ''}"}
+          .page-header
+            %h2
+              %small= question.description
+          .col-md-12
+            %table.table.table-bordered.table-reponsive
+              %thead
+                %th Option 1
+                %th Option 2
+                %th Option 3
+                %th Option 4
+              %tbody
+                %tr
+                  %td= question.option_1
+                  %td= question.option_2
+                  %td= question.option_3
+                  %td= question.option_4.present? ? question.option_4 : "--"
+          .col-sm-5
+            %table.table.table-bordered
+              %tbody
+                %tr
+                  %td.success Answer
+                  %td= question.answer
+  .col-md-3
+    = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @audio_video_question_master.digi_file_url}

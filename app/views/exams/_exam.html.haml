@@ -50,7 +50,7 @@
       %th Total
       %th Mark/qn
     %tbody
-      %tr.info
+      %tr.warning
         %th= "Multiple Question"
         %td= data.multiple_choice
         %td= data.mark_per_mc
@@ -58,3 +58,11 @@
         %th= "Fill in the blanks"
         %td= data.fill_in_blanks
         %td= data.mark_per_fib
+      %tr.warning
+        %th= "Audio Questions"
+        %td= "#{data.audio_questions} X 4"
+        %td= data.mark_per_audio
+      %tr.warning
+        %th= "Fill in the blanks"
+        %td= "#{data.video_questions} X 4"
+        %td= data.mark_per_video

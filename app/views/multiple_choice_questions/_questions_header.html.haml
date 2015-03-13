@@ -1,5 +1,5 @@
 .page-header
   %h2
-    = link_to @title, "#"
+    = raw "#{link_to @exam.exam_name, @exam}: #{link_to @title, ''}"
     .pull-right
       = raw question_btn_group(@exam)

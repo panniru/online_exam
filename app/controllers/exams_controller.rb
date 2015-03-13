@@ -33,14 +33,14 @@ class ExamsController < ApplicationController
       render "new"
     else
       flash.now[:success] = I18n.t :success, :scope => [:exam, :create]
-      render "show"
+      redirect_to @exam
     end
   end
 
   def update
     if @exam.update(exam_params)
       flash.now[:success] = I18n.t :success, :scope => [:exam, :update]
-      render "show"
+      redirect_to @exam
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:exam, :update]
       render "edit"
@@ -81,7 +81,7 @@ class ExamsController < ApplicationController
   private
 
   def exam_params
-    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :pass_criteria_5, :pass_text_5, :pass_criteria_6, :pass_text_6, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id, :mark_per_fib, :mark_per_mc) #:pass_criteria_6
+    params.require(:exam).permit(:subject, :semester, :exam_name, :course_id, :duration, :no_of_questions, :pass_criteria_1, :pass_text_1, :pass_criteria_2, :pass_text_2, :pass_criteria_3, :pass_text_3, :pass_criteria_4, :pass_text_4, :pass_criteria_5, :pass_text_5, :pass_criteria_6, :pass_text_6, :negative_mark, :fill_in_blanks, :multiple_choice, :faculty_id, :mark_per_fib, :mark_per_mc, :video_questions, :audio_questions, :mark_per_video, :mark_per_audio) #:pass_criteria_6
   end
 
 end

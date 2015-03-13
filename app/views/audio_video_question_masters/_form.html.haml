@@ -1,0 +1,60 @@
+= form_for [@exam, @audio_video_question_master], :html => { :class => "form-horizontal", :role => "form" } do |f|
+  = render "shared/error_messages", :object => f.object
+  .row
+    .col-md-9
+      .form-group
+        = f.label :description, :class => 'col-md-3 control-label'
+        .col-md-9
+          = f.text_area :description, :class => 'form-control'
+      #tab{:role => "tabpanel"}
+        %ul.nav.nav-tabs{:role => "tablis"}
+          - f.object.multiple_choice_questions.each_with_index do |question, index|
+            %li{:class => "#{index == 0 ? 'active' : ''}"}
+              %a{:href => "#question#{index+1}", :role => "tab",  :data => { :toggle => "tab"}}= "Qn# #{index+1}"
+      #tab-content.tab-content
+        %br
+        - f.object.multiple_choice_questions.each_with_index do |question, index|
+          %div{:id => "question#{index+1}", :class => "tab-pane #{index == 0 ? 'active' : ''}"}
+            .row
+              .col-md-8
+                .form-group
+                  = label_tag "Question","Question #{index+1}", {:class => 'col-md-3 control-label'}
+                  .col-sm-9
+                    = text_area_tag "multiple_choice_questions[#{index}][description]", question.description, {:class => 'form-control'}
+                    = hidden_field_tag "multiple_choice_questions[#{index}][id]", question.id, {:class => 'form-control'}
+                    = hidden_field_tag "multiple_choice_questions[#{index}][question_type]", question.question_type, {:class => 'form-control'}
+            .row
+              .col-md-6
+                .form-group
+                  = label_tag "Option 1", "Option 1", {:class => 'col-sm-4 control-label'}
+                  .col-sm-8
+                    = text_field_tag "multiple_choice_questions[#{index}][option_1]", question.option_1, {:class => 'form-control'}
+                .form-group
+                  = label_tag "Option 2", "Option 2", {:class => 'col-sm-4 control-label'}
+                  .col-sm-8
+                    = text_field_tag "multiple_choice_questions[#{index}][option_2]", question.option_2, {:class => 'form-control'}
+              .col-md-6  
+                .form-group
+                  = label_tag "Option 3", "Option 3", {:class => 'col-sm-4 control-label'}
+                  .col-sm-8
+                    = text_field_tag "multiple_choice_questions[#{index}][option_3]", question.option_3, {:class => 'form-control'}
+                .form-group
+                  = label_tag "Option 4", "Option 4", {:class => 'col-sm-4 control-label'}
+                  .col-sm-8
+                    = text_field_tag "multiple_choice_questions[#{index}][option_4]", question.option_4, {:class => 'form-control'}
+
+            .row
+              .col-sm-6
+                .form-group
+                  = label_tag "Answer", "Answer", {:class => 'col-sm-4 control-label'}
+                  .col-sm-8
+                    = select_tag "multiple_choice_questions[#{index}][answer]", options_for_select([["Option 1","option_1"], ["Option 2","option_2"], ["Option 3","option_3"], ["Option 4","option_4"]]), :class => 'form-control'
+    .col-md-3
+      = f.hidden_field :question_type
+      = f.hidden_field :exam_id
+      = render "multiple_choice_questions/audio_video_question_form", :f => f
+
+    .col-sm-6.col-sm-offset-3
+      = f.submit "Save", :class => 'btn btn-primary'
+      = link_to "Cancel", @exam, :class => 'btn btn-primary'
+

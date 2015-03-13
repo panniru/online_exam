@@ -181,7 +181,8 @@ GEM
     jquery-ui-rails (4.1.0)
       railties (>= 3.1.0)
     json (1.8.1)
-    jw_player_helper (0.0.1)
+    jwplayer-rails (1.0.1)
+      railties (>= 3.1.1)
     kgio (2.9.3)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -340,7 +341,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   jquery-ui-rails (= 4.1.0)
-  jw_player_helper
+  jwplayer-rails
   launchy
   pg
   pg_search

@@ -10,6 +10,9 @@ class DescriptiveQuestion < ActiveRecord::Base
 
   belongs_to :exam
 
+  def question_type
+    "descriptive"
+  end
   
   def update(params)
     if params[:audio_video_question_attributes].present?
