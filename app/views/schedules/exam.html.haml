@@ -1,6 +1,6 @@
 .page-header
   %h4
-    = "#{@question.question_no}."
+    = "#{@question.question_no.to_i}."
     %span= @question.description.gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
     .pull-right
       = link_to "Submit", "#", :class => "btn btn-primary", :rel => "question-nav-submit"
@@ -16,20 +16,22 @@
     .col-md-3
       - if @question.digi_file_url.present? or @question.question_type == 'audio' or @question.question_type == 'video'
         = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
-    = hidden_field_tag :question_no, @question.question_no
+    = hidden_field_tag :question_no, @question.question_no.to_i
     = hidden_field_tag :question_id, @question.question_id
     = hidden_field_tag :question_type, @question.question_type
     = hidden_field_tag :action_for
 
-%ul.pager
-  %li.previous{:class => "#{@question.question_no == 1 ? 'disabled' : ''}"}
-    %a{:rel => "question-nav-prev"}
-      %i.glyphicon.glyphicon-chevron-left
-      = "Prev"
-  %li.next
-    %a{:rel => "question-nav-next"}
-      = "Next"
-      %i.glyphicon.glyphicon-chevron-right
+.row
+  .col-md-9
+    %ul.pager
+      %li.previous{:class => "#{@question.question_no.to_i == 1 ? 'disabled' : ''}"}
+        %a{:rel => "question-nav-prev"}
+          %i.glyphicon.glyphicon-chevron-left
+          = "Prev"
+      %li.next
+        %a{:rel => "question-nav-next"}
+          = "Next"
+          %i.glyphicon.glyphicon-chevron-right
 
 .col-sm-2.pull-right
   %h4

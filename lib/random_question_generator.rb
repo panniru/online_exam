@@ -73,7 +73,7 @@ class RandomQuestionGenerator
   private
 
   def existed_questions_count
-    ScheduleDetail.from('(SELECT question_type, audio_video_question_master_id, count(*) FROM "schedule_details" WHERE "schedule_details"."student_id" = '+student_id.to_s+' AND "schedule_details"."schedule_id" = '+schedule_id.to_s+' group by question_type, audio_video_question_master_id) T').count
+    ScheduleDetail.from('(SELECT question_type, audio_video_question_master_id, count(*) count FROM "schedule_details" WHERE "schedule_details"."student_id" = '+student_id.to_s+' AND "schedule_details"."schedule_id" = '+schedule_id.to_s+' group by question_type, audio_video_question_master_id) schedule_details').inject(0){|sum, rec| (rec.question_type == 'audio' or rec.question_type == 'video') ? sum +1 : sum+ rec.count }
   end
 
   def existed_questions
@@ -97,7 +97,7 @@ class RandomQuestionGenerator
       active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type)
       question.multiple_choice_questions.each_with_index do |qtn, index| 
         answer_caught = get_schedule_details.select{|sd| sd.question_id == qtn.id and sd.question_type = question.question_type}.first.try(:answer_caught)
-        active_qtn.children_questions << build_question(qtn, (sequence.to_s+"."+(index+1).to_s), answer_caught)
+        active_qtn.children_questions << build_question(qtn, "#{sequence.to_i}.#{(index+1)}", answer_caught)
       end
       active_qtn
     else
@@ -106,7 +106,6 @@ class RandomQuestionGenerator
   end
 
   def build_question(question, sequence, answer = nil)
-    p "sequence=================#{sequence}"
     ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil), :answer_caught => answer, :question_type => question.question_type)
   end 
   

@@ -17,6 +17,21 @@ class ScheduleDetail < ActiveRecord::Base
     end
   end
 
+  def question_no
+    if (question_type == 'audio' or question_type == 'video')
+      children_question_no = nil
+      ScheduleDetail.belongs_to_question_type(question_type).belongs_to_student(student).belongs_to_schedule(schedule).order("id").each_with_index do |qtn, index| 
+        if qtn.id == self.id
+          children_question_no= "#{self.attributes['question_no']}.#{index+1}" 
+          break;
+        end
+      end
+      return children_question_no
+    else
+      self.attributes["question_no"]
+    end
+  end
+
   def question
     if self.question_type == "descriptive"
       DescriptiveQuestion.find(question_id)
@@ -29,10 +44,11 @@ class ScheduleDetail < ActiveRecord::Base
 
   def self.make_entry(schedule_id, params, student_id)
     if params[:question_type] == "audio" or params[:question_type] == "video" 
-      params[:children_questions].each_with_index do |question_params, index|
+      4.times.each_with_index do |index|
+        question_params = params[:children_questions].class == Array ? params[:children_questions][index] : params[:children_questions][index.to_s] 
         question_params[:question_type] = params[:question_type]
         question_params[:audio_video_question_master_id] = params[:question_id]
-        #question_params[:question_no] = params[:question_no].to_i + index
+        question_params[:question_no] = params[:question_no]
         save_schedule_detail(schedule_id, question_params, student_id)
       end
     else
