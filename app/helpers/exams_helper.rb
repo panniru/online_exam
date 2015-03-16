@@ -34,6 +34,18 @@ module ExamsHelper
     ApplicationHelper.btn_group(links)
   end
 
+  def right_option_for_answer(question)
+    if question.option_1.to_s == question.answer.to_s
+      return "option_1"
+    elsif question.option_2.to_s == question.answer.to_s
+      return "option_2"
+    elsif question.option_3.to_s == question.answer.to_s
+      return "option_3"
+    elsif question.option_4.to_s == question.answer.to_s
+      return "option_4"
+    end
+  end
+
   private
   def edit_exam(exam)
     link_to "Edit", edit_exam_path(exam), :class => "btn btn-success"

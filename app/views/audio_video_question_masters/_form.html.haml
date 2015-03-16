@@ -48,7 +48,7 @@
                 .form-group
                   = label_tag "Answer", "Answer", {:class => 'col-sm-4 control-label'}
                   .col-sm-8
-                    = select_tag "multiple_choice_questions[#{index}][answer]", options_for_select([["Option 1","option_1"], ["Option 2","option_2"], ["Option 3","option_3"], ["Option 4","option_4"]]), :class => 'form-control'
+                    = select_tag "multiple_choice_questions[#{index}][answer]", options_for_select([["Option 1","option_1"], ["Option 2","option_2"], ["Option 3","option_3"], ["Option 4","option_4"]], right_option_for_answer(question)), :class => 'form-control'
     .col-md-3
       = f.hidden_field :question_type
       = f.hidden_field :exam_id

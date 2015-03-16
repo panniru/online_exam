@@ -14,7 +14,7 @@ class AudioVideoQuestionMaster < ActiveRecord::Base
 
     def preapre_a_v_question(params)
       a_v_qtn = AudioVideoQuestionMaster.new(audio_video_question_master_params(params))
-      a_v_qtn.prepare_multiple_choice_question(params[:multiple_choice_questions])
+      a_v_qtn.multiple_choice_questions = a_v_qtn.prepare_multiple_choice_question(params[:multiple_choice_questions])
       a_v_qtn
     end
     
@@ -41,8 +41,9 @@ class AudioVideoQuestionMaster < ActiveRecord::Base
   def update_a_v_question(params)
     ActiveRecord::Base.transaction do
       if self.update(self.class.audio_video_question_master_params(params))
-        prepare_multiple_choice_question(params[:multiple_choice_questions])
-        if save_multiple_choice
+        questions = prepare_multiple_choice_question(params[:multiple_choice_questions])
+        
+        if questions.map(&:save).all?
           return true
         else
           raise ActiveRecord::Rollback
@@ -63,14 +64,14 @@ class AudioVideoQuestionMaster < ActiveRecord::Base
       question.audio_video_question_master_id = self.id
       question
     end
-    self.multiple_choice_questions = questions
+    questions
   end
 
   def save_multiple_choice
-    if (not multiple_choice_questions.empty?) and multiple_choice_questions.map(&:valid?).all?
-      return multiple_choice_questions.map(&:save).all?
+    if (not self.multiple_choice_questions.empty?) and self.multiple_choice_questions.map(&:valid?).all?
+      return self.multiple_choice_questions.map(&:save).all?
     else
-      multiple_choice_questions.each_with_index do |qtn, index|
+      self.multiple_choice_questions.each_with_index do |qtn, index|
         unless qtn.errors.messages.empty?
           self.errors.add :base,  "Question #{index+1} : #{qtn.errors.messages.map{|key, val| key.to_s.concat(" ").concat(val.join(","))}.join(', ')}"
         end
