@@ -94,7 +94,7 @@ class Exam < ActiveRecord::Base
   end
 
   def check_total_question_count
-    if (no_of_questions != (multiple_choice +  fill_in_blanks + audio_questions + video_questions))
+    if (no_of_questions != (multiple_choice.to_i +  fill_in_blanks.to_i + audio_questions.to_i + video_questions.to_i))
       self.errors.add :base,  "Total questions and question distributions are not matching"
     end
   end
