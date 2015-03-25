@@ -64,9 +64,9 @@ class RandomQuestionGenerator
   def next_question_type
     question_list = []
     question_list = question_list
-    audio_list = (exam.audio_questions - existed_question_type_count("audio")).times.map{|i|"audio"}
-    video_list = (exam.video_questions - existed_question_type_count("video")).times.map{|i| "video"}  
-    discreptove_multiple = (exam.multiple_choice - existed_question_type_count("multiple_choice")).times.map{|i| "multiple_choice"} + (exam.fill_in_blanks - existed_question_type_count("descriptive")).times.map{|i| "descriptive"}   
+    audio_list = (exam.audio_questions.to_i - existed_question_type_count("audio")).times.map{|i|"audio"}
+    video_list = (exam.video_questions.to_i - existed_question_type_count("video")).times.map{|i| "video"}  
+    discreptove_multiple = (exam.multiple_choice.to_i - existed_question_type_count("multiple_choice")).times.map{|i| "multiple_choice"} + (exam.fill_in_blanks - existed_question_type_count("descriptive")).times.map{|i| "descriptive"}   
     (question_list + audio_list + video_list + discreptove_multiple.shuffle).first
   end
   
