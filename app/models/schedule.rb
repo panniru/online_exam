@@ -34,7 +34,7 @@ class Schedule < ActiveRecord::Base
   private
   
   def validate_exam_questions
-    unless (self.exam.multiple_choice_questions.count >= self.exam.multiple_choice and self.exam.descriptive_questions.count >= self.exam.fill_in_blanks and self.exam.audio_video_question_masters.having_question_type("audio").count >= self.exam.audio_questions and self.exam.audio_video_question_masters.having_question_type("video").count >= self.exam.video_questions)
+    unless (self.exam.multiple_choice_questions.count >= self.exam.multiple_choice.to_i and self.exam.descriptive_questions.count >= self.exam.fill_in_blanks.to_i and self.exam.audio_video_question_masters.having_question_type("audio").count >= self.exam.audio_questions.to_i and self.exam.audio_video_question_masters.having_question_type("video").count >= self.exam.video_questions.to_i)
       self.errors.add :base, "Exam Has not enough questions to schedule as per inputs"
     end
   end
