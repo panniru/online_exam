@@ -4,7 +4,7 @@
 
 %strong= "Exam : #{exam_name}"
 %br
-%strong= "Date : #{date}"
+%strong= "Date: #{date_from} #{date_to.present? ? 'to' : ''} #{date_to}"
 
 %table.table.table-bordered
   %thead

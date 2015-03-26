@@ -19,6 +19,11 @@ class AutoSearchController < ApplicationController
     render :json => students.map{ |student| {:id => student.id, :label => student.roll_number}}
   end
 
+  def autocomplete_student
+    students = Student.where("lower(roll_number) ILIKE '%#{params[:term]}%'")
+    render :json => students.map{ |student| {:id => student.id, :label => student.roll_number}}
+  end
+
   def get_autocomplete_items(parameters)
     items = super(parameters)
   end

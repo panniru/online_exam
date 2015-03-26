@@ -37,7 +37,11 @@ class DescriptiveQuestionsController < ApplicationController
   def xls_template_descriptive
     respond_to do |format|
       @question = DescriptiveQuestion.new
-      format.xls { send_data @question.xls_template(col_sep: "\t")}
+      format.xls do
+        spreadsheet_data = StringIO.new
+        @question.xls_template.write spreadsheet_data
+        send_data spreadsheet_data.string, :filename=>"descriptive_questions.xls", :type =>  "application/vnd.ms-excel"
+      end
     end
   end
 

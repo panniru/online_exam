@@ -16,8 +16,10 @@ class ResultsController < ApplicationController
       schedules = []
       if date_from.present?
         schedules = @exam.schedules.dated_on_or_after(date_from).map(&:id)
-      else
+      elsif date_from.present? and date_to.present?
         schedules = @exam.schedules.scheduled_between(date_from, date_to).map(&:id)
+      else
+        schedules = @exam.schedules.map(&:id)
       end
       page = params[:page].present? ? params[:page] : 1
       unless schedules.empty?
@@ -34,7 +36,7 @@ class ResultsController < ApplicationController
           render :pdf => "#{@exam.exam_name} Results ",
           :template => 'results/results',
           :formats => [:pdf],
-          :locals => { exam_name: @exam.exam_full_name, date: params[:schedule_date], results: @results },
+          :locals => { exam_name: @exam.exam_full_name, date_from: params[:schedule_date_from], date_to: params[:schedule_date_to], results: @results },
           :page_size  => 'A4',
           :margin => {:top => '8mm',
             :bottom => '8mm',
@@ -92,7 +94,8 @@ class ResultsController < ApplicationController
       format.json do
         @exam = Exam.find(params[:exam_id])
         tos = params[:email].split(",").map(&:strip)
-        mail_job = ResultMailingJob.new(@exam, tos, params[:subject], params[:content], params[:schedule_date])
+        mail_job = ResultMailingJob.new(@exam, tos, params[:subject], params[:content], params[:schedule_date_from], params[:schedule_date_to])
+        #mail_job.perform
         Delayed::Job.enqueue mail_job
         render :json => {status: true}
       end

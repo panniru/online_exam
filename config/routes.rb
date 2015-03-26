@@ -103,6 +103,7 @@ OnlineExam::Application.routes.draw do
   get 'auto_search/autocomplete_course_name'
   get 'auto_search/autocomplete_exam_subject'
   get 'auto_search/autocomplete_exam_exam_name'
+  get 'auto_search/autocomplete_student'
 
   root to: "home#index"
 

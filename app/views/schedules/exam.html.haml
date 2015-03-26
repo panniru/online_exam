@@ -7,7 +7,7 @@
 = form_tag(next_question_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
   .row
     .col-sm-9
-      - if @question.question_type == 'desciptive'
+      - if @question.question_type == 'descriptive'
         = render "descriptive_answer"
       - elsif @question.question_type == 'audio' or @question.question_type == 'video' 
         = render :partial => "a_v_answer", :locals => {:a_v_question => @question}

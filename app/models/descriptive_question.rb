@@ -1,3 +1,4 @@
+require 'spreadsheet'
 WillPaginate.per_page = 15
 class DescriptiveQuestion < ActiveRecord::Base
   validates :description, :presence => true
@@ -27,11 +28,12 @@ class DescriptiveQuestion < ActiveRecord::Base
     super
   end
 
-  def xls_template(options)
+  def xls_template
     template_headers = ['description', 'answer']
-    CSV.generate(options) do |csv|
-      csv << attribute_names.select { |name| template_headers.include?name }
-    end
+    book = Spreadsheet::Workbook.new
+    sheet1 = book.create_worksheet :name => "Descriptive Questions"
+    sheet1.insert_row(0,template_headers)
+    book
   end
 
   def method_missing(name, *args, &block)

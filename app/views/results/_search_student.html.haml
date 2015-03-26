@@ -4,8 +4,8 @@
     '',
     "auto_search/autocomplete_student_roll_number?exam_id= {{examId}}&schedule_date={{scheduleDate}}",
     :placeholder => "Student Roll No", :class => 'form-control',
-      :id_element => "#student"
-    = hidden_field_tag :student, :id => "search", :ng_model => "studentId"
+    :id_element => "#studentId"
+    = hidden_field_tag :student, "",:id => "studentId", :ng_model => "studentId"
 
   .col-sm-4
     = submit_tag "Go", :name => nil, :class => "btn-primary btn"
@@ -23,6 +23,7 @@
         %form{:method => 'get' , :class => "form-horizantal", :id => "mail_results", :ng_submit => "mail()"}
           .form-group
             = text_field_tag :email, "", :class => 'form-control', :placeholder => "To", :type => "email", :required => true, :ng_model => "mailTemplate.email", :multiple => "true"
+            (Separate multiple emails with comma(,))
           .form-group
             = text_field_tag :subject, "", :class => 'form-control', :placeholder => "Subject", :required => true, :ng_model => "mailTemplate.subject"
           .form-group

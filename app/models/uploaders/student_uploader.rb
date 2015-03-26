@@ -30,11 +30,12 @@ class StudentUploader
     end
   end
 
-  def xls_template(options)
+  def xls_template
     template_headers = ["roll_number", "name", "year", "semester", "email"]
-    CSV.generate(options) do |csv|
-      csv << template_headers
-    end
+    book = Spreadsheet::Workbook.new
+    sheet1 = book.create_worksheet :name => "Students"
+    sheet1.insert_row(0,template_headers)
+    book
   end
 
 end

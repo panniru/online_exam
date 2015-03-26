@@ -1,7 +1,8 @@
 (function(angular, app) {
     "use strict";
     app.controller("StudentResultController",["$scope", "examService", "resultService", "$window", function($scope, examService, resultService, $window) {
-        
+        $scope.scheduleDateFrom = "";
+        $scope.scheduleDateTo = "";
         $scope.getExams = function(){
             examService.getUserExams()
                 .then(function(responce){
@@ -34,18 +35,18 @@
         }
 
         $scope.searchOnStudent = function(){
-            resultService.searchOnStudent($scope.examId, $scope.scheduleDate, $scope.studentId)
+            resultService.searchOnStudent($scope.examId, $scope.scheduleDateFrom, $scope.scheduleDateTo, $("#studentId").val())
                 .then(function(responce){
                     $scope.results = responce.data.results
                 });
         }
 
         $scope.print = function(){
-            $window.open(resultService.printUrl($scope.examId, $scope.scheduleDate), "_blank")
+            $window.open(resultService.printUrl($scope.examId, $scope.scheduleDateFrom, $scope.scheduleDateTo), "_blank")
         }
 
         $scope.composeMail = function(){
-            $scope.mailTemplate = {email: "", subject: "", content: "", exam_id: $scope.examId, schedule_date: $scope.scheduleDate}
+            $scope.mailTemplate = {email: "", subject: "", content: "", exam_id: $scope.examId, schedule_date_from: $scope.scheduleDateFrom, schedule_date_to: $scope.scheduleDateTo}
             $("#mailModal").modal()
         }
 

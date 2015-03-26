@@ -52,7 +52,11 @@ class StudentsController < ApplicationController
     @student_uploader = StudentUploader.new
     respond_to do |format|
       format.html { render "new_upload"}
-      format.xls { send_data @student_uploader.xls_template(col_sep: "\t") }
+      format.xls do
+        spreadsheet_data = StringIO.new
+        @student_uploader.xls_template.write spreadsheet_data
+        send_data spreadsheet_data.string, :filename=>"students.xls", :type =>  "application/vnd.ms-excel"
+      end
     end
   end
 
