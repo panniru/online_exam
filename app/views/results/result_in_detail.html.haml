@@ -7,7 +7,7 @@
     .col-md-10
       %h4 Questions
     .col-md-offset-10
-      - if can?:update, :Result
+      - if current_user.faculty? or current_user.admin?
         = link_to "Update", "#", :class => "btn btn-primary", :ng_show => "editAnswer", :ng_click => "updateDetails()"
         = link_to "Edit", "#", :class => "btn", :ng_click => "editAnswer = true", :ng_class => "{'btn-primary' : !editAnswer , 'btn-default': editAnswer}"
       

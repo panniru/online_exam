@@ -24,7 +24,7 @@ class FacultiesController < ApplicationController
     @faculty = Faculty.new(faculty_params)
     if @faculty.save
       flash.now[:success] = I18n.t :success, :scope => [:faculty, :create]
-      render "show"
+      redirect_to @faculty
     else
       flash.now[:fail] = I18n.t :fail, :scope => [:faculty, :create]
       render "new"

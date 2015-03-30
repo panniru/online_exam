@@ -4,8 +4,11 @@ class HomeController < ApplicationController
   def index
     if current_user.present? and current_user.faculty?
       page = params[:page].present? ? params[:page] : 1
-      @courses = current_user.resource.courses.paginate(:page => page)
-      render "courses/index"
+      @courses = []
+      if current_user.resource.present?
+        @courses = current_user.resource.courses.paginate(:page => page)
+        render "courses/index"
+      end
     end
   end
 
