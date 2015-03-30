@@ -43,8 +43,8 @@ gem 'pg_search'
 gem 'rmagick'
 gem 'carrierwave'
 
-#gem 'jw_player_helper'
-gem 'jwplayer-rails'
+gem 'jw_player_helper'
+#gem 'jwplayer-rails'
 
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
