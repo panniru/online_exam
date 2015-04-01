@@ -8,6 +8,7 @@ class ScheduleDetail < ActiveRecord::Base
   scope :belongs_to_question_type, lambda{|question_type| where(:question_type => question_type)}
   scope :belongs_to_question_id, lambda{|question_id| where(:question_id => question_id)}
   scope :check_existent_question, lambda{|student_id, schedule_id, question_type, question_id| belongs_to_student(student_id).belongs_to_schedule(schedule_id).belongs_to_question_type(question_type).belongs_to_question_id(question_id)}
+  scope :having_audio_video_question_master_id, lambda{|question_id| where(:audio_video_question_master_id => question_id)}
 
   def question_for_validation
     if self.question_type == "descriptive"
@@ -16,6 +17,8 @@ class ScheduleDetail < ActiveRecord::Base
       MultipleChoiceQuestion.find(question_id)
     end
   end
+
+
 
   def question_no
     if (question_type == 'audio' or question_type == 'video')
@@ -49,6 +52,7 @@ class ScheduleDetail < ActiveRecord::Base
         question_params[:question_type] = params[:question_type]
         question_params[:audio_video_question_master_id] = params[:question_id]
         question_params[:question_no] = params[:question_no]
+        question_params[:student_file_view_count] = params[:student_file_view_count]
         save_schedule_detail(schedule_id, question_params, student_id)
       end
     else
@@ -60,8 +64,9 @@ class ScheduleDetail < ActiveRecord::Base
     matched_details = self.check_existent_question(student_id, schedule_id, params[:question_type], params[:question_id]).first
     if matched_details.present?
       matched_details.update({:answer_caught => params[:answer_caught]})
+      matched_details.update({:student_file_view_count => params[:student_file_view_count]})
     else
-      ScheduleDetail.create!(:schedule_id => schedule_id, :question_id => params[:question_id], :student_id => student_id, :question_type => params[:question_type], :answer_caught => params[:answer_caught], :question_no => params[:question_no], :audio_video_question_master_id => params[:audio_video_question_master_id]) 
+      ScheduleDetail.create!(:schedule_id => schedule_id, :question_id => params[:question_id], :student_id => student_id, :question_type => params[:question_type], :answer_caught => params[:answer_caught], :question_no => params[:question_no], :audio_video_question_master_id => params[:audio_video_question_master_id], :student_file_view_count => params[:student_file_view_count]) 
     end
   end
 

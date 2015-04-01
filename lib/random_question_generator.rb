@@ -94,14 +94,17 @@ class RandomQuestionGenerator
 
   def active_question(question, sequence, answer = nil)
     if question.is_a?AudioVideoQuestionMaster
-      active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type, :digi_file_url => question.digi_file_url)
+      active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type, :digi_file_url => question.digi_file_url, :audio_video_question_master_id => question.id)
       question.multiple_choice_questions.each_with_index do |qtn, index| 
-        answer_caught = get_schedule_details.select{|sd| sd.question_id == qtn.id and sd.question_type = question.question_type}.first.try(:answer_caught)
-        active_qtn.children_questions << build_question(qtn, "#{sequence.to_i}.#{(index+1)}", answer_caught)
+        sd_detail = get_schedule_details.select{|sd| sd.question_id == qtn.id and sd.question_type = question.question_type}.first
+        act_qtn = build_question(qtn, "#{sequence.to_i}.#{(index+1)}", sd_detail.try(:answer_caught))
+        act_qtn.student_file_view_count = sd_detail.try(:student_file_view_count).try(:to_i)
+        active_qtn.children_questions << act_qtn
       end
+      active_qtn.student_file_view_count = active_qtn.children_questions[0].student_file_view_count.to_i
       active_qtn
     else
-      build_question(question, sequence, answer = nil)
+      build_question(question, sequence, answer)
     end
   end
 
@@ -156,6 +159,7 @@ class RandomQuestionGenerator
     attribute :audio_video_question_master_id
     attribute :question_type
     attribute :children_questions, []
+    attribute :student_file_view_count, Integer
   end
 
 

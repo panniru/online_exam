@@ -85,6 +85,7 @@ OnlineExam::Application.routes.draw do
       post "validate_exam_entrance"
       post "next_question" 
       get "next_question" 
+      get "increment_a_v_listen_count"
     end
   end
 

@@ -19,6 +19,10 @@
     = hidden_field_tag :question_no, @question.question_no.to_i
     = hidden_field_tag :question_id, @question.question_id
     = hidden_field_tag :question_type, @question.question_type
+    = hidden_field_tag :assigned_schedule_id, @schedule.id, :id => "assigned_schedule_id"
+    = hidden_field_tag :audio_video_question_master_id, @question.audio_video_question_master_id, :id => "audio_video_question_master_id"
+    = hidden_field_tag :student_file_view_count, @question.student_file_view_count, :id => "student_file_view_count"
+    
     = hidden_field_tag :action_for
 
 .row

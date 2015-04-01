@@ -613,9 +613,10 @@ CREATE TABLE schedule_details (
     answer_caught character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    question_no character varying(255),
     valid_answer boolean,
-    audio_video_question_master_id integer
+    audio_video_question_master_id integer,
+    question_no integer,
+    student_file_view_count integer
 );
 
 
@@ -1205,3 +1206,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150309103058');
 INSERT INTO schema_migrations (version) VALUES ('20150311124846');
 
 INSERT INTO schema_migrations (version) VALUES ('20150313105558');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401084807');

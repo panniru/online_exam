@@ -59,9 +59,9 @@ class ExamValidator
     if qtn.question_type == 'multiple_choice'
       exam.mark_per_mc.present? ? exam.mark_per_mc : 1
     elsif qtn.question_type == 'audio' 
-      exam.mark_per_audio.present? ? (exam.mark_per_audio.to_f/4) : 1
+      exam.mark_per_audio.present? ? exam.mark_per_audio.to_f : 1
     elsif qtn.question_type == 'video'
-      exam.mark_per_video.present? ? (exam.mark_per_video.to_f/4) : 1
+      exam.mark_per_video.present? ? exam.mark_per_video.to_f : 1
     else
       exam.mark_per_fib.present? ? exam.mark_per_fib : 1
     end

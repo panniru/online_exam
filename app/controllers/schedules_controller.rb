@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-  load_resource :only => [:new, :edit, :show, :update, :destroy, :exam, :review_exam, :submit_exam, :exam_entrance, :validate_exam_entrance, :next_question]
+  load_resource :only => [:new, :edit, :show, :update, :destroy, :exam, :review_exam, :submit_exam, :exam_entrance, :validate_exam_entrance, :next_question, :increment_a_v_listen_count]
   before_action :validate_exam_status, :only => [:exam, :exam_entrance, :review_exam, :next_question]
 
   authorize_resource
@@ -139,6 +139,18 @@ class SchedulesController < ApplicationController
         status = false
         if @schedule.access_password == params[:password]
           status = true
+        end
+        render :json => status
+      end
+    end
+  end
+
+  def increment_a_v_listen_count
+    respond_to do |format|
+      format.json do
+        status = false
+        if current_user.student?
+          status = @schedule.increment_a_v_listen_count(current_user.resource.id, params[:audio_video_question_master_id])
         end
         render :json => status
       end

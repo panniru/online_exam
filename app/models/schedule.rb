@@ -21,6 +21,13 @@ class Schedule < ActiveRecord::Base
   scope :scheduled_between, lambda{|from_date, to_date| where(:schedule_date => (from_date..to_date))}
   scope :dated_on_or_after, lambda{|from_date| where("schedule_date >= ?", from_date)}
 
+  def increment_a_v_listen_count(student_id, a_v_question_id)
+    self.schedule_details.belongs_to_student(student_id).having_audio_video_question_master_id(a_v_question_id).each do |sd_detail|
+      sd_detail.update_attributes({:student_file_view_count => (student_file_view_count.to_i+1)})
+    end 
+  end
+
+
   def self.role_based_schedules(user)
     if user.faculty?
       Schedule.belongs_to_faculty(user.resource.id)

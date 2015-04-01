@@ -70,7 +70,7 @@ class Exam < ActiveRecord::Base
   end
 
   def total_marks
-    ((multiple_choice.to_i * (mark_per_mc.present? ? mark_per_mc : 1 )) + (fill_in_blanks.to_i * (mark_per_fib.present? ? mark_per_fib : 1 )) + (audio_questions.to_i * (mark_per_audio.present? ? mark_per_audio : 4 )) + (video_questions.to_i * (mark_per_video.present? ? mark_per_video : 4 )))
+    ((multiple_choice.to_i * (mark_per_mc.present? ? mark_per_mc : 1 )) + (fill_in_blanks.to_i * (mark_per_fib.present? ? mark_per_fib : 1 )) + (audio_questions.to_i * (mark_per_audio.present? ? (mark_per_audio*4) : 4 )) + (video_questions.to_i * (mark_per_video.present? ? (mark_per_video*4) : 4 )))
   end
 
   def exam_full_name
