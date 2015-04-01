@@ -24,6 +24,8 @@
 //= require bootstrap/collapse
 //= require bootstrap/carousel
 //= require bootstrap/affix
+//= require jwplayer
+//= require jwplayer.html5
 
 //= require autocomplete-rails
 //= require_self

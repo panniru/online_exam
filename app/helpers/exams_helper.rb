@@ -22,15 +22,22 @@ module ExamsHelper
   def question_btn_group(exam)
     links = []
     links << link_to("Add Question", new_exam_multiple_choice_question_path(exam), :class => "btn btn-primary")
-    links << link_to("Add Audio Question", new_exam_audio_video_question_master_path(exam, :question_type => :audio))
-    
-    links << link_to("Add video Question", new_exam_audio_video_question_master_path(exam, :question_type => :video))
-    links << link_to("Show Multiple Choice Questions", exam_multiple_choice_questions_path(exam))
-    links << descriptive_questions(exam)
-    links << link_to("Show Audio Questions", exam_audio_video_question_masters_path(exam, :question_type=> "audio"))
-    links << link_to("Show Video  Questions", exam_audio_video_question_masters_path(exam, :question_type=> "video"))
-    links << link_to("Upload Multiple Choice Questions", upload_new_exam_multiple_choice_questions_path(exam))
-    links << link_to("Upload Fill in The Blanks", upload_new_exam_descriptive_questions_path(exam))
+    if exam.multiple_choice.present? and exam.multiple_choice > 0
+      links << link_to("Show Multiple Choice Questions", exam_multiple_choice_questions_path(exam))
+      links << link_to("Upload Multiple Choice Questions", upload_new_exam_multiple_choice_questions_path(exam))
+    end
+    if exam.fill_in_blanks.present? and exam.fill_in_blanks > 0
+      links << descriptive_questions(exam)
+      links << link_to("Upload Fill in The Blanks", upload_new_exam_descriptive_questions_path(exam))
+    end
+    if exam.audio_questions.present? and exam.audio_questions > 0
+      links << link_to("Add Audio Question", new_exam_audio_video_question_master_path(exam, :question_type => :audio))
+      links << link_to("Show Audio Questions", exam_audio_video_question_masters_path(exam, :question_type=> "audio"))
+    end
+    if exam.video_questions.present? and exam.video_questions > 0
+      links << link_to("Add video Question", new_exam_audio_video_question_master_path(exam, :question_type => :video))
+      links << link_to("Show Video  Questions", exam_audio_video_question_masters_path(exam, :question_type=> "video"))
+    end
     ApplicationHelper.btn_group(links)
   end
 
