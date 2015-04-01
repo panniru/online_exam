@@ -6,7 +6,7 @@
 
 set :stage, "production"
 
-server '10.0.0.73', user: 'deployer', roles: %w{web app db}, primary: true
+server '10.0.0.52', user: 'deployer', roles: %w{web app db}, primary: true
 
 set :rails_env, :production
 
@@ -44,3 +44,4 @@ set :rails_env, :production
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+

@@ -10,7 +10,8 @@ set :user, "deployer"
 #set :ssh_options , { :forward_agent => true }
 
 set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
-set :current_path, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+set :current_path, "#{fetch(:deploy_to)}/current"
+set :shared_path, "#{fetch(:deploy_to)}/shared"
 set :deploy_via, :remote_cache
 set :branch, 'master'
 
@@ -54,69 +55,25 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 namespace :deploy do
 
-  # after :restart, :clear_cache do
-  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
-  #     # Here we can do anything such as:
-  #     # within release_path do
-  #     #   execute :rake, 'cache:clear'
-  #     # end
-  #   end
-  # end
-
-  # %w[start stop restart].each do |command|
-  #   desc "#{command} unicorn server"
-  #   task command do
-  #     on roles(:app) do
-  #       run "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
-  #     end
-  #   end
-  # end
-
-  # task :restart_nginx do
-  #   on roles(:web) do
-  #     execute :sudo, :service, :nginx, :restart
-  #   end
-  # end
-
-  # after :publishing, "deploy:restart_nginx"
-
-  # task :setup_config do
-  #   on roles(:app) do
-  #     execute "echo 'in linking---------------#{fetch(:current_path)}'"
-  #     execute :sudo , "ln -nfs #{fetch(:current_path)}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
-  #     execute :sudo , "ln -nfs #{fetch(:current_path)}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
-      
-  #     #put File.read("config/database.example.yml"), "#{fetch(:shared_path)}/config/database.yml"
-  #     puts "Now edit the config files in #{fetch(:shared_path)}."
-  #   end
-  # end
-  # after :publishing, "deploy:setup_config"
-
-
-
-  task :restart_unicorn do
+  desc "Link Nginx and unicorn services"
+  task :link_services do
     on roles(:app) do
-      execute "echo '---------------#{fetch(:current_path)}'"
-      execute "/etc/init.d/unicorn_#{fetch(:application)} restart"
+      execute :sudo ,"ln -nfs #{fetch(:current_path)}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+      execute :sudo, "ln -nfs #{fetch(:current_path)}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
     end
   end
 
-  # after :publishing, "deploy:restart_unicorn"
+  before :publishing, "deploy:link_services"
 
-
-  # task :symlink_config do
-  #   on roles(:app) do
-  #     puts "excecuting"
-  #     execute :sudo , "mkdir -p #{fetch(:shared_path)}/config"
-  #     execute "ln -nfs #{fetch(:shared_path)}/config/database.yml #{fetch(:release_path)}/config/database.yml"
-  #   end
-  # end
-  # before :updated, "deploy:symlink_config"
-  desc 'Restart application'
-    task :restart do
-      on roles(:app), in: :sequence, wait: 5 do
-         execute "sudo /etc/init.d/nginx restart"
-     end
+  desc "Make sure local git is in sync with remote."
+  task :check_revision do
+    on roles(:web) do
+      unless `git rev-parse HEAD` == `git rev-parse origin/master`
+        puts "WARNING: HEAD is not the same as origin/master"
+        puts "Run `git push` to sync changes."
+        exit
+      end
+    end
   end
 
 end

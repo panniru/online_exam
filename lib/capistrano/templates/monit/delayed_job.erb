@@ -1,0 +1,5 @@
+<%APP_ROOT=  "/home/deployer/apps/online_exam/current"%>
+<%SHARED_PATH=  "/home/deployer/apps/online_exam/shared"%>
+check process delayed_job with pidfile /home/deployer/apps/online_exam/current/tmp/pids/delayed_job.0.pid
+  start program = "<%= SHARED_PATH%>/config/delayed_job_start.sh"
+  stop program = "<%= SHARED_PATH%>/config/delayed_job_stop.sh"
