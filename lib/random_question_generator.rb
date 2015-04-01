@@ -94,7 +94,7 @@ class RandomQuestionGenerator
 
   def active_question(question, sequence, answer = nil)
     if question.is_a?AudioVideoQuestionMaster
-      active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type)
+      active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type, :digi_file_url => question.digi_file_url)
       question.multiple_choice_questions.each_with_index do |qtn, index| 
         answer_caught = get_schedule_details.select{|sd| sd.question_id == qtn.id and sd.question_type = question.question_type}.first.try(:answer_caught)
         active_qtn.children_questions << build_question(qtn, "#{sequence.to_i}.#{(index+1)}", answer_caught)
