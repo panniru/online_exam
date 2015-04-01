@@ -7,7 +7,7 @@
     .pull-right
       = link_to "Edit", send("edit_exam_audio_video_question_master_path".to_sym, @exam, @audio_video_question_master), :class => "btn btn-primary"
       = link_to "Delete", send("exam_audio_video_question_master_path".to_sym, @exam, @audio_video_question_master), :class => "btn btn-danger", :data => { :confirm => 'Are you sure?', :method => :delete }
-      = link_to "Add #{params[:type]} Question", new_exam_audio_video_question_master_path(:type => @audio_video_question_master.question_type, :exam_id => @exam.id), :class => "btn btn-success"
+      = link_to "Add #{params[:type]} Question", new_exam_audio_video_question_master_path(:question_type => @audio_video_question_master.question_type, :exam_id => @exam.id), :class => "btn btn-success"
 
 %br
 .row

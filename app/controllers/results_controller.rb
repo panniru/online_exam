@@ -95,8 +95,8 @@ class ResultsController < ApplicationController
         @exam = Exam.find(params[:exam_id])
         tos = params[:email].split(",").map(&:strip)
         mail_job = ResultMailingJob.new(@exam, tos, params[:subject], params[:content], params[:schedule_date_from], params[:schedule_date_to])
-        #mail_job.perform
-        Delayed::Job.enqueue mail_job
+        mail_job.perform
+        #Delayed::Job.enqueue mail_job
         render :json => {status: true}
       end
     end
