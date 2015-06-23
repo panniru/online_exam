@@ -4,26 +4,28 @@
     %span= @question.description.gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
     .pull-right
       = link_to "Submit", "#", :class => "btn btn-primary", :rel => "question-nav-submit"
-= form_tag(next_question_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
-  .row
-    .col-sm-9
+
+.row
+  .col-sm-9
+    = form_tag(next_question_schedule_path(@schedule), :method => "post", :id => "ol_exam") do
+      = hidden_field_tag :question_no, @question.question_no.to_i
+      = hidden_field_tag :question_id, @question.question_id
+      = hidden_field_tag :question_type, @question.question_type
+      = hidden_field_tag :assigned_schedule_id, @schedule.id, :id => "assigned_schedule_id"
+      = hidden_field_tag :audio_video_question_master_id, @question.audio_video_question_master_id, :id => "audio_video_question_master_id"
+      = hidden_field_tag :student_file_view_count, @question.student_file_view_count, :id => "student_file_view_count"
+    
+      = hidden_field_tag :action_for
+
       - if @question.question_type == 'descriptive'
         = render "descriptive_answer"
       - elsif @question.question_type == 'audio' or @question.question_type == 'video' 
         = render :partial => "a_v_answer", :locals => {:a_v_question => @question}
       - else
         = render :partial => "mc_answer", :locals => {:question => @question}
-    .col-md-3
-      - if @question.digi_file_url.present? or @question.question_type == 'audio' or @question.question_type == 'video'
-        = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
-    = hidden_field_tag :question_no, @question.question_no.to_i
-    = hidden_field_tag :question_id, @question.question_id
-    = hidden_field_tag :question_type, @question.question_type
-    = hidden_field_tag :assigned_schedule_id, @schedule.id, :id => "assigned_schedule_id"
-    = hidden_field_tag :audio_video_question_master_id, @question.audio_video_question_master_id, :id => "audio_video_question_master_id"
-    = hidden_field_tag :student_file_view_count, @question.student_file_view_count, :id => "student_file_view_count"
-    
-    = hidden_field_tag :action_for
+  .col-md-3
+    - if @question.digi_file_url.present? or @question.question_type == 'audio' or @question.question_type == 'video'
+      = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
 
 .row
   .col-md-9
