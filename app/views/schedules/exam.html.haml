@@ -25,7 +25,7 @@
         = render :partial => "mc_answer", :locals => {:question => @question}
   .col-md-3
     - if @question.digi_file_url.present? or @question.question_type == 'audio' or @question.question_type == 'video'
-      = render :partial => "multiple_choice_questions/audio_video_question", :locals => {:file_url => @question.digi_file_url}
+      = render :partial => "a_v_question", :locals => {:file_url => @question.digi_file_url}
 
 .row
   .col-md-9

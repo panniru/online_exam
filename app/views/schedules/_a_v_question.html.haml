@@ -1,0 +1,86 @@
+-#= video_player({:file => file_url, :skin => "glow"}, {:width => 250, :height => 250, :id => "onlineExamVideo"}, {:onclick => "reflectswf();"})
+= hidden_field_tag :file_url_for_js_access, file_url  
+#mediaspace
+%br
+.col-md-offset-4
+  %a.btn.btn-primary.btn-sm{:href=>"#", :style => "font-size:25px;", :id=> "examMultimediaPlayButton", :title => "Play"}
+    %span.glyphicon.glyphicon-play
+  %a.btn.btn-primary.btn-sm{:href=>"#", :style => "font-size:25px;display:none;", :id=> "examMultimediaPauseButton", :title => "Pause"}
+    %span.glyphicon.glyphicon-pause
+  %a.btn.btn-primary.btn-sm{:href=>"#", :style => "font-size:25px;", :id=> "examMultimediaFullScreen", :title => "Full Screen"}
+    %span.glyphicon.glyphicon-resize-full
+
+
+:javascript
+
+  
+  $("#examMultimediaFullScreen").click(function(){
+  goFullscreen("mediaspace")
+  })
+
+  $("#examMultimediaPlayButton").click(function(){
+  jwplayer().play();
+  $(this).hide()
+  $("#examMultimediaPauseButton").show()
+  })
+
+  $("#examMultimediaPauseButton").click(function(){
+  jwplayer().pause();
+  $(this).hide()
+  $("#examMultimediaPlayButton").show()
+  })
+
+    var playCount= 0;
+    jwplayer('mediaspace').setup({
+        'flashplayer': '/assets/flash.swf',
+        'file': $("#file_url_for_js_access").val(),
+        'autostart': 'false',
+        'icons': 'false',
+        'stretching': 'fill',
+        'controlbar': 'none',
+        'width': '250',
+        'height': '250',
+        'controls': false,
+        events: {
+            onReady: function(event){
+                $("#mediaspace_logo").hide();
+                playCount = parseInt($("#student_file_view_count").val());
+                console.log("On Dom REady")
+                console.log(playCount)
+            },
+            onPlay: function(event){
+            $("#examMultimediaPauseButton").show()
+            $("#examMultimediaPlayButton").hide()
+            $("#student_file_view_count").val(playCount)
+            console.log("On Dom play")
+            console.log(jwplayer().getState())
+            console.log(playCount)
+            if(playCount >= 3){
+            jwplayer('mediaspace').stop();
+            }
+            playCount +=1;
+            },
+            onComplete: function(event){
+            $("#examMultimediaPauseButton").hide()
+            $("#examMultimediaPlayButton").show()
+            }
+        }
+    });
+    function goFullscreen(id) {
+    // Get the element that we want to take into fullscreen mode
+    var element = document.getElementById(id);
+
+    // These function will not exist in the browsers that don't support fullscreen mode yet,
+    // so we'll have to check to see if they're available before calling them.
+
+    if (element.mozRequestFullScreen) {
+      // This is how to go into fullscren mode in Firefox
+      // Note the "moz" prefix, which is short for Mozilla.
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+      // This is how to go into fullscreen mode in Chrome and Safari
+      // Both of those browsers are based on the Webkit project, hence the same prefix.
+      element.webkitRequestFullScreen();
+   }
+   // Hooray, now we're in fullscreen mode!
+  }
