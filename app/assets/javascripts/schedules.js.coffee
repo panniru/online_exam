@@ -1,5 +1,6 @@
 $ ->
    $('body').on('click', 'a[rel = "question-nav-next"]', (event)->
+        console.log("link submission")
         $("#action_for").val("next")
         $("form#ol_exam").submit()
         )
@@ -47,7 +48,7 @@ $ ->
 
    $("span#time-out-timer").countdown $("#time-out-timer").data("end-countdown"), (event) ->
         $(this).html event.strftime("%H:%M:%S")
-        if event.strftime("%D-%H-%M-%S") == '00-00-00-00'
-                $("#action_for").val("submit")
-                $("form#ol_exam").submit()
+        # if event.strftime("%D-%H-%M-%S") == '00-00-00-00'
+        #         $("#action_for").val("submit")
+        #         $("form#ol_exam").submit()
 

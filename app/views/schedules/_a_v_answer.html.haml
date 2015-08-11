@@ -14,6 +14,7 @@
               %span= question.description.gsub(/\n/, '<br/>').gsub(/\s+/, '&nbsp;').html_safe
               = hidden_field_tag "children_questions[#{index}][question_id]", question.question_id
               = hidden_field_tag "children_questions[#{index}][question_no]", question.question_no
+              = hidden_field_tag "children_questions[#{index}][schedule_detail_id]", question.schedule_detail_id
           .radio
             = radio_button_tag("children_questions[#{index}][answer_caught]", question.option_1, question.option_1 == question.answer_caught)
             = label_tag(:label_1, question.option_1)

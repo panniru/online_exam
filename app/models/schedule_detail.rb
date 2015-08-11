@@ -53,20 +53,35 @@ class ScheduleDetail < ActiveRecord::Base
         question_params[:audio_video_question_master_id] = params[:question_id]
         question_params[:question_no] = params[:question_no]
         question_params[:student_file_view_count] = params[:student_file_view_count]
-        save_schedule_detail(schedule_id, question_params, student_id)
+        schedule_detail = save_schedule_detail(schedule_id, question_params, student_id)
+        question_params[:schedule_detail_id] = schedule_detail.id
       end
     else
-      save_schedule_detail(schedule_id, params, student_id)
+      schedule_detail = save_schedule_detail(schedule_id, params, student_id)
+      params[:schedule_detail_id] = schedule_detail.id
     end
   end
 
   def self.save_schedule_detail(schedule_id, params, student_id)
-    matched_details = self.check_existent_question(student_id, schedule_id, params[:question_type], params[:question_id]).first
+      ScheduleDetail.create(:schedule_id => schedule_id, :question_id => params[:question_id], :student_id => student_id, :question_type => params[:question_type], :answer_caught => params[:answer_caught], :question_no => params[:question_no], :audio_video_question_master_id => params[:audio_video_question_master_id], :student_file_view_count => params[:student_file_view_count]) 
+  end
+
+  def self.save_answer_and_view_count(params)
+    if params[:question_type] == "audio" or params[:question_type] == "video" 
+      4.times.each_with_index do |index|
+        question_params = params[:children_questions].class == Array ? params[:children_questions][index] : params[:children_questions][index.to_s] 
+        update_shdule_details(question_params[:schedule_detail_id], question_params)
+      end
+    else
+      update_shdule_details(params[:schedule_detail_id], params)
+    end
+  end
+
+  def self.update_shdule_details(schedule_setail_id, params)
+    matched_details = ScheduleDetail.find(schedule_setail_id)
     if matched_details.present?
       matched_details.update({:answer_caught => params[:answer_caught]})
       matched_details.update({:student_file_view_count => params[:student_file_view_count]})
-    else
-      ScheduleDetail.create!(:schedule_id => schedule_id, :question_id => params[:question_id], :student_id => student_id, :question_type => params[:question_type], :answer_caught => params[:answer_caught], :question_no => params[:question_no], :audio_video_question_master_id => params[:audio_video_question_master_id], :student_file_view_count => params[:student_file_view_count]) 
     end
   end
 

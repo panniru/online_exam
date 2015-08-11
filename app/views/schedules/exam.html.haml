@@ -16,6 +16,7 @@
       = hidden_field_tag :student_file_view_count, @question.student_file_view_count, :id => "student_file_view_count"
     
       = hidden_field_tag :action_for
+      = hidden_field_tag :schedule_detail_id, @question.schedule_detail_id
 
       - if @question.question_type == 'descriptive'
         = render "descriptive_answer"
@@ -42,3 +43,5 @@
 .col-sm-2.pull-right
   %h4
     %span.label.label-danger{"data-end-countdown".to_sym => "#{@schedule.count_down_exam_end_time}", :id => "time-out-timer"}
+
+ 

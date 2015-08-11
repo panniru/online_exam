@@ -12,7 +12,7 @@ class ExamValidator
   end
   
   def self.validate_answer(answer, answer_caught)
-    answer.upcase == answer_caught.try(:upcase)
+    answer.upcase.strip == answer_caught.try(:upcase).try(:strip)
   end
   
   def validate

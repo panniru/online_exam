@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
   authorize_resource
 
   def index
-    @schedules = current_user.admin? ? Schedule.all : Schedule.role_based_schedules(current_user)
+    @schedules = current_user.admin? ? Schedule.all.order("exam_date_time DESC") : Schedule.role_based_schedules(current_user).order("exam_date_time DESC")
     @active_schedules = []
     @closed_schedules = []
     @schedules.each do |schedule|
@@ -70,7 +70,7 @@ class SchedulesController < ApplicationController
     @schedule = SchedulesDecorator.decorate(@schedule)
 
     if @status
-      @question = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id).session_first_question
+      @question = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id, current_user).session_first_question
       render "exam"
     else
       render "show"
@@ -80,18 +80,18 @@ class SchedulesController < ApplicationController
   def next_question
     if @status
       @exam = @schedule.exam
-      random_question_gen = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id)
+      random_question_gen = RandomQuestionGenerator.new(@exam, @schedule.id, current_user.resource.id, current_user)
       @schedule = SchedulesDecorator.decorate(@schedule)
       if params[:action_for] == "prev"
         @question = random_question_gen.prev_question(params[:question_no])
         if params[:question_id].present?
-          ScheduleDetail.make_entry(@schedule.id, params, current_user.resource.id)
+          ScheduleDetail.save_answer_and_view_count(params)
         end
       elsif params[:action_for] == "current"
         @question = random_question_gen.current_question(params[:question_no])
       else
         if params[:question_id].present?
-          ScheduleDetail.make_entry(@schedule.id, params, current_user.resource.id)
+          ScheduleDetail.save_answer_and_view_count(params)
         end
         @question = random_question_gen.next_question(params[:question_no])
       end

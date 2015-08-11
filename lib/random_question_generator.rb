@@ -14,22 +14,22 @@ class RandomQuestionGenerator
 
   def session_first_question
     schedule_details = get_schedule_details.last
-    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.answer_caught) : new_question
+    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.id,schedule_details.answer_caught) : new_question
   end
 
   def prev_question(current_question_no)
     schedule_details = detail_on_question_no(current_question_no.to_i-1)
-    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.answer_caught) : nil
+    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.id,schedule_details.answer_caught) : nil
   end
 
   def next_question(current_question_no)
     schedule_details = detail_on_question_no(current_question_no.to_i+1)
-    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.answer_caught) : new_question
+    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.id,schedule_details.answer_caught) : new_question
   end
 
   def current_question(question_no)
     schedule_details = detail_on_question_no(question_no)
-    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.answer_caught) : nil
+    schedule_details.present? ? active_question(schedule_details.question, schedule_details.question_no, schedule_details.id, schedule_details.answer_caught) : nil
   end
 
   def detail_on_question_no(number)
@@ -39,14 +39,13 @@ class RandomQuestionGenerator
   def generate_all_questions_on_submit
     schedule_details = get_schedule_details
     until existed_questions_count >= exam.no_of_questions
-      question = new_question
-      schedule_details << question
-      ScheduleDetail.make_entry(schedule_id, question, current_user.resource.id)
+      new_question
     end
   end
   
 
   def new_question
+    schedule_details = get_schedule_details
     count_exist = existed_questions_count
     return nil if  count_exist>= exam.no_of_questions
     next_question = nil
@@ -58,7 +57,11 @@ class RandomQuestionGenerator
     else
       next_question = load_multiple_choice_question
     end
-    active_question(next_question, count_exist+1)
+    schedule_details << next_question
+    next_qtn_no = count_exist+1
+    act_qtn = new_active_questions(next_question, next_qtn_no)
+    schedule_detail = ScheduleDetail.make_entry(schedule_id, act_qtn, current_user.resource.id)
+    act_qtn
   end
 
   def next_question_type
@@ -89,27 +92,43 @@ class RandomQuestionGenerator
   end
   
   def get_schedule_details
-    @schedule_details ||= ScheduleDetail.belongs_to_student(student_id).belongs_to_schedule(schedule_id)
+    @schedule_details = ScheduleDetail.belongs_to_student(student_id).belongs_to_schedule(schedule_id)
   end
 
-  def active_question(question, sequence, answer = nil)
+  def new_active_questions(question, sequence)
+    if question.is_a?AudioVideoQuestionMaster
+      active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type, :digi_file_url => question.digi_file_url, :audio_video_question_master_id => question.id)
+      question.multiple_choice_questions.each_with_index do |qtn, index| 
+        act_qtn = build_question(qtn, "#{sequence.to_i}.#{(index+1)}", nil)
+        act_qtn.student_file_view_count = 0
+        active_qtn.children_questions << act_qtn
+      end
+      active_qtn.student_file_view_count = active_qtn.children_questions[0].student_file_view_count.to_i
+      active_qtn
+    else
+      build_question(question, sequence, nil)
+    end
+  end
+  
+
+  def active_question(question, sequence, schedule_detail_id, answer = nil)
     if question.is_a?AudioVideoQuestionMaster
       active_qtn = ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :question_type => question.question_type, :digi_file_url => question.digi_file_url, :audio_video_question_master_id => question.id)
       question.multiple_choice_questions.each_with_index do |qtn, index| 
         sd_detail = get_schedule_details.select{|sd| sd.question_id == qtn.id and sd.question_type = question.question_type}.first
-        act_qtn = build_question(qtn, "#{sequence.to_i}.#{(index+1)}", sd_detail.try(:answer_caught))
+        act_qtn = build_question(qtn, "#{sequence.to_i}.#{(index+1)}", sd_detail.id, sd_detail.try(:answer_caught))
         act_qtn.student_file_view_count = sd_detail.try(:student_file_view_count).try(:to_i)
         active_qtn.children_questions << act_qtn
       end
       active_qtn.student_file_view_count = active_qtn.children_questions[0].student_file_view_count.to_i
       active_qtn
     else
-      build_question(question, sequence, answer)
+      build_question(question, sequence, schedule_detail_id, answer)
     end
   end
 
-  def build_question(question, sequence, answer = nil)
-    ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil), :answer_caught => answer, :question_type => question.question_type)
+  def build_question(question, sequence, schedule_detail_id, answer = nil)
+    ActiveQuestion.new(:question_id => question.id, :question_no => sequence, :description => question.description, :option_1 => question.option_1, :option_2 => question.option_2, :option_3 => question.option_3, :option_4 => question.option_4, :digi_file_url => (question.audio_video_question.present? ? question.audio_video_question.try(:digi_file_url) : nil), :answer_caught => answer, :question_type => question.question_type, :schedule_detail_id => schedule_detail_id)
   end 
   
   def load_multiple_choice_question
@@ -160,6 +179,7 @@ class RandomQuestionGenerator
     attribute :question_type
     attribute :children_questions, []
     attribute :student_file_view_count, Integer
+    attribute :schedule_detail_id, Integer
   end
 
 
